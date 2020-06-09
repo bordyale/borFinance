@@ -1,14 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
-    <description>BorFinance Services</description>
-    <vendor></vendor>
-    <version>1.0</version>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ofbiz.apache.org/dtds/services.xsd">
+	<description>BorFinance Services</description>
+	<vendor></vendor>
+	<version>1.0</version>
 
-    <service name="noSyntaxError" engine="interface">
-        <description>
+	<service name="noSyntaxError" engine="interface">
+		<description>
             Dummy service to prevent empty files and syntax error - Remove when the 1st real service will be added here 
         </description>
-    </service> 
-    
+	</service>
+	<service name="createBfinProduct" default-entity-name="BfinProduct" engine="entity-auto" invoke="create" auth="true">
+		<description>Create Work Papers entry</description>
+		<permission-service service-name="borFinanceGenericPermission" main-action="CREATE" />
+		<auto-attributes include="pk" mode="OUT" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+	</service>
+	<service name="updateBfinProduct" default-entity-name="BfinProduct" engine="entity-auto" invoke="update" auth="true">
+		<description>Update a Example</description>
+		<permission-service service-name="borFinanceGenericPermission" main-action="UPDATE" />
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+	</service>
+	<service name="deleteBfinProduct" default-entity-name="BfinProduct" engine="entity-auto" invoke="delete" auth="true">
+		<description>Delete a VfShipmentItem</description>
+		<permission-service service-name="borFinanceGenericPermission" main-action="DELETE" />
+		<auto-attributes include="pk" mode="IN" optional="false" />
+	</service>
+	
+	<service name="createBfinPurchase" default-entity-name="BfinPurchase" engine="entity-auto" invoke="create" auth="true">
+		<description>Create Work Papers entry</description>
+		<permission-service service-name="borFinanceGenericPermission" main-action="CREATE" />
+		<auto-attributes include="pk" mode="OUT" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+	</service>
+	<service name="updateBfinPurchase" default-entity-name="BfinPurchase" engine="entity-auto" invoke="update" auth="true">
+		<description>Update a Example</description>
+		<permission-service service-name="borFinanceGenericPermission" main-action="UPDATE" />
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+	</service>
+	<service name="deleteBfinPurchase" default-entity-name="BfinPurchase" engine="entity-auto" invoke="delete" auth="true">
+		<description>Delete a VfShipmentItem</description>
+		<permission-service service-name="borFinanceGenericPermission" main-action="DELETE" />
+		<auto-attributes include="pk" mode="IN" optional="false" />
+	</service>
+	
+	
+	<service name="createBfinDividend" default-entity-name="BfinDividend" engine="entity-auto" invoke="create" auth="true">
+		<description>Create Work Papers entry</description>
+		<permission-service service-name="borFinanceGenericPermission" main-action="CREATE" />
+		<auto-attributes include="pk" mode="OUT" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+	</service>
+	<service name="updateBfinDividend" default-entity-name="BfinDividend" engine="entity-auto" invoke="update" auth="true">
+		<description>Update a Example</description>
+		<permission-service service-name="borFinanceGenericPermission" main-action="UPDATE" />
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+	</service>
+	<service name="deleteBfinDividend" default-entity-name="BfinDividend" engine="entity-auto" invoke="delete" auth="true">
+		<description>Delete a VfShipmentItem</description>
+		<permission-service service-name="borFinanceGenericPermission" main-action="DELETE" />
+		<auto-attributes include="pk" mode="IN" optional="false" />
+	</service>
+	
+	<service name="createBfinPrice" default-entity-name="BfinPrice" engine="entity-auto" invoke="create" auth="true">
+		<description>Create Work Papers entry</description>
+		<permission-service service-name="borFinanceGenericPermission" main-action="CREATE" />
+		<auto-attributes include="pk" mode="OUT" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+	</service>
+	<service name="updateBfinPrice" default-entity-name="BfinPrice" engine="entity-auto" invoke="update" auth="true">
+		<description>Update a Example</description>
+		<permission-service service-name="borFinanceGenericPermission" main-action="UPDATE" />
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+	</service>
+	<service name="deleteBfinPrice" default-entity-name="BfinPrice" engine="entity-auto" invoke="delete" auth="true">
+		<description>Delete a VfShipmentItem</description>
+		<permission-service service-name="borFinanceGenericPermission" main-action="DELETE" />
+		<auto-attributes include="pk" mode="IN" optional="false" />
+	</service>
+
+
+
+	<service name="borFinanceGenericPermission" engine="simple" location="component://borFinance/minilang/borFinancePermissionServices.xml"
+		invoke="borFinancePermissionService">
+		<implements service="permissionInterface" />
+	</service>
+
 </services>
