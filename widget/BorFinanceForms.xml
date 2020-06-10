@@ -1,6 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-        xmlns="http://ofbiz.apache.org/Widget-Form" xsi:schemaLocation="http://ofbiz.apache.org/Widget-Form http://ofbiz.apache.org/dtds/widget-form.xsd">
+<forms xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ofbiz.apache.org/Widget-Form"
+	xsi:schemaLocation="http://ofbiz.apache.org/Widget-Form http://ofbiz.apache.org/dtds/widget-form.xsd">
 
+
+
+	<form name="ListBfinProductAjax" extends="ListBfinProduct" type="list" paginate-target="authview/findBfinProductAjax">
+		<actions>
+			<entity-condition entity-name="BfinProduct">
+				<order-by field-name="prodName" />
+			</entity-condition>
+		</actions>
+		<field name="prodId" title="${uiLabelMap.CommonId}">
+			<display />
+		</field>
+
+		<on-event-update-area event-type="paginate" area-id="ListBfinProductAjax" area-target="ListBfinProductFormOnly" />
+	</form>
+	<form name="ListBfinProduct" type="list" list-name="listIt" paginate-target="authview/findBfinProductAjax"
+		default-entity-name="BfinProduct" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2"
+		default-table-style="basic-table hover-bar">
+		<actions>
+			<set field="requestParameters.noConditionFind" value="Y" />
+			<service service-name="performFind" result-map="result" result-map-list="listIt">
+				<field-map field-name="inputFields" from-field="requestParameters" />
+				<field-map field-name="entityName" value="BfinProduct" />
+				<field-map field-name="orderBy" from-field="parameters.sortField" />
+				<field-map field-name="viewIndex" from-field="viewIndex" />
+				<field-map field-name="viewSize" from-field="viewSize" />
+			</service>
+			<set field="sortField" from-field="parameters.sortField" />
+		</actions>
+
+		<field name="prodId" title="${uiLabelMap.CommonId}">
+			<display />
+		</field>
+		<field name="prodSym" title="${uiLabelMap.Symbol}" sort-field="true">
+			<display />
+		</field>
+		<field name="prodName" title="${uiLabelMap.CommonName}" sort-field="true">
+			<display />
+		</field>
+		<field name="deleteLink" title=" " widget-style="buttontext">
+			<hyperlink description="${uiLabelMap.CommonDelete}" target="deleteBfinProduct" also-hidden="false"
+				confirmation-message="${uiLabelMap.CommonConfirmDelete}" image-location="${iconsLocation}/delete.png">
+				<parameter param-name="prodId" />
+
+			</hyperlink>
+		</field>
+
+	</form>
+
+	<form name="EditBfinProductBackgroundSubmit" type="single" extends="EditBfinProduct" target="updateBfinProductAjax">
+		<alt-target use-when="bfinProduct==null" target="createBfinProductAjax" />
+		<field name="prodId" title="${uiLabelMap.CommonId}">
+			<hidden />
+		</field>
+		<on-event-update-area event-type="submit" area-id="ListBfinProductAjax" area-target="ListBfinProductFormOnly" />
+		<!--on-event-update-area event-type="submit" area-id="EditExampleAjax" area-target="CreateExampleFormOnly"/ --><!-- JLR: this does not seem to be useful -->
+	</form>
+
+	<form name="EditBfinProduct" type="single" target="updateBfinProduct" title="" default-map-name="example"
+		default-entity-name="BfinProduct">
+
+		<alt-target use-when="bfinProduct==null" target="createBfinProduct" />
+		<auto-fields-service service-name="updateBfinProduct" />
+		<field name="prodId" title="${uiLabelMap.CommonId}">
+			<hidden />
+		</field>
+		<field name="submitButton" use-when="bfinProduct==null" title="${uiLabelMap.CommonCreate}">
+			<submit button-type="button" />
+		</field>
+		<field name="submitButton" use-when="bfinProduct!=null" title="${uiLabelMap.CommonUpdate}">
+			<submit button-type="button" />
+		</field>
+	</form>
 
 </forms>

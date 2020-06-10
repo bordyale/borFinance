@@ -1,28 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns="http://ofbiz.apache.org/Site-Conf" xsi:schemaLocation="http://ofbiz.apache.org/Site-Conf http://ofbiz.apache.org/dtds/site-conf.xsd">
-    <!-- The controller elements that are common to all OFBiz components
-         can be found in the following xml file. A component can override the
-         elements found in the common-controller.xml file. -->
-    <include location="component://common/webcommon/WEB-INF/common-controller.xml"/>
+<site-conf xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ofbiz.apache.org/Site-Conf"
+	xsi:schemaLocation="http://ofbiz.apache.org/Site-Conf http://ofbiz.apache.org/dtds/site-conf.xsd">
+	<!-- The controller elements that are common to all OFBiz components can be found in the following xml file. A component can override 
+		the elements found in the common-controller.xml file. -->
+	<include location="component://common/webcommon/WEB-INF/common-controller.xml" />
 
-    <description>BorFinance Component Site Configuration File</description>
+	<description>BorFinance Component Site Configuration File</description>
 
-    <!-- Events to run on every request before security (chains exempt) -->
-    <!--
-    <preprocessor>
-    </preprocessor>
-    -->
-    <!-- Events to run on every request after all other processing (chains exempt) -->
-    <!--
-    <postprocessor>
-        <event name="test" type="java" path="org.apache.ofbiz.webapp.event.TestEvent" invoke="test"/>
-    </postprocessor>
-    -->
 
-    <!-- Request Mappings -->
-    <request-map uri="main"><security https="true" auth="true"/><response name="success" type="view" value="main"/></request-map>
-    
-    <!-- View Mappings -->
-    <view-map name="main" type="screen" page="component://borFinance/widget/BorFinanceScreens.xml#main"/>
+	<request-map uri="createBfinProductAjax">
+		<security https="true" auth="true" />
+		<event type="service" invoke="createBfinProduct" />
+		<response name="success" type="request" value="json" />
+		<response name="error" type="request" value="json" />
+	</request-map>
+	<request-map uri="updateBfinProductAjax">
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateBfinProduct" />
+		<response name="success" type="view" value="findBfinProductAjax" />
+		<response name="error" type="view" value="findBfinProductAjax" />
+	</request-map>
+	<request-map uri="createBfinProduct">
+		<security https="true" auth="true" />
+		<event type="service" invoke="createBfinProduct" />
+		<response name="success" type="view" value="findBfinProductAjax" />
+		<response name="error" type="view" value="findBfinProductAjax" />
+	</request-map>
+	<request-map uri="updateBfinProduct">
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateBfinProduct" />
+		<response name="success" type="view" value="findBfinProductAjax" />
+		<response name="error" type="view" value="findBfinProductAjax" />
+	</request-map>
+	<request-map uri="deleteBfinProduct">
+		<security https="true" auth="true" />
+		<event type="service" invoke="deleteBfinProduct" />
+		<response name="success" type="view" value="findBfinProductAjax" />
+		<response name="error" type="view" value="findBfinProductAjax" />
+	</request-map>
+	<request-map uri="ListBfinProductFormOnly">
+		<security https="true" auth="false" />
+		<response name="success" type="view" value="ListBfinProductFormOnly" />
+	</request-map>
+	<request-map uri="CreateBfinProductFormOnly">
+		<security https="true" auth="false" />
+		<response name="success" type="view" value="CreateBfinProductFormOnly" />
+	</request-map>
+
+	<!-- Events to run on every request before security (chains exempt) -->
+	<!-- <preprocessor> </preprocessor> -->
+	<!-- Events to run on every request after all other processing (chains exempt) -->
+	<!-- <postprocessor> <event name="test" type="java" path="org.apache.ofbiz.webapp.event.TestEvent" invoke="test"/> </postprocessor> -->
+
+	<!-- Request Mappings -->
+	<request-map uri="main">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="main" />
+	</request-map>
+
+
+	<!-- ajax view mappings -->
+	<view-map name="findBfinProductAjax" type="screen" page="component://borFinance/widget/BorFinanceScreens.xml#AjaxBfinProduct" />
+	<view-map name="ListBfinProductFormOnly" type="screen"
+		page="component://borFinance/widget/BorFinanceScreens.xml#ListBfinProductFormOnly" />
+	<view-map name="CreateBfinProductFormOnly" type="screen"
+		page="component://borFinance/widget/BorFinanceScreens.xml#CreateBfinProductFormOnly" />
+	<!-- View Mappings -->
+	<view-map name="main" type="screen" page="component://borFinance/widget/BorFinanceScreens.xml#main" />
 </site-conf>
