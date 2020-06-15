@@ -26,12 +26,13 @@
 		<permission-service service-name="borFinanceGenericPermission" main-action="DELETE" />
 		<auto-attributes include="pk" mode="IN" optional="false" />
 	</service>
-	
+
 	<service name="createBfinPurchase" default-entity-name="BfinPurchase" engine="entity-auto" invoke="create" auth="true">
 		<description>Create Work Papers entry</description>
 		<permission-service service-name="borFinanceGenericPermission" main-action="CREATE" />
 		<auto-attributes include="pk" mode="OUT" optional="false" />
 		<auto-attributes include="nonpk" mode="IN" optional="true" />
+		<override name="prodId" optional="false" />
 	</service>
 	<service name="updateBfinPurchase" default-entity-name="BfinPurchase" engine="entity-auto" invoke="update" auth="true">
 		<description>Update a Example</description>
@@ -44,13 +45,13 @@
 		<permission-service service-name="borFinanceGenericPermission" main-action="DELETE" />
 		<auto-attributes include="pk" mode="IN" optional="false" />
 	</service>
-	
-	
+
 	<service name="createBfinDividend" default-entity-name="BfinDividend" engine="entity-auto" invoke="create" auth="true">
 		<description>Create Work Papers entry</description>
 		<permission-service service-name="borFinanceGenericPermission" main-action="CREATE" />
 		<auto-attributes include="pk" mode="OUT" optional="false" />
 		<auto-attributes include="nonpk" mode="IN" optional="true" />
+		<override name="prodId" optional="false" />
 	</service>
 	<service name="updateBfinDividend" default-entity-name="BfinDividend" engine="entity-auto" invoke="update" auth="true">
 		<description>Update a Example</description>
@@ -63,12 +64,13 @@
 		<permission-service service-name="borFinanceGenericPermission" main-action="DELETE" />
 		<auto-attributes include="pk" mode="IN" optional="false" />
 	</service>
-	
+
 	<service name="createBfinPrice" default-entity-name="BfinPrice" engine="entity-auto" invoke="create" auth="true">
 		<description>Create Work Papers entry</description>
 		<permission-service service-name="borFinanceGenericPermission" main-action="CREATE" />
 		<auto-attributes include="pk" mode="OUT" optional="false" />
 		<auto-attributes include="nonpk" mode="IN" optional="true" />
+		<override name="prodId" optional="false" />
 	</service>
 	<service name="updateBfinPrice" default-entity-name="BfinPrice" engine="entity-auto" invoke="update" auth="true">
 		<description>Update a Example</description>

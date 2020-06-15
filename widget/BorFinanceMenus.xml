@@ -8,5 +8,14 @@
 		<menu-item name="AjaxBfinProduct" title="${uiLabelMap.BfinProduct}">
 			<link target="authview/findBfinProductAjax" />
 		</menu-item>
+		<menu-item name="BfinPurchase" title="${uiLabelMap.BfinPurchase}">
+			<link target="findBfinPurchase" />
+		</menu-item>
+		<menu-item name="BfinDividend" title="${uiLabelMap.BfinDividend}">
+			<link target="findBfinDividend" />
+		</menu-item>
+		<menu-item name="BfinPrice" title="${uiLabelMap.BfinPrice}">
+			<link target="findBfinPrice" />
+		</menu-item>
 	</menu>
 </menus>

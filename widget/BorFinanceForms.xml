@@ -75,4 +75,210 @@
 		</field>
 	</form>
 
+	<form name="ListBfinPurchase" type="list" list-name="listIt" paginate-target="findBfinPurchase" default-entity-name="BfinProdPurchView"
+		separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<actions>
+			<set field="requestParameters.noConditionFind" value="Y" />
+			<service service-name="performFind" result-map="result" result-map-list="listIt">
+				<field-map field-name="inputFields" from-field="requestParameters" />
+				<field-map field-name="entityName" value="BfinProdPurchView" />
+				<field-map field-name="orderBy" from-field="parameters.sortField" />
+				<field-map field-name="viewIndex" from-field="viewIndex" />
+				<field-map field-name="viewSize" from-field="viewSize" />
+			</service>
+			<set field="sortField" from-field="parameters.sortField" />
+		</actions>
+
+		<field name="prodId" title="${uiLabelMap.CommonId}">
+			<display />
+		</field>
+		<field name="prodSym" title="${uiLabelMap.Symbol}" sort-field="true">
+			<display />
+		</field>
+		<field name="prodName" title="${uiLabelMap.CommonName}" sort-field="true">
+			<display />
+		</field>
+		<field name="deleteLink" title=" " widget-style="buttontext">
+			<hyperlink description="${uiLabelMap.CommonDelete}" target="deleteBfinPurchase" also-hidden="false"
+				confirmation-message="${uiLabelMap.CommonConfirmDelete}" image-location="${iconsLocation}/delete.png">
+				<parameter param-name="purchId" />
+
+			</hyperlink>
+		</field>
+
+	</form>
+	<form name="FindBfinPurchase" type="single" target="findBfinPurchase" default-entity-name="BfinPurchase">
+
+		<field name="noConditionFind">
+			<hidden value="Y" /><!-- if this isn't there then with all fields empty no query will be done -->
+		</field>
+		<field name="prodSym" title="${uiLabelMap.Symbol}" sort-field="true">
+			<text size="10" maxlength="20" />
+		</field>
+		<field name="prodName" title="${uiLabelMap.CommonName}" sort-field="true">
+			<text size="10" maxlength="20" />
+		</field>
+
+		<field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+			<submit button-type="button" />
+		</field>
+
+
+	</form>
+	<form name="EditBfinPurchase" type="single" target="updateBfinPurchase" title="" default-map-name="example"
+		default-entity-name="BfinPurchase">
+
+		<alt-target use-when="bfinPurchase==null" target="createBfinPurchase" />
+		<auto-fields-service service-name="updateBfinPurchase" />
+		<field name="prodId" title="${uiLabelMap.ProductId}">
+			<lookup target-form-name="LookupProduct" position="center" />
+		</field>
+		<field name="purchId">
+			<hidden />
+		</field>
+		<field name="submitButton" use-when="bfinProduct==null" title="${uiLabelMap.CommonCreate}">
+			<submit button-type="button" />
+		</field>
+		<field name="submitButton" use-when="bfinProduct!=null" title="${uiLabelMap.CommonUpdate}">
+			<submit button-type="button" />
+		</field>
+	</form>
+
+	<form name="ListBfinDividend" type="list" list-name="listIt" paginate-target="findBfinDividend" default-entity-name="BfinProdDivView"
+		separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<actions>
+			<set field="requestParameters.noConditionFind" value="Y" />
+			<service service-name="performFind" result-map="result" result-map-list="listIt">
+				<field-map field-name="inputFields" from-field="requestParameters" />
+				<field-map field-name="entityName" value="BfinProdDivView" />
+				<field-map field-name="orderBy" from-field="parameters.sortField" />
+				<field-map field-name="viewIndex" from-field="viewIndex" />
+				<field-map field-name="viewSize" from-field="viewSize" />
+			</service>
+			<set field="sortField" from-field="parameters.sortField" />
+		</actions>
+
+		<field name="prodId" title="${uiLabelMap.CommonId}">
+			<display />
+		</field>
+		<field name="prodSym" title="${uiLabelMap.Symbol}" sort-field="true">
+			<display />
+		</field>
+		<field name="prodName" title="${uiLabelMap.CommonName}" sort-field="true">
+			<display />
+		</field>
+		<field name="deleteLink" title=" " widget-style="buttontext">
+			<hyperlink description="${uiLabelMap.CommonDelete}" target="deleteBfinDividend" also-hidden="false"
+				confirmation-message="${uiLabelMap.CommonConfirmDelete}" image-location="${iconsLocation}/delete.png">
+				<parameter param-name="purchId" />
+
+			</hyperlink>
+		</field>
+
+	</form>
+	<form name="FindBfinDividend" type="single" target="findBfinDividend" default-entity-name="BfinDividend">
+
+		<field name="noConditionFind">
+			<hidden value="Y" /><!-- if this isn't there then with all fields empty no query will be done -->
+		</field>
+		<field name="prodSym" title="${uiLabelMap.Symbol}" sort-field="true">
+			<text size="10" maxlength="20" />
+		</field>
+		<field name="prodName" title="${uiLabelMap.CommonName}" sort-field="true">
+			<text size="10" maxlength="20" />
+		</field>
+
+		<field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+			<submit button-type="button" />
+		</field>
+
+
+	</form>
+	<form name="EditBfinDividend" type="single" target="updateBfinDividend" title="" default-map-name="example"
+		default-entity-name="BfinDividend">
+
+		<alt-target use-when="bfinDividend==null" target="createBfinDividend" />
+		<auto-fields-service service-name="updateBfinDividend" />
+		<field name="prodId" title="${uiLabelMap.ProductId}">
+			<lookup target-form-name="LookupProduct" position="center" />
+		</field>
+		<field name="purchId">
+			<hidden />
+		</field>
+		<field name="submitButton" use-when="bfinProduct==null" title="${uiLabelMap.CommonCreate}">
+			<submit button-type="button" />
+		</field>
+		<field name="submitButton" use-when="bfinProduct!=null" title="${uiLabelMap.CommonUpdate}">
+			<submit button-type="button" />
+		</field>
+	</form>
+
+	<form name="ListBfinPrice" type="list" list-name="listIt" paginate-target="findBfinPrice" default-entity-name="BfinProdPriceView"
+		separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+		<actions>
+			<set field="requestParameters.noConditionFind" value="Y" />
+			<service service-name="performFind" result-map="result" result-map-list="listIt">
+				<field-map field-name="inputFields" from-field="requestParameters" />
+				<field-map field-name="entityName" value="BfinProdPriceView" />
+				<field-map field-name="orderBy" from-field="parameters.sortField" />
+				<field-map field-name="viewIndex" from-field="viewIndex" />
+				<field-map field-name="viewSize" from-field="viewSize" />
+			</service>
+			<set field="sortField" from-field="parameters.sortField" />
+		</actions>
+
+		<field name="prodId" title="${uiLabelMap.CommonId}">
+			<display />
+		</field>
+		<field name="prodSym" title="${uiLabelMap.Symbol}" sort-field="true">
+			<display />
+		</field>
+		<field name="prodName" title="${uiLabelMap.CommonName}" sort-field="true">
+			<display />
+		</field>
+		<field name="deleteLink" title=" " widget-style="buttontext">
+			<hyperlink description="${uiLabelMap.CommonDelete}" target="deleteBfinPrice" also-hidden="false"
+				confirmation-message="${uiLabelMap.CommonConfirmDelete}" image-location="${iconsLocation}/delete.png">
+				<parameter param-name="purchId" />
+
+			</hyperlink>
+		</field>
+
+	</form>
+	<form name="FindBfinPrice" type="single" target="findBfinPrice" default-entity-name="BfinPrice">
+
+		<field name="noConditionFind">
+			<hidden value="Y" /><!-- if this isn't there then with all fields empty no query will be done -->
+		</field>
+		<field name="prodSym" title="${uiLabelMap.Symbol}" sort-field="true">
+			<text size="10" maxlength="20" />
+		</field>
+		<field name="prodName" title="${uiLabelMap.CommonName}" sort-field="true">
+			<text size="10" maxlength="20" />
+		</field>
+
+		<field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
+			<submit button-type="button" />
+		</field>
+
+
+	</form>
+	<form name="EditBfinPrice" type="single" target="updateBfinPrice" title="" default-map-name="example" default-entity-name="BfinPrice">
+
+		<alt-target use-when="bfinPrice==null" target="createBfinPrice" />
+		<auto-fields-service service-name="updateBfinPrice" />
+		<field name="prodId" title="${uiLabelMap.ProductId}">
+			<lookup target-form-name="LookupProduct" position="center" />
+		</field>
+		<field name="purchId">
+			<hidden />
+		</field>
+		<field name="submitButton" use-when="bfinProduct==null" title="${uiLabelMap.CommonCreate}">
+			<submit button-type="button" />
+		</field>
+		<field name="submitButton" use-when="bfinProduct!=null" title="${uiLabelMap.CommonUpdate}">
+			<submit button-type="button" />
+		</field>
+	</form>
+
 </forms>

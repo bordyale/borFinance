@@ -24,13 +24,49 @@
         <value xml:lang="en">Finance Products</value>
         <value xml:lang="it">Prodotti Finanziari</value>
     </property>
+    <property key="BfinPurchase">
+        <value xml:lang="en">Purchases list</value>
+        <value xml:lang="it">Acquisti</value>
+    </property>
+    <property key="BfinDividend">
+        <value xml:lang="en">Dividends list</value>
+        <value xml:lang="it">Dividendi</value>
+    </property>
+    <property key="BfinPrice">
+        <value xml:lang="en">Prices list</value>
+        <value xml:lang="it">Prezzi</value>
+    </property>
     <property key="PageTitleFindBfinProduct">
         <value xml:lang="en">Finance Products</value>
         <value xml:lang="it">Prodotti Finanziari</value>
     </property>
+    <property key="PageTitleFindBfinPurchase">
+        <value xml:lang="en">Purchases list</value>
+        <value xml:lang="it">Acquisti</value>
+    </property>
+    <property key="PageTitleFindBfinDividend">
+        <value xml:lang="en">Dividends list</value>
+        <value xml:lang="it">Dividendi</value>
+    </property>
+    <property key="PageTitleFindBfinPrice">
+        <value xml:lang="en">Prices list</value>
+        <value xml:lang="it">Prezzi</value>
+    </property>
     <property key="NewBfinProduct">
         <value xml:lang="en">New Product</value>
         <value xml:lang="it">Nuovo Prodotto</value>
+    </property>
+    <property key="NewBfinPurchase">
+        <value xml:lang="en">New Purchase</value>
+        <value xml:lang="it">Nuovo Acquisto</value>
+    </property>
+    <property key="NewBfinDividend">
+        <value xml:lang="en">New Dividend</value>
+        <value xml:lang="it">Nuovo Dividendo</value>
+    </property>
+     <property key="NewBfinPrice">
+        <value xml:lang="en">New Price</value>
+        <value xml:lang="it">Nuovo Prezzo</value>
     </property>
     <property key="Symbol">
         <value xml:lang="en">Symbol</value>
@@ -39,5 +75,9 @@
     <property key="CommonId">
         <value xml:lang="en">Id</value>
         <value xml:lang="it">Id</value>
+    </property>
+    <property key="LookupProduct">
+        <value xml:lang="en">Lookup Product</value>
+        <value xml:lang="it">Lookup Product</value>
     </property>
 </resource>

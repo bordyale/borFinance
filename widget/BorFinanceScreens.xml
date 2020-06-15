@@ -54,7 +54,7 @@
 								<container id="ListBfinProductsAjax">
 									<include-screen name="ListBfinProductFormOnly" />
 								</container>
-								
+
 							</widgets>
 							<fail-widgets>
 								<label style="h3">${uiLabelMap.BorFinanceViewPermissionError}</label>
@@ -99,6 +99,168 @@
 			<widgets>
 				<!-- <include-form name="EditBfinProductBackgroundSubmit" location="component://borFinance/widget/BorFinanceForms.xml" /> -->
 				<include-form name="EditBfinProduct" location="component://borFinance/widget/BorFinanceForms.xml" />
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="BfinPurchase">
+		<section>
+			<actions>
+				<set field="headerItem" value="BfinPurchase" />
+				<set field="titleProperty" value="PageTitleFindBfinPurchase" />
+				<set field="exampleCtx" from-field="parameters" />
+			</actions>
+			<widgets>
+				<decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<section>
+							<condition>
+								<if-has-permission permission="BORFINANCE" action="_VIEW" />
+							</condition>
+							<widgets>
+								<container style="h1">
+									<label>${uiLabelMap[titleProperty]}</label>
+								</container>
+								<section>
+									<condition>
+										<if-compare field="javaScriptEnabled" value="true" operator="equals" />
+									</condition>
+									<widgets />
+									<fail-widgets>
+										<container style="button-bar">
+											<label>${uiLabelMap.ExampleAjaxIntro}</label>
+										</container>
+									</fail-widgets>
+								</section>
+								<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+									<decorator-section name="search-options">
+										<include-form name="FindBfinPurchase" location="component://borFinance/widget/BorFinanceForms.xml" />
+									</decorator-section>
+									<decorator-section name="search-results">
+										<include-form name="ListBfinPurchase" location="component://borFinance/widget/BorFinanceForms.xml" />
+									</decorator-section>
+								</decorator-screen>
+								<container style="h2">
+									<label>${uiLabelMap.NewBfinPurchase}</label>
+								</container>
+								<container>
+									<include-form name="EditBfinPurchase" location="component://borFinance/widget/BorFinanceForms.xml" />
+								</container>
+							</widgets>
+							<fail-widgets>
+								<label style="h3">${uiLabelMap.BorFinanceViewPermissionError}</label>
+							</fail-widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="BfinDividend">
+		<section>
+			<actions>
+				<set field="headerItem" value="BfinDividend" />
+				<set field="titleProperty" value="PageTitleFindBfinDividend" />
+				<set field="exampleCtx" from-field="parameters" />
+			</actions>
+			<widgets>
+				<decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<section>
+							<condition>
+								<if-has-permission permission="BORFINANCE" action="_VIEW" />
+							</condition>
+							<widgets>
+								<container style="h1">
+									<label>${uiLabelMap[titleProperty]}</label>
+								</container>
+								<section>
+									<condition>
+										<if-compare field="javaScriptEnabled" value="true" operator="equals" />
+									</condition>
+									<widgets />
+									<fail-widgets>
+										<container style="button-bar">
+											<label>${uiLabelMap.ExampleAjaxIntro}</label>
+										</container>
+									</fail-widgets>
+								</section>
+								<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+									<decorator-section name="search-options">
+										<include-form name="FindBfinDividend" location="component://borFinance/widget/BorFinanceForms.xml" />
+									</decorator-section>
+									<decorator-section name="search-results">
+										<include-form name="ListBfinDividend" location="component://borFinance/widget/BorFinanceForms.xml" />
+									</decorator-section>
+								</decorator-screen>
+								<container style="h2">
+									<label>${uiLabelMap.NewBfinDividend}</label>
+								</container>
+								<container>
+									<include-form name="EditBfinDividend" location="component://borFinance/widget/BorFinanceForms.xml" />
+								</container>
+							</widgets>
+							<fail-widgets>
+								<label style="h3">${uiLabelMap.BorFinanceViewPermissionError}</label>
+							</fail-widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="BfinPrice">
+		<section>
+			<actions>
+				<set field="headerItem" value="BfinPrice" />
+				<set field="titleProperty" value="PageTitleFindBfinPrice" />
+				<set field="exampleCtx" from-field="parameters" />
+			</actions>
+			<widgets>
+				<decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						<section>
+							<condition>
+								<if-has-permission permission="BORFINANCE" action="_VIEW" />
+							</condition>
+							<widgets>
+								<container style="h1">
+									<label>${uiLabelMap[titleProperty]}</label>
+								</container>
+								<section>
+									<condition>
+										<if-compare field="javaScriptEnabled" value="true" operator="equals" />
+									</condition>
+									<widgets />
+									<fail-widgets>
+										<container style="button-bar">
+											<label>${uiLabelMap.ExampleAjaxIntro}</label>
+										</container>
+									</fail-widgets>
+								</section>
+								<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
+									<decorator-section name="search-options">
+										<include-form name="FindBfinPrice" location="component://borFinance/widget/BorFinanceForms.xml" />
+									</decorator-section>
+									<decorator-section name="search-results">
+										<include-form name="ListBfinPrice" location="component://borFinance/widget/BorFinanceForms.xml" />
+									</decorator-section>
+								</decorator-screen>
+								<container style="h2">
+									<label>${uiLabelMap.NewBfinPrice}</label>
+								</container>
+								<container>
+									<include-form name="EditBfinPrice" location="component://borFinance/widget/BorFinanceForms.xml" />
+								</container>
+							</widgets>
+							<fail-widgets>
+								<label style="h3">${uiLabelMap.BorFinanceViewPermissionError}</label>
+							</fail-widgets>
+						</section>
+					</decorator-section>
+				</decorator-screen>
 			</widgets>
 		</section>
 	</screen>

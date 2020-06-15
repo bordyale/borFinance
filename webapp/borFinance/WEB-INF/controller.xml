@@ -7,7 +7,10 @@
 
 	<description>BorFinance Component Site Configuration File</description>
 
-
+	<request-map uri="findBfinProductAjax">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="findBfinProductAjax" />
+	</request-map>
 	<request-map uri="createBfinProductAjax">
 		<security https="true" auth="true" />
 		<event type="service" invoke="createBfinProduct" />
@@ -35,7 +38,7 @@
 	<request-map uri="deleteBfinProduct">
 		<security https="true" auth="true" />
 		<event type="service" invoke="deleteBfinProduct" />
-		<response name="success" type="view" value="findBfinProductAjax" />
+		<response name="success" type="request-redirect" value="findBfinProductAjax" />
 		<response name="error" type="view" value="findBfinProductAjax" />
 	</request-map>
 	<request-map uri="ListBfinProductFormOnly">
@@ -47,10 +50,88 @@
 		<response name="success" type="view" value="CreateBfinProductFormOnly" />
 	</request-map>
 
+	<request-map uri="findBfinPurchase">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="findBfinPurchase" />
+	</request-map>
+	<request-map uri="createBfinPurchase">
+		<security https="true" auth="true" />
+		<event type="service" invoke="createBfinPurchase" />
+		<response name="success" type="view" value="findBfinPurchase" />
+		<response name="error" type="view" value="findBfinPurchase" />
+	</request-map>
+	<request-map uri="updateBfinPurchase">
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateBfinPurchase" />
+		<response name="success" type="view" value="findBfinPurchase" />
+		<response name="error" type="view" value="findBfinPurchase" />
+	</request-map>
+	<request-map uri="deleteBfinPurchase">
+		<security https="true" auth="true" />
+		<event type="service" invoke="deleteBfinPurchase" />
+		<response name="success" type="view" value="findBfinPurchase" />
+		<response name="error" type="view" value="findBfinPurchase" />
+	</request-map>
+	
+	<request-map uri="findBfinDividend">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="findBfinDividend" />
+	</request-map>
+	<request-map uri="createBfinDividend">
+		<security https="true" auth="true" />
+		<event type="service" invoke="createBfinDividend" />
+		<response name="success" type="view" value="findBfinDividend" />
+		<response name="error" type="view" value="findBfinDividend" />
+	</request-map>
+	<request-map uri="updateBfinDividend">
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateBfinDividend" />
+		<response name="success" type="view" value="findBfinDividend" />
+		<response name="error" type="view" value="findBfinDividend" />
+	</request-map>
+	<request-map uri="deleteBfinDividend">
+		<security https="true" auth="true" />
+		<event type="service" invoke="deleteBfinDividend" />
+		<response name="success" type="view" value="findBfinDividend" />
+		<response name="error" type="view" value="findBfinDividend" />
+	</request-map>
+	
+	<request-map uri="findBfinPrice">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="findBfinPrice" />
+	</request-map>
+	<request-map uri="createBfinPrice">
+		<security https="true" auth="true" />
+		<event type="service" invoke="createBfinPrice" />
+		<response name="success" type="view" value="findBfinPrice" />
+		<response name="error" type="view" value="findBfinPrice" />
+	</request-map>
+	<request-map uri="updateBfinPrice">
+		<security https="true" auth="true" />
+		<event type="service" invoke="updateBfinPrice" />
+		<response name="success" type="view" value="findBfinPrice" />
+		<response name="error" type="view" value="findBfinPrice" />
+	</request-map>
+	<request-map uri="deleteBfinPrice">
+		<security https="true" auth="true" />
+		<event type="service" invoke="deleteBfinPrice" />
+		<response name="success" type="view" value="findBfinPrice" />
+		<response name="error" type="view" value="findBfinPrice" />
+	</request-map>
+
+
 	<!-- Events to run on every request before security (chains exempt) -->
 	<!-- <preprocessor> </preprocessor> -->
 	<!-- Events to run on every request after all other processing (chains exempt) -->
 	<!-- <postprocessor> <event name="test" type="java" path="org.apache.ofbiz.webapp.event.TestEvent" invoke="test"/> </postprocessor> -->
+	
+	
+	<!-- Lookup request mappings -->
+
+	<request-map uri="LookupProduct">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="LookupProduct" />
+	</request-map>
 
 	<!-- Request Mappings -->
 	<request-map uri="main">
@@ -66,5 +147,11 @@
 	<view-map name="CreateBfinProductFormOnly" type="screen"
 		page="component://borFinance/widget/BorFinanceScreens.xml#CreateBfinProductFormOnly" />
 	<!-- View Mappings -->
+	<view-map name="findBfinPurchase" type="screen" page="component://borFinance/widget/BorFinanceScreens.xml#BfinPurchase" />
+	<view-map name="findBfinDividend" type="screen" page="component://borFinance/widget/BorFinanceScreens.xml#BfinDividend" />
+	<view-map name="findBfinPrice" type="screen" page="component://borFinance/widget/BorFinanceScreens.xml#BfinPrice" />
 	<view-map name="main" type="screen" page="component://borFinance/widget/BorFinanceScreens.xml#main" />
+	
+	
+	<view-map name="LookupProduct" type="screen" page="component://borFinance/widget/LookupScreens.xml#LookupProduct" />
 </site-conf>

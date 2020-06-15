@@ -15,7 +15,34 @@
 	<version>1.0</version>
 
 
+	<view-entity entity-name="BfinProdPurchView" package-name="org.apache.ofbiz.borFinance">
+		<member-entity entity-alias="PROD" entity-name="BfinProduct" />
+		<member-entity entity-alias="PURCH" entity-name="BfinPurchase" />
+		<alias-all entity-alias="PROD" />
+		<alias-all entity-alias="PURCH" />
+		<view-link entity-alias="PURCH" rel-entity-alias="PROD">
+			<key-map field-name="prodId" />
+		</view-link>
+	</view-entity>
 
+	<view-entity entity-name="BfinProdDivView" package-name="org.apache.ofbiz.borFinance">
+		<member-entity entity-alias="PROD" entity-name="BfinProduct" />
+		<member-entity entity-alias="DIV" entity-name="BfinDividend" />
+		<alias-all entity-alias="PROD" />
+		<alias-all entity-alias="DIV" />
+		<view-link entity-alias="DIV" rel-entity-alias="PROD">
+			<key-map field-name="prodId" />
+		</view-link>
+	</view-entity>
+	<view-entity entity-name="BfinProdPriceView" package-name="org.apache.ofbiz.borFinance">
+		<member-entity entity-alias="PROD" entity-name="BfinProduct" />
+		<member-entity entity-alias="PRICE" entity-name="BfinPrice" />
+		<alias-all entity-alias="PROD" />
+		<alias-all entity-alias="PRICE" />
+		<view-link entity-alias="PRICE" rel-entity-alias="PROD">
+			<key-map field-name="prodId" />
+		</view-link>
+	</view-entity>
 
 
 </entitymodel>
