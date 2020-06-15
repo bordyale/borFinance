@@ -83,6 +83,10 @@
 		<permission-service service-name="borFinanceGenericPermission" main-action="DELETE" />
 		<auto-attributes include="pk" mode="IN" optional="false" />
 	</service>
+	<service name="populateDividendTable" engine="java" location="org.apache.ofbiz.borfinance.BorFinanceServices" invoke="populateDividendTable"
+		auth="true">
+		<description>Populate Dividend Table Job</description>
+	</service>
 
 
 

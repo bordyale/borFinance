@@ -7,6 +7,19 @@
 
 	<description>BorFinance Component Site Configuration File</description>
 
+
+
+	<request-map uri="populateDividendTable">
+		<security https="true" auth="true" />
+		<event type="service" path="" invoke="populateDividendTable" />
+		<response name="success" type="view" value="findBfinDividend">
+
+		</response>
+		<response name="error" type="view" value="findPromotions">
+
+		</response>
+	</request-map>
+
 	<request-map uri="findBfinProductAjax">
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="findBfinProductAjax" />
@@ -72,7 +85,7 @@
 		<response name="success" type="view" value="findBfinPurchase" />
 		<response name="error" type="view" value="findBfinPurchase" />
 	</request-map>
-	
+
 	<request-map uri="findBfinDividend">
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="findBfinDividend" />
@@ -95,7 +108,7 @@
 		<response name="success" type="view" value="findBfinDividend" />
 		<response name="error" type="view" value="findBfinDividend" />
 	</request-map>
-	
+
 	<request-map uri="findBfinPrice">
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="findBfinPrice" />
@@ -124,8 +137,8 @@
 	<!-- <preprocessor> </preprocessor> -->
 	<!-- Events to run on every request after all other processing (chains exempt) -->
 	<!-- <postprocessor> <event name="test" type="java" path="org.apache.ofbiz.webapp.event.TestEvent" invoke="test"/> </postprocessor> -->
-	
-	
+
+
 	<!-- Lookup request mappings -->
 
 	<request-map uri="LookupProduct">
@@ -151,7 +164,7 @@
 	<view-map name="findBfinDividend" type="screen" page="component://borFinance/widget/BorFinanceScreens.xml#BfinDividend" />
 	<view-map name="findBfinPrice" type="screen" page="component://borFinance/widget/BorFinanceScreens.xml#BfinPrice" />
 	<view-map name="main" type="screen" page="component://borFinance/widget/BorFinanceScreens.xml#main" />
-	
-	
+
+
 	<view-map name="LookupProduct" type="screen" page="component://borFinance/widget/LookupScreens.xml#LookupProduct" />
 </site-conf>
