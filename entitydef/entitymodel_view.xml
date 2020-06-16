@@ -27,10 +27,10 @@
 
 	<view-entity entity-name="BfinProdDivView" package-name="org.apache.ofbiz.borFinance">
 		<member-entity entity-alias="PROD" entity-name="BfinProduct" />
-		<member-entity entity-alias="DIV" entity-name="BfinDividend" />
+		<member-entity entity-alias="DDIV" entity-name="BfinDividend" />
 		<alias-all entity-alias="PROD" />
-		<alias-all entity-alias="DIV" />
-		<view-link entity-alias="DIV" rel-entity-alias="PROD">
+		<alias-all entity-alias="DDIV" />
+		<view-link entity-alias="DDIV" rel-entity-alias="PROD">
 			<key-map field-name="prodId" />
 		</view-link>
 	</view-entity>

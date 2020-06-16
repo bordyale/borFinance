@@ -24,6 +24,9 @@ import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -113,9 +116,76 @@ public class BorFinanceServices {
 				boolean growCheck = true;
 				int growingDivYears = 0;
 				BigDecimal prevYearDiv = BigDecimal.ZERO;
-				Map<String, Object> yearsMap = new HashMap<String, Object>();
+				// Map<String, Object> yearsMap = new HashMap<String, Object>();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 				String lastClosePrice = arr.getJSONObject(divMap.firstKey()).getString("5. adjusted close");
-				System.out.print("Last closed Price" + lastClosePrice);
+				String lastClosePriceDateStr = divMap.firstKey();
+				Date lastClosePriceDate = sdf.parse(lastClosePriceDateStr);
+				// System.out.print("Last closed Price" + lastClosePrice);
+				// SAVE LAST CLOSED PRICE
+				GenericValue lastPriceStored = EntityQuery.use(delegator).from("BfinPrice").where("prodId", prodId).cache().orderBy("date DESC").queryFirst();
+				if (lastPriceStored != null) {
+					Date lastSavedDate = (Date) lastPriceStored.get("date");
+					if (lastClosePriceDate.after(lastSavedDate)) {
+						try {
+							Map<String, Object> tmpResult = dispatcher.runSync("createBfinPrice",
+									UtilMisc.<String, Object> toMap("userLogin", userLogin, "date", lastClosePriceDate, "price", lastClosePrice, "prodId", prodId));
+						} catch (GenericServiceException e) {
+							Debug.logError(e, module);
+						}
+
+					}
+
+				} else {
+					try {
+						Map<String, Object> tmpResult = dispatcher.runSync("createBfinPrice",
+								UtilMisc.<String, Object> toMap("userLogin", userLogin, "date", lastClosePriceDate, "price", lastClosePrice, "prodId", prodId));
+					} catch (GenericServiceException e) {
+						Debug.logError(e, module);
+					}
+				}
+
+				GenericValue lastDividendStored = EntityQuery.use(delegator).from("BfinDividend").where("prodId", prodId).cache().orderBy("date DESC").queryFirst();
+				if (lastDividendStored == null) {
+					// first population for this stock
+
+					for (String key : divMap.keySet()) {
+						BigDecimal dividend = new BigDecimal(divMap.get(key));
+						if (dividend.compareTo(BigDecimal.ZERO) != 0) {
+							Map<String, Object> tmpResult = dispatcher.runSync("createBfinDividend",
+									UtilMisc.<String, Object> toMap("userLogin", userLogin, "prodId", prodId, "amount", dividend, "date", sdf.parse(key)));
+						}
+					}
+
+				} else {
+					Date lastDividendStoredDate = (Date) lastDividendStored.get("date");
+					for (String key : divMap.keySet()) {
+						BigDecimal dividend = new BigDecimal(divMap.get(key));
+						if (dividend.compareTo(BigDecimal.ZERO) != 0) {
+							Date date = sdf.parse(key);
+							Calendar cal1 = Calendar.getInstance();
+							cal1.setTime(date);
+							int month1 = cal1.get(Calendar.MONTH);
+							int year1 = cal1.get(Calendar.YEAR);
+
+							Calendar cal2 = Calendar.getInstance();
+							cal2.setTime(lastDividendStoredDate);
+							int month2 = cal2.get(Calendar.MONTH);
+							int year2 = cal2.get(Calendar.YEAR);
+
+							if (date.after(lastDividendStoredDate)) {
+								if (!(year1 == year2 && month1 == month2)) {
+
+									Map<String, Object> tmpResult = dispatcher.runSync("createBfinDividend",
+											UtilMisc.<String, Object> toMap("userLogin", userLogin, "prodId", prodId, "amount", dividend, "date", sdf.parse(key)));
+								}
+							}else{
+								break;
+							}
+						}
+					}
+
+				}
 
 				i++;
 			}
@@ -125,18 +195,18 @@ public class BorFinanceServices {
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 			errMsg = UtilProperties.getMessage(resource, "RefRevenueZero", messageMap, locale);
 			return ServiceUtil.returnError(errMsg);
-		}catch(InterruptedException e){
+		} catch (InterruptedException e) {
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 			errMsg = UtilProperties.getMessage(resource, "RefRevenueZero", messageMap, locale);
 			return ServiceUtil.returnError(errMsg);
-		}catch(Exception e){
+		} catch (Exception e) {
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 			errMsg = UtilProperties.getMessage(resource, "RefRevenueZero", messageMap, locale);
 			return ServiceUtil.returnError(errMsg);
 		}
-		
+
 		return result;
 	}
 

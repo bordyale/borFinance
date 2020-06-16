@@ -161,12 +161,7 @@
 		<field name="prodId" title="${uiLabelMap.CommonId}">
 			<display />
 		</field>
-		<field name="prodSym" title="${uiLabelMap.Symbol}" sort-field="true">
-			<display />
-		</field>
-		<field name="prodName" title="${uiLabelMap.CommonName}" sort-field="true">
-			<display />
-		</field>
+		
 		<field name="deleteLink" title=" " widget-style="buttontext">
 			<hyperlink description="${uiLabelMap.CommonDelete}" target="deleteBfinDividend" also-hidden="false"
 				confirmation-message="${uiLabelMap.CommonConfirmDelete}" image-location="${iconsLocation}/delete.png">
