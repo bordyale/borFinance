@@ -69,6 +69,30 @@
         <value xml:lang="en">Id</value>
         <value xml:lang="it">Id</value>
     </property>
+    <property key="Date">
+        <value xml:lang="en">Date</value>
+        <value xml:lang="it">Data</value>
+    </property>
+    <property key="Price">
+        <value xml:lang="en">Price</value>
+        <value xml:lang="it">Prezzo</value>
+    </property>
+    <property key="Amount">
+        <value xml:lang="en">Amount</value>
+        <value xml:lang="it">Ammontare</value>
+    </property>
+    <property key="Type">
+        <value xml:lang="en">Type</value>
+        <value xml:lang="it">Tipo</value>
+    </property>
+    <property key="Exchange">
+        <value xml:lang="en">Exchange</value>
+        <value xml:lang="it">Exchange</value>
+    </property>
+    <property key="Broker">
+        <value xml:lang="en">Broker</value>
+        <value xml:lang="it">Broker</value>
+    </property>
     <property key="LookupProduct">
         <value xml:lang="en">Lookup Product</value>
         <value xml:lang="it">Lookup Product</value>

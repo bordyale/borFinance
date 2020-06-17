@@ -32,12 +32,15 @@
 		</actions>
 
 		<field name="prodId" title="${uiLabelMap.CommonId}">
-			<display />
+			<hidden />
 		</field>
 		<field name="prodSym" title="${uiLabelMap.Symbol}" sort-field="true">
 			<display />
 		</field>
 		<field name="prodName" title="${uiLabelMap.CommonName}" sort-field="true">
+			<display />
+		</field>
+		<field name="productType" title="${uiLabelMap.Type}" sort-field="true">
 			<display />
 		</field>
 		<field name="deleteLink" title=" " widget-style="buttontext">
@@ -66,6 +69,15 @@
 		<auto-fields-service service-name="updateBfinProduct" />
 		<field name="prodId" title="${uiLabelMap.CommonId}">
 			<hidden />
+		</field>
+		
+		<field name="productType" title="${uiLabelMap.Type}">
+			<drop-down allow-empty="false">
+				<entity-options entity-name="Enumeration" key-field-name="enumId" description="${description} [${enumCode}]">
+					<entity-constraint name="enumTypeId" value="BFIN_PRODUCT_TYPE" />
+					<entity-order-by field-name="sequenceId" />
+				</entity-options>
+			</drop-down>
 		</field>
 		<field name="submitButton" use-when="bfinProduct==null" title="${uiLabelMap.CommonCreate}">
 			<submit button-type="button" />
@@ -112,11 +124,8 @@
 		<field name="noConditionFind">
 			<hidden value="Y" /><!-- if this isn't there then with all fields empty no query will be done -->
 		</field>
-		<field name="prodSym" title="${uiLabelMap.Symbol}" sort-field="true">
-			<text size="10" maxlength="20" />
-		</field>
-		<field name="prodName" title="${uiLabelMap.CommonName}" sort-field="true">
-			<text size="10" maxlength="20" />
+		<field name="prodId" title="${uiLabelMap.ProductId}">
+			<lookup target-form-name="LookupProduct" position="center" />
 		</field>
 
 		<field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
@@ -136,6 +145,23 @@
 		<field name="purchId">
 			<hidden />
 		</field>
+		<field name="exchangeId" title="${uiLabelMap.Exchange}">
+			<drop-down allow-empty="false">
+				<entity-options entity-name="Enumeration" key-field-name="enumId" description="${description} [${enumCode}]">
+					<entity-constraint name="enumTypeId" value="BFIN_EXCHANGE" />
+					<entity-order-by field-name="sequenceId" />
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="brokerId" title="${uiLabelMap.Broker}">
+			<drop-down allow-empty="false">
+				<entity-options entity-name="Enumeration" key-field-name="enumId" description="${description} [${enumCode}]">
+					<entity-constraint name="enumTypeId" value="BFIN_BROKER" />
+					<entity-order-by field-name="sequenceId" />
+				</entity-options>
+			</drop-down>
+		</field>
+		
 		<field name="submitButton" use-when="bfinProduct==null" title="${uiLabelMap.CommonCreate}">
 			<submit button-type="button" />
 		</field>
@@ -158,10 +184,23 @@
 			<set field="sortField" from-field="parameters.sortField" />
 		</actions>
 
-		<field name="prodId" title="${uiLabelMap.CommonId}">
+		<field name="prodId">
+			<hidden />
+		</field>
+
+		<field name="prodSym" title="${uiLabelMap.Symbol}" sort-field="true">
 			<display />
 		</field>
-		
+		<field name="prodName" title="${uiLabelMap.CommonName}" sort-field="true">
+			<display />
+		</field>
+		<field name="date" title="${uiLabelMap.Date}" sort-field="true">
+			<display />
+		</field>
+		<field name="amount" title="${uiLabelMap.Amount}" sort-field="true">
+			<display />
+		</field>
+
 		<field name="deleteLink" title=" " widget-style="buttontext">
 			<hyperlink description="${uiLabelMap.CommonDelete}" target="deleteBfinDividend" also-hidden="false"
 				confirmation-message="${uiLabelMap.CommonConfirmDelete}" image-location="${iconsLocation}/delete.png">
@@ -176,11 +215,8 @@
 		<field name="noConditionFind">
 			<hidden value="Y" /><!-- if this isn't there then with all fields empty no query will be done -->
 		</field>
-		<field name="prodSym" title="${uiLabelMap.Symbol}" sort-field="true">
-			<text size="10" maxlength="20" />
-		</field>
-		<field name="prodName" title="${uiLabelMap.CommonName}" sort-field="true">
-			<text size="10" maxlength="20" />
+		<field name="prodId" title="${uiLabelMap.ProductId}">
+			<lookup target-form-name="LookupProduct" position="center" />
 		</field>
 
 		<field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
@@ -221,16 +257,27 @@
 			</service>
 			<set field="sortField" from-field="parameters.sortField" />
 		</actions>
-
-		<field name="prodId" title="${uiLabelMap.CommonId}">
-			<display />
+		<field name="priceId">
+			<hidden />
 		</field>
+		<field name="prodId">
+			<hidden />
+		</field>
+
+		
 		<field name="prodSym" title="${uiLabelMap.Symbol}" sort-field="true">
 			<display />
 		</field>
 		<field name="prodName" title="${uiLabelMap.CommonName}" sort-field="true">
 			<display />
 		</field>
+		<field name="date" title="${uiLabelMap.Date}" sort-field="true">
+			<display />
+		</field>
+		<field name="price" title="${uiLabelMap.Price}" sort-field="true">
+			<display />
+		</field>
+
 		<field name="deleteLink" title=" " widget-style="buttontext">
 			<hyperlink description="${uiLabelMap.CommonDelete}" target="deleteBfinPrice" also-hidden="false"
 				confirmation-message="${uiLabelMap.CommonConfirmDelete}" image-location="${iconsLocation}/delete.png">
@@ -245,11 +292,8 @@
 		<field name="noConditionFind">
 			<hidden value="Y" /><!-- if this isn't there then with all fields empty no query will be done -->
 		</field>
-		<field name="prodSym" title="${uiLabelMap.Symbol}" sort-field="true">
-			<text size="10" maxlength="20" />
-		</field>
-		<field name="prodName" title="${uiLabelMap.CommonName}" sort-field="true">
-			<text size="10" maxlength="20" />
+		<field name="prodId" title="${uiLabelMap.ProductId}">
+			<lookup target-form-name="LookupProduct" position="center" />
 		</field>
 
 		<field name="searchButton" title="${uiLabelMap.CommonFind}" widget-style="smallSubmit">
