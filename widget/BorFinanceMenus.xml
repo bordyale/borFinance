@@ -17,5 +17,8 @@
 		<menu-item name="BfinPrice" title="${uiLabelMap.BfinPrice}">
 			<link target="findBfinPrice" />
 		</menu-item>
+		<menu-item name="BfinReport" title="${uiLabelMap.BfinReport}">
+			<link target="findBfinReport" />
+		</menu-item>
 	</menu>
 </menus>

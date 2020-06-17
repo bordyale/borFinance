@@ -131,6 +131,11 @@
 		<response name="success" type="view" value="findBfinPrice" />
 		<response name="error" type="view" value="findBfinPrice" />
 	</request-map>
+	
+	<request-map uri="findBfinReport">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="findBfinReport" />
+	</request-map>
 
 
 	<!-- Events to run on every request before security (chains exempt) -->
@@ -163,6 +168,7 @@
 	<view-map name="findBfinPurchase" type="screen" page="component://borFinance/widget/BorFinanceScreens.xml#BfinPurchase" />
 	<view-map name="findBfinDividend" type="screen" page="component://borFinance/widget/BorFinanceScreens.xml#BfinDividend" />
 	<view-map name="findBfinPrice" type="screen" page="component://borFinance/widget/BorFinanceScreens.xml#BfinPrice" />
+	<view-map name="findBfinReport" type="screen" page="component://borFinance/widget/BorFinanceScreens.xml#BfinReport" />
 	<view-map name="main" type="screen" page="component://borFinance/widget/BorFinanceScreens.xml#main" />
 
 

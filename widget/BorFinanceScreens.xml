@@ -258,5 +258,35 @@
 			</widgets>
 		</section>
 	</screen>
-
+	
+	
+	
+	
+	
+	
+	<screen name="BfinReport">
+    <section>
+        <actions>
+            <set field="titleProperty" value="PageTitleFindBfinReport"/>
+            <set field="headerItem" value="BfinReport"/>
+            <script location="component://borFinance/groovyScripts/ListReport.groovy"/>
+        </actions>
+        <widgets>
+            <decorator-screen name="BorFinanceCommonDecoratorBs" location="${parameters.mainDecoratorLocation}">
+                <decorator-section name="body">
+                     <label style="h4" text="${uiLabelMap.BfinReport}"/>
+                     <platform-specific>
+                         <html><html-template location="component://borFinance/template/ListReport.ftl"/></html>
+                     </platform-specific>
+                     <!-- <label style="h4" text="${uiLabelMap.OfbizDemoAddOfbizDemoFtl}"/>
+                     <platform-specific>
+                         <html><html-template location="component://ofbizDemo/webapp/ofbizDemo/crud/AddOfbizDemo.ftl"/></html>
+                     </platform-specific> -->
+                </decorator-section>
+            </decorator-screen>
+        </widgets>
+    </section>
+</screen>
+	
+	
 </screens>

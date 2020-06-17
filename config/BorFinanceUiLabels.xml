@@ -29,6 +29,10 @@
         <value xml:lang="en">Prices list</value>
         <value xml:lang="it">Prezzi</value>
     </property>
+    <property key="BfinReport">
+        <value xml:lang="en">Report</value>
+        <value xml:lang="it">Report</value>
+    </property>
     <property key="PageTitleFindBfinProduct">
         <value xml:lang="en">Finance Products</value>
         <value xml:lang="it">Prodotti Finanziari</value>
@@ -44,6 +48,10 @@
     <property key="PageTitleFindBfinPrice">
         <value xml:lang="en">Prices list</value>
         <value xml:lang="it">Prezzi</value>
+    </property>
+    <property key="PageTitleFindBfinReport">
+        <value xml:lang="en">Report</value>
+        <value xml:lang="it">Report</value>
     </property>
     <property key="NewBfinProduct">
         <value xml:lang="en">New Product</value>
@@ -81,6 +89,7 @@
         <value xml:lang="en">Amount</value>
         <value xml:lang="it">Ammontare</value>
     </property>
+    
     <property key="Type">
         <value xml:lang="en">Type</value>
         <value xml:lang="it">Tipo</value>
