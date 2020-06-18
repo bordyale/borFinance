@@ -1,3 +1,23 @@
+<script>
+         $(function() {
+            $( "#autocomplete-4" ).autocomplete({
+        source: function (request, response) {
+        $.ajax({
+        type: "POST",
+        url:"employees.php",
+        data: {term:request.term,my_variable2:"variable2_data"},
+        success: response,
+        dataType: 'json',
+        minLength: 2,
+        delay: 100
+            });
+        }});
+         });
+</script>
+
+
+
+
 <form method="post" action="<@ofbizUrl>createOfbizDemoEventFtl</@ofbizUrl>" name="createOfbizDemoEvent" class="form-horizontal">
   
   <div class="control-group">
@@ -9,7 +29,7 @@
   <div class="control-group">
     <label class="control-label" for="lastName">${uiLabelMap.OfbizDemoLastName}</label>
     <div class="controls">
-      <input type="text" id="lastName" name="lastName" required>
+      <input type="text" id="autocomplete-4" name="lastName" required>
     </div>
   </div>
   <div class="control-group">
