@@ -15,7 +15,7 @@
 		<response name="success" type="view" value="findBfinDividend">
 
 		</response>
-		<response name="error" type="view" value="findPromotions">
+		<response name="error" type="view" value="findBfinDividend">
 
 		</response>
 	</request-map>

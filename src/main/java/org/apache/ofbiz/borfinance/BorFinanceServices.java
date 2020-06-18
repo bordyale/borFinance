@@ -55,6 +55,7 @@ import org.apache.ofbiz.service.LocalDispatcher;
 import org.apache.ofbiz.service.ModelService;
 import org.apache.ofbiz.service.ServiceUtil;
 import org.json.JSONObject;
+import org.json.JSONException;
 
 /**
  * Services for Agreement (Accounting)
@@ -79,31 +80,47 @@ public class BorFinanceServices {
 		Map<String, Object> result = ServiceUtil.returnSuccess();
 
 		GenericValue userLogin = (GenericValue) context.get("userLogin");
-
+		long startTime = System.currentTimeMillis();
 		try {
 			List<EntityExpr> exprs = UtilMisc.toList(EntityCondition.makeCondition("productType", EntityOperator.EQUALS, "STOCK"));
 			EntityCondition cond = EntityCondition.makeCondition(exprs, EntityOperator.AND);
-			List<GenericValue> conditions = EntityQuery.use(delegator).from("BfinProduct").where(cond).queryList();
+			List<GenericValue> conditions = EntityQuery.use(delegator).from("BfinProduct").where(cond).orderBy("prodId ASC").queryList();
 
 			int i = 0;
 			int apiindex = 0;
 			boolean reset = false;
+
 			for (GenericValue stock : conditions) {
 				String symbol = (String) stock.get("prodSym");
 				String prodId = (String) stock.get("prodId");
 
-				if (i != 0 && i % (5 * apikey.length) == 0) {
-					Thread.sleep(65000);
-					apiindex = 0;
-					reset = true;
+				if (i != 0 && i % 4 == 0) {
+					break;
 				}
-				if (i != 0 && i % 5 == 0 && reset == false) {
-					apiindex++;
+				// To avoid ask API if not necessary
+				GenericValue lastDividendStored = EntityQuery.use(delegator).from("BfinDividend").where("prodId", prodId).cache().orderBy("date DESC").queryFirst();
+				if (lastDividendStored != null) {
+					Date lastDividendStoredCreatedDate = (Date) lastDividendStored.get("createdStamp");
+					Calendar c = Calendar.getInstance();
+					c.setTime(new Date());
+					c.add(Calendar.DATE, -2);
+					if (c.getTime().compareTo(lastDividendStoredCreatedDate) < 0) {
+						Debug.logWarning(symbol + " " + "LAST DIVIDEND ALREADY SAVED IN THE LAST 7 DAYS, SKYP API REQUEST", module);
+						continue;
+					}
 				}
-				reset = false;
-
-				JSONObject resp = sendGet(symbol, apikey[apiindex]);
-				JSONObject arr = resp.getJSONObject("Monthly Adjusted Time Series");
+				i++;
+				JSONObject resp = sendGet(symbol, apikey[0]);
+				JSONObject arr;
+				try {
+					arr = resp.getJSONObject("Monthly Adjusted Time Series");
+				} catch (JSONException e) {
+					Debug.logWarning(e, module);
+					Debug.logError(symbol + " " + i + " " + resp.toString(), module);
+					Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
+					errMsg = UtilProperties.getMessage(resource, "JSONExpection", messageMap, locale);
+					return ServiceUtil.returnError(errMsg);
+				}
 				SortedMap<String, String> divMap = new TreeMap<String, String>(Collections.reverseOrder());
 				Iterator it = arr.keys();
 				while (it.hasNext()) {
@@ -145,7 +162,6 @@ public class BorFinanceServices {
 					}
 				}
 
-				GenericValue lastDividendStored = EntityQuery.use(delegator).from("BfinDividend").where("prodId", prodId).cache().orderBy("date DESC").queryFirst();
 				if (lastDividendStored == null) {
 					// first population for this stock
 
@@ -179,7 +195,7 @@ public class BorFinanceServices {
 									Map<String, Object> tmpResult = dispatcher.runSync("createBfinDividend",
 											UtilMisc.<String, Object> toMap("userLogin", userLogin, "prodId", prodId, "amount", dividend, "date", sdf.parse(key)));
 								}
-							}else{
+							} else {
 								break;
 							}
 						}
@@ -187,7 +203,13 @@ public class BorFinanceServices {
 
 				}
 
-				i++;
+				long stopTime = System.currentTimeMillis();
+				long elapsedTime = stopTime - startTime;
+				// To avoid transaction timeout and rollback
+				if (elapsedTime > 100000) {
+					Debug.logWarning("Exiting JOB time : " + elapsedTime, module);
+					break;
+				}
 			}
 
 		} catch (GenericEntityException e) {
@@ -201,6 +223,9 @@ public class BorFinanceServices {
 			errMsg = UtilProperties.getMessage(resource, "RefRevenueZero", messageMap, locale);
 			return ServiceUtil.returnError(errMsg);
 		} catch (Exception e) {
+			long stopTime = System.currentTimeMillis();
+			long elapsedTime = stopTime - startTime;
+			Debug.logWarning("Exiting JOB time with exception: " + elapsedTime, module);
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 			errMsg = UtilProperties.getMessage(resource, "RefRevenueZero", messageMap, locale);

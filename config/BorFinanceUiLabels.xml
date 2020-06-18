@@ -13,6 +13,9 @@
     <property key="BorFinanceViewPermissionError">
         <value xml:lang="en">You are not allowed to view this page.</value>
     </property>
+    <property key="JSONExpection">
+        <value xml:lang="en">Error JSON ALPHAVANTAGE API</value>
+    </property>
     <property key="BfinProduct">
         <value xml:lang="en">Finance Products</value>
         <value xml:lang="it">Prodotti Finanziari</value>

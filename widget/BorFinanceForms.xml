@@ -32,7 +32,7 @@
 		</actions>
 
 		<field name="prodId" title="${uiLabelMap.CommonId}">
-			<hidden />
+			<display />
 		</field>
 		<field name="prodSym" title="${uiLabelMap.Symbol}" sort-field="true">
 			<display />
