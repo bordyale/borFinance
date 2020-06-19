@@ -48,11 +48,18 @@
 
   <body data-offset="125">
   
+  
+  
 
     <div class="container">
+    
 
       <!-- Static navbar -->
       <nav class="navbar navbar-default">
+      	<div class="alert alert-danger alert-dismissible">
+  			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  			<strong>Success!</strong> Indicates a successful or positive action.
+		</div>
         <div class="container-fluid">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -61,11 +68,11 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="https://bootstrapdocs.com/v3.3.6/docs/examples/navbar/#">Project name</a>
+            <a class="navbar-brand" href="https://bootstrapdocs.com/v3.3.6/docs/examples/navbar/#">${StringUtil.wrapString(uiLabelMap[titleProperty])}</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="https://bootstrapdocs.com/v3.3.6/docs/examples/navbar/#">Home</a></li>
+              <li class="active"><a href="<@ofbizUrl>main</@ofbizUrl>">Main</a></li>
               <li><a href="https://bootstrapdocs.com/v3.3.6/docs/examples/navbar/#">About</a></li>
               <li><a href="https://bootstrapdocs.com/v3.3.6/docs/examples/navbar/#">Contact</a></li>
               <li class="dropdown">
@@ -84,7 +91,7 @@
             <ul class="nav navbar-nav navbar-right">
               <li class="active"><a href="https://bootstrapdocs.com/v3.3.6/docs/examples/navbar/">Default <span class="sr-only">(current)</span></a></li>
               <li><a href="https://bootstrapdocs.com/v3.3.6/docs/examples/navbar-static-top/">Static top</a></li>
-              <li><a href="https://bootstrapdocs.com/v3.3.6/docs/examples/navbar-fixed-top/">Fixed top</a></li>
+              <li><a href="<@ofbizUrl>logout</@ofbizUrl>" title="${uiLabelMap.CommonLogout}">logout</i></a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
@@ -95,7 +102,7 @@
         <h1>Navbar example</h1>
         <p>This example is a quick exercise to illustrate how the default, static navbar and fixed to top navbar work. It includes the responsive CSS and HTML, so it also adapts to your viewport and device.</p>
         <p>
-          <a class="btn btn-lg btn-primary" href="https://bootstrapdocs.com/v3.3.6/docs/components/#navbar" role="button">View navbar docs »</a>
+          <a class="btn btn-lg btn-primary" href="https://bootstrapdocs.com/v3.3.6/docs/components/#navbar" role="button">View navbar docs ï¿½</a>
         </p>
       
     
