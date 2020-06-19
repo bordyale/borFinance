@@ -275,21 +275,19 @@
 				<decorator-screen name="BorFinanceCommonDecoratorBs" location="${parameters.mainDecoratorLocation}">
 					<decorator-section name="body">
 						<label style="h4" text="${uiLabelMap.BfinReport}" />
+						
+						
 						<platform-specific>
 							<html>
 								<html-template location="component://borFinance/template/FilterReport.ftl" />
 							</html>
 						</platform-specific>
-						<platform-specific>
+						<!-- <platform-specific>
 							<html>
 								<html-template location="component://borFinance/template/ListReport.ftl" />
 							</html>
-						</platform-specific>
-						<platform-specific>
-							<html>
-								<html-template location="component://borFinance/template/Javascript.ftl" />
-							</html>
-						</platform-specific>
+						</platform-specific> -->
+						
 						<platform-specific>
 							<html>
 								<html-template location="component://borFinance/template/BootStrapTable.ftl" />
@@ -303,29 +301,7 @@
 		</section>
 	</screen>
 
-	<screen name="login">
-		<section>
-			<actions>
-				<set field="titleProperty" value="PageTitleLogin" />
-			</actions>
-			<widgets>
-
-				<platform-specific>
-					<html>
-						<html-template location="component://borFinance/webapp/borFinance/includes/PreBody.ftl" />
-					</html>
-				</platform-specific>
-				
-				<platform-specific>
-					<html>
-						<html-template location="component://borFinance/webapp/borFinance/includes/PostBody.ftl" />
-					</html>
-				</platform-specific>
-
-
-			</widgets>
-		</section>
-	</screen>
+	
 
 
 

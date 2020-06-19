@@ -72,9 +72,16 @@
 					<widgets>
 						<platform-specific>
 							<html>
+								<html-template location="component://borFinance/webapp/borFinance/includes/Header.ftl" />
+							</html>
+						</platform-specific>
+						
+						<platform-specific>
+							<html>
 								<html-template location="component://borFinance/webapp/borFinance/includes/PreBody.ftl" />
 							</html>
 						</platform-specific>
+						
 						<decorator-section-include name="pre-body" />
 						<decorator-section-include name="body" />
 						<platform-specific>
@@ -87,6 +94,35 @@
 						<label style="h3">${uiLabelMap.BorFinanceViewPermissionError}</label>
 					</fail-widgets>
 				</section>
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="login">
+		<section>
+			<actions>
+				<set field="titleProperty" value="PageTitleLogin" />
+			</actions>
+			<widgets>
+				<include-screen name="GlobalActions" location="component://common/widget/CommonScreens.xml" />
+				<platform-specific>
+					<html>
+						<html-template location="component://borFinance/webapp/borFinance/includes/Header.ftl" />
+					</html>
+				</platform-specific>
+				<platform-specific>
+					<html>
+						<html-template location="component://borFinance/webapp/borFinance/includes/Login.ftl" />
+					</html>
+				</platform-specific>
+				
+				<platform-specific>
+					<html>
+						<html-template location="component://borFinance/webapp/borFinance/includes/PostBody.ftl" />
+					</html>
+				</platform-specific>
+
+
 			</widgets>
 		</section>
 	</screen>
