@@ -99,6 +99,7 @@ public class BorFinanceServices {
 				}
 				// To avoid ask API if not necessary
 				GenericValue lastDividendStored = EntityQuery.use(delegator).from("BfinDividend").where("prodId", prodId).cache().orderBy("date DESC").queryFirst();
+				//TODO: check if sunday or monday and skip request
 				if (lastDividendStored != null) {
 					Date lastDividendStoredCreatedDate = (Date) lastDividendStored.get("createdStamp");
 					Calendar c = Calendar.getInstance();

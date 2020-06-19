@@ -17,17 +17,13 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">   
+   
 
-<link rel="stylesheet" 
-
-href="https://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
 <script type="text/javascript" 
 
 src="https://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" 
 
-src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 
 

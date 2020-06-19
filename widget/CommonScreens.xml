@@ -21,6 +21,7 @@
 			</widgets>
 		</section>
 	</screen>
+	
 
 	<screen name="BorFinanceCommonDecorator">
 		<section>
@@ -55,7 +56,7 @@
 
 				<!-- Including custom CSS Styles that you want to use in your application view. [] in field can be used to set the order of loading 
 					CSS files to load if there are multiple -->
-				<set field="layoutSettings.styleSheets[]" value="/borFinance/css/bootstrap.min.css" />
+				<set field="layoutSettings.styleSheets[+0]" value="/borFinance/css/bootstrap.min.css" global="true"/>
 
 				<!-- Including custom JS that you want to use in your application view. [] in field can be used to set the order of loading of 
 					JS files to load if there are multiple -->
@@ -89,4 +90,6 @@
 			</widgets>
 		</section>
 	</screen>
+	
+	
 </screens>

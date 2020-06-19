@@ -303,5 +303,30 @@
 		</section>
 	</screen>
 
+	<screen name="login">
+		<section>
+			<actions>
+				<set field="titleProperty" value="PageTitleLogin" />
+			</actions>
+			<widgets>
+
+				<platform-specific>
+					<html>
+						<html-template location="component://borFinance/webapp/borFinance/includes/PreBody.ftl" />
+					</html>
+				</platform-specific>
+				
+				<platform-specific>
+					<html>
+						<html-template location="component://borFinance/webapp/borFinance/includes/PostBody.ftl" />
+					</html>
+				</platform-specific>
+
+
+			</widgets>
+		</section>
+	</screen>
+
+
 
 </screens>
