@@ -21,15 +21,33 @@
 
 <body data-offset="125">
 
-
+<div class="container">
 
 <#if userLogin?has_content>
     <#assign appMax = 8>
     <#assign alreadySelected = false>
-<div id="main-navigation-bar">
-    <div id="main-nav-bar-left">
-        <#--<a id="homeButton" href="<@ofbizUrl>HomeMenu</@ofbizUrl>"><img id="homeButtonImage" src="/rainbowstone/images/home.svg" alt="Home"></a>-->
-        <ul id="app-bar-list">
+<!-- Static navbar -->
+<nav class="navbar navbar-default">
+	<!-- Messages -->
+      	<div class="alert alert-danger alert-dismissible">
+  			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+  			<strong>Success!</strong> Indicates a successful or positive action.
+		</div>
+	<div class="container-fluid">
+		<div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+        </div>
+	
+        <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+        <li class="dropdown">
+            <a href="https://bootstrapdocs.com/v3.3.6/docs/examples/navbar/#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${uiLabelMap.CommonApplications} <span class="caret"></span></a>
+            <ul class="dropdown-menu">
             <#assign appCount = 0>
             <#assign firstApp = true>
             <#list displayApps as display>
@@ -56,17 +74,10 @@
                     <#-- do not display this component-->
                     <#else>
                         <#if appCount<=appMax>
-                            <li class="app-btn<#if selected> selected</#if>">
-                                <#if selected>
-                                <div id="app-selected">
-                                    <#assign alreadySelected = true>
-                                </#if>
-                                <a href="${thisURL}${StringUtil.wrapString(externalKeyParam)}"<#if uiLabelMap?exists> title="${uiLabelMap[display.description]}">${uiLabelMap[display.title]}<#else> title="${display.description}">${display.title}</#if></a>
-                                <#if selected>
-                                    <div id="color-add"></div>
-                                </div>
-                                </#if>
-                            </li>
+                        
+                        	<li <#if selected> class="active"</#if>><a href="${thisURL}${StringUtil.wrapString(externalKeyParam)}"><#if uiLabelMap?exists> ${uiLabelMap[display.title]}<#else> ${display.title}</#if></a></li>
+                        
+                            
                         <#else>
                             <#break>
                         </#if>
@@ -95,24 +106,17 @@
                         <#assign thisURL = thisURL + "/control/main">
                     </#if>
                     <#if appCount<=appMax>
-                        <li class="app-btn<#if selected> selected</#if>">
-                            <#if selected>
-                            <div id="app-selected">
-                                <#assign alreadySelected = true>
-                            </#if>
-                            <a href="${thisURL}${StringUtil.wrapString(externalKeyParam)}"<#if uiLabelMap?exists> title="${uiLabelMap[display.description]}">${uiLabelMap[display.title]}<#else> title="${display.description}">${display.title}</#if></a>
-                            <#if selected>
-                                <div id="color-add"></div>
-                            </div>
-                            </#if>
-                        </li>
+                    
+                    	<li <#if selected> class="active"</#if>><a href="${thisURL}${StringUtil.wrapString(externalKeyParam)}"><#if uiLabelMap?exists> ${uiLabelMap[display.title]}<#else> ${display.title}</#if></a></li>
+                    	
+                        
                     <#else>
                         <#break>
                     </#if>
                     <#assign appCount = appCount + 1>
                 </#if>
             </#list>
-        </ul>
+        
         <!-- Si le nombre d'application est supérieur au nombre d'application max affichable, je met le restant
         dans un menu déroulant. J'ai volontairement doublé le code car sinon, la lecture du code lors d'une maintenance
         risquait d'être compliquée. A corriger si jamais les performances s'en font ressentir -->
@@ -143,15 +147,10 @@
                 <#else>
                     <#if appMax < appCount>
                         <#if !moreApp>
-                        <div id="more-app" <#if !alreadySelected>class="selected"</#if>>
-                            <span>+</span>
-                        <ul id="more-app-list">
-                            <#assign moreApp = true>
+                        	<#assign moreApp = true>
                         </#if>
-                        <li class="app-btn-sup<#if selected> selected</#if>">
-                            <a class="more-app-a" href="${thisURL}${StringUtil.wrapString(externalKeyParam)}"<#if uiLabelMap?exists> title="${uiLabelMap[display.description]}">${uiLabelMap[display.title]}<#else> title="${display.description}">${display.title}</#if></a>
-                        </li>
-                    </#if>
+                        <li <#if selected> class="active"</#if>><a href="${thisURL}${StringUtil.wrapString(externalKeyParam)}"><#if uiLabelMap?exists> ${uiLabelMap[display.title]}<#else> ${display.title}</#if></a></li>
+    			      </#if>
                     <#assign appCount = appCount + 1>
                 </#if>
             </#if>
@@ -178,38 +177,35 @@
                 </#if>
                 <#if appMax < appCount>
                     <#if !moreApp>
-                    <div id="more-app">
-                        <span>+</span>
-                    <ul id="more-app-list">
                         <#assign moreApp = true>
                     </#if>
-                    <li class="app-btn-sup<#if selected> selected</#if>">
-                        <a class="more-app-a" href="${thisURL}${StringUtil.wrapString(externalKeyParam)}"<#if uiLabelMap?exists> title="${uiLabelMap[display.description]}">${uiLabelMap[display.title]}<#else> title="${display.description}">${display.title}</#if></a>
-                    </li>
+                    <li <#if selected> class="active"</#if>><a href="${thisURL}${StringUtil.wrapString(externalKeyParam)}"><#if uiLabelMap?exists> ${uiLabelMap[display.title]}<#else> ${display.title}</#if></a></li>
+                    
                 </#if>
                 <#assign appCount = appCount + 1>
             </#if>
         </#list>
         <#if moreApp>
-        </ul> <!-- more-app-list -->
-        </div> <!-- more-app -->
-        </#if>
-    </div>
         
-    </div> <!-- main navigation bar -->
+        </#if>
+        </ul>
+        </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+           <li><a href="<@ofbizUrl>logout</@ofbizUrl>" title="${uiLabelMap.CommonLogout}">logout</i></a></li>
+        </ul>
+        </div><!--/.nav-collapse -->
+	</div><!--/.container-fluid -->        
+</nav> <!-- main navigation bar -->
     
 </#if>
 
   
-    <div class="container">
+  
     
       <!-- Static navbar -->
-      <nav class="navbar navbar-default">
-      	<!-- Messages -->
-      	<div class="alert alert-danger alert-dismissible">
-  			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  			<strong>Success!</strong> Indicates a successful or positive action.
-		</div>
+      <!--<nav class="navbar navbar-default">
+      	
         <div class="container-fluid">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -228,7 +224,7 @@
               <li class="dropdown">
                 <a href="https://bootstrapdocs.com/v3.3.6/docs/examples/navbar/#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${uiLabelMap.CommonApplications} <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                  <li><a href="https://bootstrapdocs.com/v3.3.6/docs/examples/navbar/#">Action</a></li>
+                  <li class="active"><a href="https://bootstrapdocs.com/v3.3.6/docs/examples/navbar/#">Action</a></li>
                   <li><a href="https://bootstrapdocs.com/v3.3.6/docs/examples/navbar/#">Another action</a></li>
                   <li><a href="https://bootstrapdocs.com/v3.3.6/docs/examples/navbar/#">Something else here</a></li>
                   <li role="separator" class="divider"></li>
@@ -245,18 +241,9 @@
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
-      </nav>
+      </nav>-->
       
-
-      <!-- Main component for a primary marketing message or call to action -->
-      <div class="jumbotron">
-        
-      
-    
-    
-    
-    
-    <div class="container menus" id="container">
+	 <div class="container menus" id="container">
       <div class="row">
         <div class="col-sm-12">
           <ul id="page-title" class="breadcrumb">
@@ -270,4 +257,16 @@
           </ul>
         </div>
       </div>
+
+
+
+      <!-- Main component for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        
+      
+    
+    
+    
+    
+    
       
