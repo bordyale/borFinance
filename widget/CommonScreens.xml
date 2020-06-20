@@ -101,6 +101,9 @@
 	<screen name="login">
 		<section>
 			<actions>
+				<property-map resource="BorFinanceUiLabels" map-name="uiLabelMap" global="true" />
+				<property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true" />
+				<set field="layoutSettings.companyName" from-field="uiLabelMap.OfbizDemoCompanyName" global="true" />
 				<set field="titleProperty" value="PageTitleLogin" />
 			</actions>
 			<widgets>

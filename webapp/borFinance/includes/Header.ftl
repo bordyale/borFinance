@@ -60,4 +60,3 @@ $(document).ready(function(){
 
 
 </head>
-<body data-offset="125">
