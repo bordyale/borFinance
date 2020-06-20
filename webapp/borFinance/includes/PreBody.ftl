@@ -29,10 +29,8 @@
 <!-- Static navbar -->
 <nav class="navbar navbar-default">
 	<!-- Messages -->
-      	<div class="alert alert-danger alert-dismissible">
-  			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-  			<strong>Success!</strong> Indicates a successful or positive action.
-		</div>
+		<#include "component://borFinance/webapp/borFinance/includes/Messages.ftl"/>
+      	
 	<div class="container-fluid">
 		<div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -41,10 +39,12 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
+            <a class="navbar-brand" href="<@ofbizUrl>main</@ofbizUrl>">${StringUtil.wrapString(uiLabelMap[titleProperty])}</a>
         </div>
 	
         <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">
+        <#include "component://borFinance/template/MainAppBarMenu.ftl"/>
         <li class="dropdown">
             <a href="https://bootstrapdocs.com/v3.3.6/docs/examples/navbar/#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${uiLabelMap.CommonApplications} <span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -192,7 +192,7 @@
         </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-           <li><a href="<@ofbizUrl>logout</@ofbizUrl>" title="${uiLabelMap.CommonLogout}">logout</i></a></li>
+           <li><a href="<@ofbizUrl>logout</@ofbizUrl>" title="${uiLabelMap.CommonLogout}">${uiLabelMap.CommonLogout}</i></a></li>
         </ul>
         </div><!--/.nav-collapse -->
 	</div><!--/.container-fluid -->        
@@ -211,21 +211,7 @@
 
       <!-- Main component for a primary marketing message or call to action -->
       <div class="jumbotron">
-      <div class="container menus" id="container2">
-      <div class="row">
-        <div class="col-sm-12">
-          <ul id="page-title" class="breadcrumb">
-            <li>
-                <a href="<@ofbizUrl>main</@ofbizUrl>">Main</a>
-            </li>
-            <li class="active"><span class="flipper-title">${StringUtil.wrapString(uiLabelMap[titleProperty])}</span></li>
-            <li class="pull-right">
-              <a href="<@ofbizUrl>logout</@ofbizUrl>" title="${uiLabelMap.CommonLogout}">logout</i></a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      </div>
+      
         
       
     

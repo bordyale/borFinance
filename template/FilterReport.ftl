@@ -27,13 +27,14 @@
 
 
 
-<div class="container">
-  <h2>Vertical (basic) form</h2>
+
+
   <form action="/action_page.php">
     <div class="form-group">
       <label for="text">${uiLabelMap.LookupProduct}</label>
       <input type="text" class="form-control" id="autocomplete-4" name="prodId">
     </div>
-    <button type="submit" class="btn btn-default">Submit</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
   </form>
-</div>
+
+

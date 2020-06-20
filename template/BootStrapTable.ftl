@@ -16,7 +16,8 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 -->
-<div class="table-responsive">
+
+<div class="table-responsive" style="margin-top: 2.0em">
 <table id="myTable" class="table table-striped table-bordered table-hover">  
         <thead>  
           <tr>  
@@ -54,4 +55,5 @@ under the License.
           
         </tbody>  
       </table>
+
 </div>
