@@ -80,6 +80,18 @@ public class BorFinanceServices {
 		Map<String, Object> result = ServiceUtil.returnSuccess();
 
 		GenericValue userLogin = (GenericValue) context.get("userLogin");
+
+		// If Sunday of Monday dont check previous day
+		Calendar d = Calendar.getInstance();
+		Date today = new Date();
+		d.setTime(today);
+		int dayOfWeek = d.get(Calendar.DAY_OF_WEEK);
+
+		if (dayOfWeek == 1 || dayOfWeek == 2) {
+			Debug.logWarning("ON DAY: " + new SimpleDateFormat("EE").format(today) + " DON'T EXECUTE populateDividendTable()", module);
+			return result;
+		}
+
 		long startTime = System.currentTimeMillis();
 		try {
 			List<EntityExpr> exprs = UtilMisc.toList(EntityCondition.makeCondition("productType", EntityOperator.EQUALS, "STOCK"));
@@ -99,14 +111,14 @@ public class BorFinanceServices {
 				}
 				// To avoid ask API if not necessary
 				GenericValue lastDividendStored = EntityQuery.use(delegator).from("BfinDividend").where("prodId", prodId).cache().orderBy("date DESC").queryFirst();
-				//TODO: check if sunday or monday and skip request
 				if (lastDividendStored != null) {
-					Date lastDividendStoredCreatedDate = (Date) lastDividendStored.get("createdStamp");
+					Date lastDividendStoredDateCheck = (Date) lastDividendStored.get("dateLastCheckForPopulation");
 					Calendar c = Calendar.getInstance();
 					c.setTime(new Date());
-					c.add(Calendar.DATE, -2);
-					if (c.getTime().compareTo(lastDividendStoredCreatedDate) < 0) {
-						Debug.logWarning(symbol + " " + "LAST DIVIDEND ALREADY SAVED IN THE LAST 7 DAYS, SKYP API REQUEST", module);
+					int backDayytocheck = -1;
+					c.add(Calendar.DATE, backDayytocheck);
+					if (c.getTime().compareTo(lastDividendStoredDateCheck) < 0) {
+						Debug.logWarning(symbol + " " + "LAST DIVIDEND ALREADY SAVED IN THE LAST " + backDayytocheck + " DAYS, SKiP API REQUEST", module);
 						continue;
 					}
 				}
@@ -170,7 +182,7 @@ public class BorFinanceServices {
 						BigDecimal dividend = new BigDecimal(divMap.get(key));
 						if (dividend.compareTo(BigDecimal.ZERO) != 0) {
 							Map<String, Object> tmpResult = dispatcher.runSync("createBfinDividend",
-									UtilMisc.<String, Object> toMap("userLogin", userLogin, "prodId", prodId, "amount", dividend, "date", sdf.parse(key)));
+									UtilMisc.<String, Object> toMap("userLogin", userLogin, "prodId", prodId, "dateLastCheckForPopulation", new Date(), "amount", dividend, "date", sdf.parse(key)));
 						}
 					}
 
@@ -193,10 +205,12 @@ public class BorFinanceServices {
 							if (date.after(lastDividendStoredDate)) {
 								if (!(year1 == year2 && month1 == month2)) {
 
-									Map<String, Object> tmpResult = dispatcher.runSync("createBfinDividend",
-											UtilMisc.<String, Object> toMap("userLogin", userLogin, "prodId", prodId, "amount", dividend, "date", sdf.parse(key)));
+									Map<String, Object> tmpResult = dispatcher.runSync("createBfinDividend", UtilMisc.<String, Object> toMap("userLogin", userLogin, "prodId", prodId,
+											"dateLastCheckForPopulation", new Date(), "amount", dividend, "date", sdf.parse(key)));
 								}
 							} else {
+								dispatcher.runSync("createBfinDividend",
+										UtilMisc.<String, Object> toMap("divId", lastDividendStored.get("divId"), "dateLastCheckForPopulation", new Date(), "userLogin", userLogin));
 								break;
 							}
 						}

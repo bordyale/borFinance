@@ -40,6 +40,7 @@
 		<field name="divId" type="id-ne"></field>
 		<field name="prodId" type="id-ne"></field>
 		<field name="date" type="date-time"></field>
+		<field name="dateLastCheckForPopulation" type="date-time"></field>
 		<field name="amount" type="fixed-point"></field>
 		<prim-key field="divId" />
 		<relation type="one" fk-name="prodId" rel-entity-name="BfinProduct">
