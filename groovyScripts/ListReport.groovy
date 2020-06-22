@@ -15,7 +15,17 @@ import java.text.NumberFormat
 import java.util.Locale
 
 
-pricesList = from("BfinPurchaseAvgPriceView").orderBy("prodName").cache(false).queryList()
+
+prodId = parameters.prodId
+
+List filCond = []
+if (prodId) {
+	filCond.add(EntityCondition.makeCondition("prodId", EntityOperator.EQUALS, prodId))
+}
+
+filCondAND = EntityCondition.makeCondition(filCond, EntityOperator.AND)
+
+pricesList = from("BfinPurchaseAvgPriceView").where(filCondAND).orderBy("prodName").cache(false).queryList()
 
 
 

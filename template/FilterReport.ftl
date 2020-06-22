@@ -29,7 +29,7 @@
 
 
 
-  <form action="/action_page.php">
+  <form action="<@ofbizUrl>findBfinReport</@ofbizUrl>">
     <div class="form-group">
       <label for="text">${uiLabelMap.LookupProduct}</label>
       <input type="text" class="form-control" id="autocomplete-4" name="prodId">
