@@ -55,19 +55,6 @@ for (GenericValue entry: pricesList){
 		e.put("currYield",curryield)
 	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	hashMaps.add(e)
 }
 
