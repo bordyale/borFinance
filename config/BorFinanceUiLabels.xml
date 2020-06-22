@@ -88,6 +88,42 @@
         <value xml:lang="en">Price</value>
         <value xml:lang="it">Prezzo</value>
     </property>
+    <property key="Quantity">
+        <value xml:lang="en">Quantity</value>
+        <value xml:lang="it">Quantitá</value>
+    </property>
+    <property key="AvgBoughtPrice">
+        <value xml:lang="en">Avg Bought Price</value>
+        <value xml:lang="it">Prezzo Medio Acquisto</value>
+    </property>
+    <property key="LastMktPrice">
+        <value xml:lang="en">Last Market Price</value>
+        <value xml:lang="it">Ultimo Prezzo Mercato</value>
+    </property>
+    <property key="LastMktPriceDate">
+        <value xml:lang="en">Last Market Price Date</value>
+        <value xml:lang="it">Data Ultimo Prezzo Mercato</value>
+    </property>
+    <property key="mktValue">
+        <value xml:lang="en">Market Value</value>
+        <value xml:lang="it">Valore di mercato</value>
+    </property>
+    <property key="lastDividend">
+        <value xml:lang="en">Last Div</value>
+        <value xml:lang="it">Ultimo Dividendo</value>
+    </property>
+    <property key="lastDividendDate">
+        <value xml:lang="en">Last Div Date</value>
+        <value xml:lang="it">Date Ultimo Dividendo</value>
+    </property>
+    <property key="currYield">
+        <value xml:lang="en">Curr Yield</value>
+        <value xml:lang="it">Yield Attuale</value>
+    </property>
+    <property key="divFreq">
+        <value xml:lang="en">Dividend Frequency</value>
+        <value xml:lang="it">Frequenza Dividendo</value>
+    </property>
     <property key="Amount">
         <value xml:lang="en">Amount</value>
         <value xml:lang="it">Ammontare</value>

@@ -16,7 +16,7 @@
 
 		<on-event-update-area event-type="paginate" area-id="ListBfinProductAjax" area-target="ListBfinProductFormOnly" />
 	</form>
-	<form name="ListBfinProduct" type="list" list-name="listIt" paginate-target="authview/findBfinProductAjax"
+	<form name="ListBfinProduct" type="list" list-name="listIt" target="updateBfinProductAjax" paginate-target="authview/findBfinProductAjax"
 		default-entity-name="BfinProduct" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2"
 		default-table-style="basic-table hover-bar">
 		<actions>
@@ -42,6 +42,17 @@
 		</field>
 		<field name="productType" title="${uiLabelMap.Type}" sort-field="true">
 			<display />
+		</field>
+		<field name="divFreqId" title="${uiLabelMap.divFreq}" sort-field="true">
+			<drop-down allow-empty="false">
+				<entity-options entity-name="Enumeration" key-field-name="enumId" description="${description} [${enumCode}]">
+					<entity-constraint name="enumTypeId" value="BFIN_DIVFREQ" />
+					<entity-order-by field-name="sequenceId" />
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="submitButton" title="${uiLabelMap.CommonUpdate}">
+			<submit button-type="button" />
 		</field>
 		<field name="deleteLink" title=" " widget-style="buttontext">
 			<hyperlink description="${uiLabelMap.CommonDelete}" target="deleteBfinProduct" also-hidden="false"
@@ -75,6 +86,14 @@
 			<drop-down allow-empty="false">
 				<entity-options entity-name="Enumeration" key-field-name="enumId" description="${description} [${enumCode}]">
 					<entity-constraint name="enumTypeId" value="BFIN_PRODUCT_TYPE" />
+					<entity-order-by field-name="sequenceId" />
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="divFreqId" title="${uiLabelMap.divFreq}">
+			<drop-down allow-empty="false">
+				<entity-options entity-name="Enumeration" key-field-name="enumId" description="${description} [${enumCode}]">
+					<entity-constraint name="enumTypeId" value="BFIN_DIVFREQ" />
 					<entity-order-by field-name="sequenceId" />
 				</entity-options>
 			</drop-down>
@@ -144,6 +163,9 @@
 		</field>
 		<field name="purchId">
 			<hidden />
+		</field>
+		<field name="currencyUomId">
+			<hidden value="USD" />
 		</field>
 		<field name="exchangeId" title="${uiLabelMap.Exchange}">
 			<drop-down allow-empty="false">

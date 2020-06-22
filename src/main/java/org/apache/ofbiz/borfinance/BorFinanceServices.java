@@ -87,10 +87,11 @@ public class BorFinanceServices {
 		d.setTime(today);
 		int dayOfWeek = d.get(Calendar.DAY_OF_WEEK);
 
-		if (dayOfWeek == 1 || dayOfWeek == 2) {
-			Debug.logWarning("ON DAY: " + new SimpleDateFormat("EE").format(today) + " DON'T EXECUTE populateDividendTable()", module);
-			return result;
-		}
+		/*
+		 * if (dayOfWeek == 1 || dayOfWeek == 2) { Debug.logWarning("ON DAY: " +
+		 * new SimpleDateFormat("EE").format(today) +
+		 * " DON'T EXECUTE populateDividendTable()", module); return result; }
+		 */
 
 		long startTime = System.currentTimeMillis();
 		try {
@@ -105,6 +106,7 @@ public class BorFinanceServices {
 			for (GenericValue stock : conditions) {
 				String symbol = (String) stock.get("prodSym");
 				String prodId = (String) stock.get("prodId");
+				String divFreqId = (String) stock.get("divFreqId");
 
 				if (i != 0 && i % 4 == 0) {
 					break;
@@ -181,8 +183,8 @@ public class BorFinanceServices {
 					for (String key : divMap.keySet()) {
 						BigDecimal dividend = new BigDecimal(divMap.get(key));
 						if (dividend.compareTo(BigDecimal.ZERO) != 0) {
-							Map<String, Object> tmpResult = dispatcher.runSync("createBfinDividend",
-									UtilMisc.<String, Object> toMap("userLogin", userLogin, "prodId", prodId, "dateLastCheckForPopulation", new Date(), "amount", dividend, "date", sdf.parse(key)));
+							Map<String, Object> tmpResult = dispatcher.runSync("createBfinDividend", UtilMisc.<String, Object> toMap("userLogin", userLogin, "prodId", prodId,
+									"dateLastCheckForPopulation", new Date(), "divFreqId", divFreqId, "amount", dividend, "date", sdf.parse(key)));
 						}
 					}
 
@@ -206,10 +208,10 @@ public class BorFinanceServices {
 								if (!(year1 == year2 && month1 == month2)) {
 
 									Map<String, Object> tmpResult = dispatcher.runSync("createBfinDividend", UtilMisc.<String, Object> toMap("userLogin", userLogin, "prodId", prodId,
-											"dateLastCheckForPopulation", new Date(), "amount", dividend, "date", sdf.parse(key)));
+											"dateLastCheckForPopulation", new Date(), "divFreqId", divFreqId, "amount", dividend, "date", sdf.parse(key)));
 								}
 							} else {
-								dispatcher.runSync("createBfinDividend",
+								dispatcher.runSync("updateBfinDividend",
 										UtilMisc.<String, Object> toMap("divId", lastDividendStored.get("divId"), "dateLastCheckForPopulation", new Date(), "userLogin", userLogin));
 								break;
 							}
