@@ -113,7 +113,7 @@ for (GenericValue entry: pricesList){
 	hashMaps.add(e)
 }
 for (e in hashMaps){
-	e.put("percentage", (BigDecimal)e.mktValue.divide(totMktValue,3,RoundingMode.HALF_UP).multiply(new BigDecimal(100)))
+	e.put("percentage", (BigDecimal)e.mktValueConverted.divide(totMktValue,3,RoundingMode.HALF_UP).multiply(new BigDecimal(100)))
 }
 
 
