@@ -27,8 +27,10 @@ under the License.
             <th>${uiLabelMap.Quantity}</th>
             <th>${uiLabelMap.AvgBoughtPrice}</th>
             <th>${uiLabelMap.LastMktPrice}</th>
+            <th>${uiLabelMap.CommonCurrency}</th>
             <th>${uiLabelMap.LastMktPriceDate}</th>
             <th>${uiLabelMap.mktValue}</th>
+            <th>${uiLabelMap.mktValueConverted}</th>
             <th>${uiLabelMap.currYield}</th>
             <th>${uiLabelMap.lastDividend}</th>
             <th>${uiLabelMap.lastDividendDate}</th>
@@ -45,8 +47,10 @@ under the License.
             	<td>${item.quantitySum}</td>
             	<td>${item.avgPurchPrice}</td>
             	<td><#if item.lastMktPrice?has_content>${item.lastMktPrice}<#else>0</#if></td>
+            	<td><#if item.currencyUomId?has_content>${item.currencyUomId}<#else>0</#if></td>
             	<td><#if item.lastMktPriceDate?has_content>${item.lastMktPriceDate}<#else>0</#if></td>
             	<td><#if item.mktValue?has_content>${item.mktValue}<#else>0</#if></td>
+            	<td><#if item.mktValueConverted?has_content>${item.mktValueConverted}<#else>0</#if></td>
             	<td><#if item.currYield?has_content>${item.currYield}<#else>0</#if></td>
             	<td><#if item.lastDividend?has_content>${item.lastDividend}<#else>0</#if></td>
             	<td><#if item.lastDividendDate?has_content>${item.lastDividendDate}<#else>0</#if></td>

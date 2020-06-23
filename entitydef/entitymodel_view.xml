@@ -48,6 +48,7 @@
 	<view-entity entity-name="BfinPurchaseSumView" package-name="org.apache.ofbiz.borFinance">
 		<member-entity entity-alias="PURCH" entity-name="BfinPurchase" />
 		<alias entity-alias="PURCH" name="prodId" group-by="true" />
+		<alias entity-alias="PURCH" name="currencyUomId" group-by="true" />
 		<alias entity-alias="PURCH" name="quantitySum" field="quantity" function="sum" />
 		<alias entity-alias="PURCH" name="priceSum" field="price" function="sum" />
 	</view-entity>
@@ -59,6 +60,7 @@
 		<alias entity-alias="PROD" name="prodName" group-by="true" />
 		<alias entity-alias="PROD" name="sectorId" group-by="true" />
 		<alias entity-alias="PURCH" name="prodId" group-by="true" />
+		<alias entity-alias="PURCH" name="currencyUomId" group-by="true" />
 		<alias entity-alias="PURCH" name="quantitySum" group-by="true" />
 		<alias entity-alias="PURCH" name="priceSum" group-by="true" />
 		<alias name="avgPurchPrice" group-by="true">

@@ -112,6 +112,10 @@
         <value xml:lang="en">Market Value</value>
         <value xml:lang="it">Valore di mercato</value>
     </property>
+    <property key="mktValueConverted">
+        <value xml:lang="en">Market Value USD</value>
+        <value xml:lang="it">Valore di mercato USD</value>
+    </property>
     <property key="lastDividend">
         <value xml:lang="en">Last Div</value>
         <value xml:lang="it">Ultimo Dividendo</value>

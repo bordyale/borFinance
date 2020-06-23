@@ -9,6 +9,7 @@ import org.apache.ofbiz.entity.GenericValue
 import org.apache.ofbiz.entity.util.EntityUtil
 import org.apache.ofbiz.base.util.UtilDateTime
 import org.apache.ofbiz.base.util.UtilMisc
+import org.apache.ofbiz.service.ServiceUtil
 
 import java.sql.Timestamp
 import java.math.BigDecimal
@@ -41,9 +42,9 @@ List<HashMap<String,Object>> sectorsList = new ArrayList<HashMap<String,Object>>
 BigDecimal totMktValue = BigDecimal.ZERO
 Map<String,Object> se = new HashMap<String,Object>()
 for (GenericValue entry: pricesList){
-	
+
 	Map<String,Object> e = new HashMap<String,Object>()
-	
+
 	String sectorId = entry.get("sectorId")
 	e.put("prodSym",entry.get("prodSym"))
 	e.put("prodName",entry.get("prodName"))
@@ -78,15 +79,37 @@ for (GenericValue entry: pricesList){
 		e.put("lastMktPrice",priceNow)
 		e.put("lastMktPriceDate",sdf.format(price.date))
 		BigDecimal mktValue =qtySum.multiply(priceNow).setScale(3,RoundingMode.HALF_UP)
-		totMktValue= totMktValue.add(mktValue)
 		e.put("mktValue",mktValue)
-		UtilMisc.addToBigDecimalInMap(se, sectorId, mktValue)
+		//convert currency
+		String currentUOMId =entry.get("currencyUomId")
+
+		e.put("currencyUomId",currentUOMId)
+		if (currentUOMId && !"USD".equals(currentUOMId)) {
+			serviceResults = runService('convertUom',
+					[uomId : currentUOMId, uomIdTo : "USD", originalValue : mktValue])
+			if (ServiceUtil.isError(serviceResults)) {
+				request.setAttribute("_ERROR_MESSAGE_", ServiceUtil.getErrorMessage(serviceResults))
+				return
+			} else {
+				convertedValue = serviceResults.convertedValue
+				if (convertedValue) {
+					e.put("mktValueConverted",convertedValue)
+					UtilMisc.addToBigDecimalInMap(se, sectorId, convertedValue)
+					totMktValue= totMktValue.add(convertedValue)
+				}
+			}
+		}else{
+			e.put("mktValueConverted",mktValue)
+			UtilMisc.addToBigDecimalInMap(se, sectorId, mktValue)
+			totMktValue= totMktValue.add(mktValue)
+		}
+
 		//e.put("percentage",mktValue.divide(totMktValue,3,RoundingMode.HALF_UP))
 		//current Yield
 		BigDecimal curryield = forwardAnnualDiv.divide(priceNow,6,RoundingMode.HALF_UP).multiply(new BigDecimal(100))
 		e.put("currYield",curryield)
 	}
-	
+
 	hashMaps.add(e)
 }
 for (e in hashMaps){
@@ -103,12 +126,12 @@ for (e in se){
 	sector.put("sectorId",e.key)
 	sector.put("mktValue",e.value)
 	sector.put("percentage",(BigDecimal)e.value.divide(totMktValue,3,RoundingMode.HALF_UP))
-	
+
 	sectorsList.add(sector)
 }
 //total Market Value
 Map<String,Object> sector  = new HashMap<String,Object>()
-sector.put("sectorId","TOT PORT VALUE")
+sector.put("sectorId","TOT PORT VALUE (USD)")
 sector.put("mktValue",totMktValue)
 sector.put("percentage",totMktValue.divide(totMktValue,3,RoundingMode.HALF_UP))
 sectorsList.add(sector)
