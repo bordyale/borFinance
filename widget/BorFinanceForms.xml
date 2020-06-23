@@ -44,9 +44,17 @@
 			<display />
 		</field>
 		<field name="divFreqId" title="${uiLabelMap.divFreq}" sort-field="true">
-			<drop-down allow-empty="false">
+			<drop-down allow-empty="true">
 				<entity-options entity-name="Enumeration" key-field-name="enumId" description="${description} [${enumCode}]">
 					<entity-constraint name="enumTypeId" value="BFIN_DIVFREQ" />
+					<entity-order-by field-name="sequenceId" />
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="sectorId" title="${uiLabelMap.Sector}">
+			<drop-down allow-empty="true">
+				<entity-options entity-name="Enumeration" key-field-name="enumId" description="${description} [${enumCode}]">
+					<entity-constraint name="enumTypeId" value="BFIN_SECTOR" />
 					<entity-order-by field-name="sequenceId" />
 				</entity-options>
 			</drop-down>
@@ -81,7 +89,7 @@
 		<field name="prodId" title="${uiLabelMap.CommonId}">
 			<hidden />
 		</field>
-		
+
 		<field name="productType" title="${uiLabelMap.Type}">
 			<drop-down allow-empty="false">
 				<entity-options entity-name="Enumeration" key-field-name="enumId" description="${description} [${enumCode}]">
@@ -98,6 +106,14 @@
 				</entity-options>
 			</drop-down>
 		</field>
+		<field name="sectorId" title="${uiLabelMap.Sector}">
+			<drop-down allow-empty="false">
+				<entity-options entity-name="Enumeration" key-field-name="enumId" description="${description} [${enumCode}]">
+					<entity-constraint name="enumTypeId" value="BFIN_SECTOR" />
+					<entity-order-by field-name="sequenceId" />
+				</entity-options>
+			</drop-down>
+		</field>
 		<field name="submitButton" use-when="bfinProduct==null" title="${uiLabelMap.CommonCreate}">
 			<submit button-type="button" />
 		</field>
@@ -106,8 +122,9 @@
 		</field>
 	</form>
 
-	<form name="ListBfinPurchase" type="list" list-name="listIt" paginate-target="findBfinPurchase" default-entity-name="BfinProdPurchView"
-		separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+	<form name="ListBfinPurchase" type="list" list-name="listIt" target="updateBfinPurchase" paginate-target="findBfinPurchase"
+		default-entity-name="BfinProdPurchView" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2"
+		default-table-style="basic-table hover-bar">
 		<actions>
 			<set field="requestParameters.noConditionFind" value="Y" />
 			<service service-name="performFind" result-map="result" result-map-list="listIt">
@@ -119,15 +136,37 @@
 			</service>
 			<set field="sortField" from-field="parameters.sortField" />
 		</actions>
-
+		
 		<field name="prodId" title="${uiLabelMap.CommonId}">
-			<display />
+			<hidden />
 		</field>
 		<field name="prodSym" title="${uiLabelMap.Symbol}" sort-field="true">
 			<display />
 		</field>
 		<field name="prodName" title="${uiLabelMap.CommonName}" sort-field="true">
 			<display />
+		</field>
+		<field name="quantity" title="${uiLabelMap.Quantity}" sort-field="true">
+			<display />
+		</field>
+		<field name="price" title="${uiLabelMap.Price}" sort-field="true">
+			<display />
+		</field>
+		<field name="exchangeId" title="${uiLabelMap.Exchange}">
+			<drop-down allow-empty="false">
+				<entity-options entity-name="Enumeration" key-field-name="enumId" description="${description} [${enumCode}]">
+					<entity-constraint name="enumTypeId" value="BFIN_EXCHANGE" />
+					<entity-order-by field-name="sequenceId" />
+				</entity-options>
+			</drop-down>
+		</field>
+		<field name="brokerId" title="${uiLabelMap.Broker}">
+			<drop-down allow-empty="false">
+				<entity-options entity-name="Enumeration" key-field-name="enumId" description="${description} [${enumCode}]">
+					<entity-constraint name="enumTypeId" value="BFIN_BROKER" />
+					<entity-order-by field-name="sequenceId" />
+				</entity-options>
+			</drop-down>
 		</field>
 		<field name="deleteLink" title=" " widget-style="buttontext">
 			<hyperlink description="${uiLabelMap.CommonDelete}" target="deleteBfinPurchase" also-hidden="false"
@@ -183,7 +222,7 @@
 				</entity-options>
 			</drop-down>
 		</field>
-		
+
 		<field name="submitButton" use-when="bfinProduct==null" title="${uiLabelMap.CommonCreate}">
 			<submit button-type="button" />
 		</field>
@@ -286,7 +325,7 @@
 			<hidden />
 		</field>
 
-		
+
 		<field name="prodSym" title="${uiLabelMap.Symbol}" sort-field="true">
 			<display />
 		</field>

@@ -74,7 +74,7 @@ span.psw {
 
 
 
-<form action="<@ofbizUrl>login</@ofbizUrl>" method="post">
+<form action="<@ofbizUrl>login</@ofbizUrl>" method="post" name="loginform">
   
 
   <div class="container">
@@ -85,13 +85,9 @@ span.psw {
     <input type="password" placeholder="Enter Password" name="PASSWORD" required>
         
     <button type="submit">Login</button>
-    <label>
-      <input type="checkbox" checked="checked" name="remember"> Remember me
-    </label>
+    
   </div>
+   <input type="hidden" id="JavaScriptEnabled" name="JavaScriptEnabled" value="Y">
 
-  <div class="container" style="background-color:#f1f1f1">
-    <button type="button" class="cancelbtn">Cancel</button>
-    <span class="psw">Forgot <a href="#">password?</a></span>
-  </div>
+  
 </form>

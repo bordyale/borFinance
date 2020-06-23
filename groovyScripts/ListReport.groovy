@@ -8,14 +8,16 @@ import org.apache.ofbiz.entity.condition.EntityCondition
 import org.apache.ofbiz.entity.GenericValue
 import org.apache.ofbiz.entity.util.EntityUtil
 import org.apache.ofbiz.base.util.UtilDateTime
+
 import java.sql.Timestamp
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.Locale
 
 
-
+SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 prodId = parameters.prodId
 
 List filCond = []
@@ -48,17 +50,24 @@ for (GenericValue entry: pricesList){
 	if (dividend){
 		BigDecimal amount =dividend.amount
 		e.put("lastDividend",amount)
-		e.put("lastDividendDate",dividend.date)
+		e.put("lastDividendDate",sdf.format(dividend.date))
 		String divFreqId = divFreqId = dividend.divFreqId
 		if (divFreqId !=null && divFreqId.equals("QUAR")){
 			forwardAnnualDiv = amount.divide(new BigDecimal(3),3,RoundingMode.HALF_UP).multiply(new BigDecimal(12))
-		}}
+		}
+		if (divFreqId !=null && divFreqId.equals("ANN")){
+			forwardAnnualDiv = amount
+		}
+		if (divFreqId !=null && divFreqId.equals("MON")){
+			forwardAnnualDiv = amount.multiply(new BigDecimal(12))
+		}
+	}
 	//extract Last Price
 	price = from("BfinPrice").where("prodId",prodId).orderBy("date DESC").cache(false).queryFirst()
 	if (price){
 		BigDecimal priceNow = price.price
 		e.put("lastMktPrice",priceNow)
-		e.put("lastMktPriceDate",price.date)
+		e.put("lastMktPriceDate",sdf.format(price.date))
 		e.put("mktValue",qtySum.multiply(priceNow).setScale(3,RoundingMode.HALF_UP))
 		//current Yield
 		BigDecimal curryield = forwardAnnualDiv.divide(priceNow,4,RoundingMode.HALF_UP).multiply(new BigDecimal(100))

@@ -57,6 +57,7 @@
 		<member-entity entity-alias="PURCH" entity-name="BfinPurchaseSumView" />
 		<alias entity-alias="PROD" name="prodSym" group-by="true" />
 		<alias entity-alias="PROD" name="prodName" group-by="true" />
+		<alias entity-alias="PROD" name="sectorId" group-by="true" />
 		<alias entity-alias="PURCH" name="prodId" group-by="true" />
 		<alias entity-alias="PURCH" name="quantitySum" group-by="true" />
 		<alias entity-alias="PURCH" name="priceSum" group-by="true" />
