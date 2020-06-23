@@ -132,6 +132,10 @@
         <value xml:lang="en">Sector</value>
         <value xml:lang="it">Settore</value>
     </property>
+    <property key="Percentage">
+        <value xml:lang="en">Percentage</value>
+        <value xml:lang="it">Percentuale</value>
+    </property>
     <property key="Amount">
         <value xml:lang="en">Amount</value>
         <value xml:lang="it">Ammontare</value>

@@ -8,13 +8,16 @@ import org.apache.ofbiz.entity.condition.EntityCondition
 import org.apache.ofbiz.entity.GenericValue
 import org.apache.ofbiz.entity.util.EntityUtil
 import org.apache.ofbiz.base.util.UtilDateTime
+import org.apache.ofbiz.base.util.UtilMisc
 
 import java.sql.Timestamp
+import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Locale
+import java.util.Map
 
 
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -30,16 +33,22 @@ filCondAND = EntityCondition.makeCondition(filCond, EntityOperator.AND)
 pricesList = from("BfinPurchaseAvgPriceView").where(filCondAND).orderBy("prodName").cache(false).queryList()
 
 
-
+sectors = from("Enumeration").where("enumTypeId", "BFIN_SECTOR").orderBy("sequenceId").queryList()
 
 
 List<HashMap<String,Object>> hashMaps = new ArrayList<HashMap<String,Object>>()
-
-
+List<HashMap<String,Object>> sectorsList = new ArrayList<HashMap<String,Object>>()
+BigDecimal totMktValue = BigDecimal.ZERO
+Map<String,Object> se = new HashMap<String,Object>()
 for (GenericValue entry: pricesList){
+	
 	Map<String,Object> e = new HashMap<String,Object>()
+	
+	String sectorId = entry.get("sectorId")
 	e.put("prodSym",entry.get("prodSym"))
 	e.put("prodName",entry.get("prodName"))
+	e.put("sectorId",sectorId)
+	//se.put("sectorId",sectorId)
 	BigDecimal qtySum =(BigDecimal)entry.get("quantitySum")
 	e.put("quantitySum",qtySum)
 	e.put("avgPurchPrice",(BigDecimal)entry.get("avgPurchPrice").setScale(3,RoundingMode.HALF_UP))
@@ -68,13 +77,41 @@ for (GenericValue entry: pricesList){
 		BigDecimal priceNow = price.price
 		e.put("lastMktPrice",priceNow)
 		e.put("lastMktPriceDate",sdf.format(price.date))
-		e.put("mktValue",qtySum.multiply(priceNow).setScale(3,RoundingMode.HALF_UP))
+		BigDecimal mktValue =qtySum.multiply(priceNow).setScale(3,RoundingMode.HALF_UP)
+		totMktValue= totMktValue.add(mktValue)
+		e.put("mktValue",mktValue)
+		UtilMisc.addToBigDecimalInMap(se, sectorId, mktValue)
+		//e.put("percentage",mktValue.divide(totMktValue,3,RoundingMode.HALF_UP))
 		//current Yield
-		BigDecimal curryield = forwardAnnualDiv.divide(priceNow,4,RoundingMode.HALF_UP).multiply(new BigDecimal(100))
+		BigDecimal curryield = forwardAnnualDiv.divide(priceNow,6,RoundingMode.HALF_UP).multiply(new BigDecimal(100))
 		e.put("currYield",curryield)
 	}
-
+	
 	hashMaps.add(e)
 }
+for (e in hashMaps){
+	e.put("percentage", (BigDecimal)e.mktValue.divide(totMktValue,3,RoundingMode.HALF_UP).multiply(new BigDecimal(100)))
+}
+
+
+
+
+
+//SECTORS
+for (e in se){
+	Map<String,Object> sector  = new HashMap<String,Object>()
+	sector.put("sectorId",e.key)
+	sector.put("mktValue",e.value)
+	sector.put("percentage",(BigDecimal)e.value.divide(totMktValue,3,RoundingMode.HALF_UP))
+	
+	sectorsList.add(sector)
+}
+//total Market Value
+Map<String,Object> sector  = new HashMap<String,Object>()
+sector.put("sectorId","TOT PORT VALUE")
+sector.put("mktValue",totMktValue)
+sector.put("percentage",totMktValue.divide(totMktValue,3,RoundingMode.HALF_UP))
+sectorsList.add(sector)
 
 context.reportList = hashMaps;
+context.sectorList = sectorsList;

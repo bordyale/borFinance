@@ -17,6 +17,7 @@ specific language governing permissions and limitations
 under the License.
 -->
 
+<#setting number_format="0.###">
 <div class="table-responsive" style="margin-top: 2.0em">
 <table id="myTable" class="table table-striped table-bordered table-hover">  
         <thead>  
@@ -31,6 +32,7 @@ under the License.
             <th>${uiLabelMap.currYield}</th>
             <th>${uiLabelMap.lastDividend}</th>
             <th>${uiLabelMap.lastDividendDate}</th>
+            <th>${uiLabelMap.percentage}</th>
              
           </tr>  
         </thead>  
@@ -48,6 +50,33 @@ under the License.
             	<td><#if item.currYield?has_content>${item.currYield}<#else>0</#if></td>
             	<td><#if item.lastDividend?has_content>${item.lastDividend}<#else>0</#if></td>
             	<td><#if item.lastDividendDate?has_content>${item.lastDividendDate}<#else>0</#if></td>
+            	<td><#if item.percentage?has_content>${item.percentage}<#else>0</#if></td>
+          	</tr> 
+	                        
+	    </#list>
+        
+        </tbody>  
+      </table>
+
+</div>
+
+<div class="table-responsive" style="margin-top: 2.0em">
+<table id="sectors" class="table table-hover table-sm">  
+        <thead>  
+          <tr>  
+            <th>${uiLabelMap.Sector}</th>          
+            <th>${uiLabelMap.mktValue}</th>
+            <th>${uiLabelMap.percentage}</th>
+             
+          </tr>  
+        </thead>  
+        <tbody>  
+        <#list sectorList as item>
+   
+        	<tr>  
+            	<td><#if item.sectorId?has_content>${item.sectorId}<#else>0</#if></td>
+            	<td><#if item.mktValue?has_content>${item.mktValue}<#else>0</#if></td>
+            	<td><#if item.percentage?has_content>${item.percentage?string.percent}<#else>0</#if></td>
           	</tr> 
 	                        
 	    </#list>
