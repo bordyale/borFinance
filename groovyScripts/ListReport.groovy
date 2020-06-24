@@ -131,10 +131,12 @@ for (e in se){
 }
 //total Market Value
 Map<String,Object> sector  = new HashMap<String,Object>()
-sector.put("sectorId","TOT PORT VALUE (USD)")
-sector.put("mktValue",totMktValue)
-sector.put("percentage",totMktValue.divide(totMktValue,3,RoundingMode.HALF_UP))
-sectorsList.add(sector)
+if (totMktValue){
+	sector.put("sectorId","TOT PORT VALUE (USD)")
+	sector.put("mktValue",totMktValue)
+	sector.put("percentage",totMktValue.divide(totMktValue,3,RoundingMode.HALF_UP))
+	sectorsList.add(sector)
+}
 
 context.reportList = hashMaps;
 context.sectorList = sectorsList;

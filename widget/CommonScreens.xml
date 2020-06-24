@@ -108,22 +108,22 @@
 			</actions>
 			<widgets>
 				<include-screen name="GlobalActions" location="component://common/widget/CommonScreens.xml" />
-				<platform-specific>
+				<!-- <platform-specific>
 					<html>
 						<html-template location="component://borFinance/webapp/borFinance/includes/Header.ftl" />
 					</html>
-				</platform-specific>
+				</platform-specific> -->
 				<platform-specific>
 					<html>
-						<html-template location="component://borFinance/webapp/borFinance/includes/Login.ftl" />
+						<html-template location="component://borFinance/webapp/borFinance/includes/Login2.ftl" />
 					</html>
 				</platform-specific>
 				
-				<platform-specific>
+				<!-- <platform-specific>
 					<html>
 						<html-template location="component://borFinance/webapp/borFinance/includes/PostBody.ftl" />
 					</html>
-				</platform-specific>
+				</platform-specific> -->
 
 
 			</widgets>
