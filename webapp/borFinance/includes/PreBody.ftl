@@ -19,15 +19,15 @@
 
 
 
-<body data-offset="125">
+<body>
 
-<div class="container">
 
 <#if userLogin?has_content>
     <#assign appMax = 8>
     <#assign alreadySelected = false>
 <!-- Static navbar -->
-<nav class="navbar navbar-default">
+
+<nav class="navbar navbar-inverse">
 	<!-- Messages -->
 		<#include "component://borFinance/webapp/borFinance/includes/Messages.ftl"/>
       	
@@ -200,7 +200,7 @@
     
 </#if>
 
-  
+  <div class="container-fluid">
   
     
      
