@@ -161,4 +161,8 @@
         <value xml:lang="en">Lookup Product</value>
         <value xml:lang="it">Lookup Product</value>
     </property>
+    <property key="SkipApi">
+        <value xml:lang="en">Skip Api</value>
+        <value xml:lang="it">Skip Api</value>
+    </property>
 </resource>

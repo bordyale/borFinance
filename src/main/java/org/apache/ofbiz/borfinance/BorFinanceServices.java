@@ -107,6 +107,11 @@ public class BorFinanceServices {
 				String symbol = (String) stock.get("prodSym");
 				String prodId = (String) stock.get("prodId");
 				String divFreqId = (String) stock.get("divFreqId");
+				String skipApi = (String) stock.get("skipApi");
+				
+				if(skipApi!=null && "Y".equals(skipApi)) {
+					continue;
+				}
 
 				if (i != 0 && i % 4 == 0) {
 					break;

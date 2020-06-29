@@ -51,6 +51,12 @@
 				</entity-options>
 			</drop-down>
 		</field>
+		<field name="skipApi" title="${uiLabelMap.SkipApi}">
+			<drop-down allow-empty="true">
+				<option key="Y" description="${uiLabelMap.CommonY}" />
+				<option key="N" description="${uiLabelMap.CommonN}" />
+			</drop-down>
+		</field>
 		<field name="sectorId" title="${uiLabelMap.Sector}">
 			<drop-down allow-empty="true">
 				<entity-options entity-name="Enumeration" key-field-name="enumId" description="${description} [${enumCode}]">
