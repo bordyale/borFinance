@@ -35,7 +35,7 @@
 			<display />
 		</field>
 		<field name="prodSym" title="${uiLabelMap.Symbol}" sort-field="true">
-			<display />
+			<text />
 		</field>
 		<field name="prodName" title="${uiLabelMap.CommonName}" sort-field="true">
 			<display />
