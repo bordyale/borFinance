@@ -152,6 +152,9 @@
 		<field name="prodId" title="${uiLabelMap.CommonId}">
 			<hidden />
 		</field>
+		<field name="purchId" title="${uiLabelMap.CommonId}">
+			<hidden />
+		</field>
 		<field name="prodSym" title="${uiLabelMap.Symbol}" sort-field="true">
 			<display />
 		</field>
@@ -162,7 +165,7 @@
 			<display />
 		</field>
 		<field name="price" title="${uiLabelMap.Price}" sort-field="true">
-			<display />
+			<text />
 		</field>
 		<field name="exchangeId" title="${uiLabelMap.Exchange}">
 			<drop-down allow-empty="false">
@@ -179,6 +182,9 @@
 					<entity-order-by field-name="sequenceId" />
 				</entity-options>
 			</drop-down>
+		</field>
+		<field name="submitButton" title="${uiLabelMap.CommonUpdate}">
+			<submit button-type="button" />
 		</field>
 		<field name="deleteLink" title=" " widget-style="buttontext">
 			<hyperlink description="${uiLabelMap.CommonDelete}" target="deleteBfinPurchase" also-hidden="false"

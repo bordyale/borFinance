@@ -92,11 +92,11 @@ for (GenericValue entry: pricesList){
 				return
 			} else {
 				convertedValue = serviceResults.convertedValue
-				if (convertedValue) {
+				
 					e.put("mktValueConverted",convertedValue)
 					UtilMisc.addToBigDecimalInMap(se, sectorId, convertedValue)
 					totMktValue= totMktValue.add(convertedValue)
-				}
+				
 			}
 		}else{
 			e.put("mktValueConverted",mktValue)
@@ -113,7 +113,11 @@ for (GenericValue entry: pricesList){
 	hashMaps.add(e)
 }
 for (e in hashMaps){
-	e.put("percentage", (BigDecimal)e.mktValueConverted.divide(totMktValue,3,RoundingMode.HALF_UP).multiply(new BigDecimal(100)))
+	BigDecimal mktValueConverted = (BigDecimal)e.mktValueConverted
+	if (totMktValue && mktValueConverted) {
+		e.put("percentage", mktValueConverted.divide(totMktValue,3,RoundingMode.HALF_UP).multiply(new BigDecimal(100)))
+
+		}
 }
 
 
