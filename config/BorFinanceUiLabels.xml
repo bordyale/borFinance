@@ -165,4 +165,8 @@
         <value xml:lang="en">Skip Api</value>
         <value xml:lang="it">Skip Api</value>
     </property>
+    <property key="DateLastCheckForPopulation">
+        <value xml:lang="en">DateLastCheckForPopulation</value>
+        <value xml:lang="it">DateLastCheckForPopulation</value>
+    </property>
 </resource>
