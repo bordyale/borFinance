@@ -22,8 +22,7 @@ under the License.
 <table id="myTable" class="display responsive nowrap" >  
         <thead>  
           <tr>  
-            <th>${uiLabelMap.Symbol}</th>  
-            <th>${uiLabelMap.CommonName}</th>  
+            <th>${uiLabelMap.Symbol}</th>   
             <th>${uiLabelMap.Quantity}</th>
             <th>${uiLabelMap.AvgBoughtPrice}</th>
             <th>${uiLabelMap.LastMktPrice}</th>
@@ -35,6 +34,7 @@ under the License.
             <th>${uiLabelMap.lastDividend}</th>
             <th>${uiLabelMap.lastDividendDate}</th>
             <th>${uiLabelMap.percentage}</th>
+            <th>${uiLabelMap.CommonName}</th> 
              
           </tr>  
         </thead>  
@@ -43,7 +43,6 @@ under the License.
    
         	<tr>  
             	<td>${item.prodSym}</td>  
-            	<td>${item.prodName}</td>
             	<td>${item.quantitySum}</td>
             	<td>${item.avgPurchPrice}</td>
             	<td><#if item.lastMktPrice?has_content>${item.lastMktPrice}<#else>0</#if></td>
@@ -55,6 +54,7 @@ under the License.
             	<td><#if item.lastDividend?has_content>${item.lastDividend}<#else>0</#if></td>
             	<td><#if item.lastDividendDate?has_content>${item.lastDividendDate}<#else>0</#if></td>
             	<td><#if item.percentage?has_content>${item.percentage}<#else>0</#if></td>
+            	<td>${item.prodName}</td>
           	</tr> 
 	                        
 	    </#list>
