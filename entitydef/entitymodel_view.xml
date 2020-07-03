@@ -44,13 +44,27 @@
 		</view-link>
 	</view-entity>
 
-
-	<view-entity entity-name="BfinPurchaseSumView" package-name="org.apache.ofbiz.borFinance">
+	<view-entity entity-name="BfinPurchaseProdView" package-name="org.apache.ofbiz.borFinance">
 		<member-entity entity-alias="PURCH" entity-name="BfinPurchase" />
 		<alias entity-alias="PURCH" name="prodId" group-by="true" />
 		<alias entity-alias="PURCH" name="currencyUomId" group-by="true" />
+		<alias entity-alias="PURCH" name="quantity" group-by="true" />
+		<alias entity-alias="PURCH" name="price" group-by="true" />
+		<alias name="priceTot" group-by="true">
+			<complex-alias operator="*">
+				<complex-alias-field entity-alias="PURCH" field="price" />
+				<complex-alias-field entity-alias="PURCH" field="quantity" />
+			</complex-alias>
+		</alias>
+		
+	</view-entity>
+
+	<view-entity entity-name="BfinPurchaseSumView" package-name="org.apache.ofbiz.borFinance">
+		<member-entity entity-alias="PURCH" entity-name="BfinPurchaseProdView" />
+		<alias entity-alias="PURCH" name="prodId" group-by="true" />
+		<alias entity-alias="PURCH" name="currencyUomId" group-by="true" />
 		<alias entity-alias="PURCH" name="quantitySum" field="quantity" function="sum" />
-		<alias entity-alias="PURCH" name="priceSum" field="price" function="sum" />
+		<alias entity-alias="PURCH" name="priceSum" field="priceTot" function="sum" />
 	</view-entity>
 
 	<view-entity entity-name="BfinPurchaseAvgPriceView" package-name="org.apache.ofbiz.borFinance">

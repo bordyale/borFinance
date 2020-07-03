@@ -168,7 +168,7 @@
 			<text />
 		</field>
 		<field name="exchangeId" title="${uiLabelMap.Exchange}">
-			<drop-down allow-empty="false">
+			<drop-down allow-empty="true">
 				<entity-options entity-name="Enumeration" key-field-name="enumId" description="${description} [${enumCode}]">
 					<entity-constraint name="enumTypeId" value="BFIN_EXCHANGE" />
 					<entity-order-by field-name="sequenceId" />
