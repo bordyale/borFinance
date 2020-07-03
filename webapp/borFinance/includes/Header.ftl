@@ -54,7 +54,12 @@ src="https://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
 <script language="JavaScript" type="text/javascript">
 
 $(document).ready(function(){
-    $('#myTable').dataTable();
+    $('#myTable').dataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'colvis'
+        ]
+    } );
 });
 
 </script>

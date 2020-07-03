@@ -19,7 +19,7 @@ under the License.
 
 <#setting number_format="0.###">
 <div class="table-responsive" style="margin-top: 2.0em">
-<table id="myTable" class="display compact table-hover">  
+<table id="myTable" class="display responsive nowrap" >  
         <thead>  
           <tr>  
             <th>${uiLabelMap.Symbol}</th>  
