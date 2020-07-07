@@ -167,6 +167,9 @@
 		<field name="price" title="${uiLabelMap.Price}" sort-field="true">
 			<text />
 		</field>
+		<field name="purchDate" title="${uiLabelMap.Date}" sort-field="true">
+			<display type="date" />
+		</field>
 		<field name="exchangeId" title="${uiLabelMap.Exchange}">
 			<drop-down allow-empty="true">
 				<entity-options entity-name="Enumeration" key-field-name="enumId" description="${description} [${enumCode}]">
@@ -321,8 +324,19 @@
 		<field name="prodId" title="${uiLabelMap.ProductId}">
 			<lookup target-form-name="LookupProduct" position="center" />
 		</field>
+		<field name="divId">
+			<hidden />
+		</field>
 		<field name="purchId">
 			<hidden />
+		</field>
+		<field name="divFreqId" title="${uiLabelMap.divFreq}" sort-field="true">
+			<drop-down allow-empty="true">
+				<entity-options entity-name="Enumeration" key-field-name="enumId" description="${description} [${enumCode}]">
+					<entity-constraint name="enumTypeId" value="BFIN_DIVFREQ" />
+					<entity-order-by field-name="sequenceId" />
+				</entity-options>
+			</drop-down>
 		</field>
 		<field name="submitButton" use-when="bfinProduct==null" title="${uiLabelMap.CommonCreate}">
 			<submit button-type="button" />
