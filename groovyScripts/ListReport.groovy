@@ -46,6 +46,7 @@ for (GenericValue entry: pricesList){
 	Map<String,Object> e = new HashMap<String,Object>()
 
 	String sectorId = entry.get("sectorId")
+	e.put("prodId",entry.get("prodId"))
 	e.put("prodSym",entry.get("prodSym"))
 	e.put("prodName",entry.get("prodName"))
 	e.put("sectorId",sectorId)
@@ -64,6 +65,9 @@ for (GenericValue entry: pricesList){
 		String divFreqId = divFreqId = dividend.divFreqId
 		if (divFreqId !=null && divFreqId.equals("QUAR")){
 			forwardAnnualDiv = amount.divide(new BigDecimal(3),3,RoundingMode.HALF_UP).multiply(new BigDecimal(12))
+		}
+		if (divFreqId !=null && divFreqId.equals("SEMES")){
+			forwardAnnualDiv = amount.divide(new BigDecimal(6),3,RoundingMode.HALF_UP).multiply(new BigDecimal(12))
 		}
 		if (divFreqId !=null && divFreqId.equals("ANN")){
 			forwardAnnualDiv = amount

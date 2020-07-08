@@ -67,7 +67,9 @@ $(document).ready(function(){
         dom: 'Bfrtip',
         buttons: [
             'colvis'
-        ]
+        ],
+       "pageLength": 30,
+     
     } );
 });
 

@@ -162,7 +162,7 @@
 			<display />
 		</field>
 		<field name="quantity" title="${uiLabelMap.Quantity}" sort-field="true">
-			<display />
+			<text />
 		</field>
 		<field name="price" title="${uiLabelMap.Price}" sort-field="true">
 			<text />
@@ -412,6 +412,9 @@
 			<lookup target-form-name="LookupProduct" position="center" />
 		</field>
 		<field name="purchId">
+			<hidden />
+		</field>
+		<field name="priceId">
 			<hidden />
 		</field>
 		<field name="submitButton" use-when="bfinProduct==null" title="${uiLabelMap.CommonCreate}">

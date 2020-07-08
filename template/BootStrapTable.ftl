@@ -19,7 +19,7 @@ under the License.
 
 <#setting number_format="0.###">
 <div class="table-responsive" style="margin-top: 2.0em">
-<table id="myTable" class="display responsive nowrap" >  
+<table id="myTable" class="display responsive nowrap compact" style="width:100%">  
         <thead>  
           <tr>  
             <th>${uiLabelMap.Symbol}</th>   
@@ -44,7 +44,7 @@ under the License.
         	<tr>  
             	<td>${item.prodSym}</td>  
             	<td>${item.quantitySum}</td>
-            	<td>${item.avgPurchPrice}</td>
+            	<td><a href="<@ofbizUrl>findBfinPurchase?prodId=${item.prodId}</@ofbizUrl>">${item.avgPurchPrice}</a></td>
             	<td><#if item.lastMktPrice?has_content>${item.lastMktPrice}<#else>0</#if></td>
             	<td><#if item.currencyUomId?has_content>${item.currencyUomId}<#else>0</#if></td>
             	<td><#if item.lastMktPriceDate?has_content>${item.lastMktPriceDate}<#else>0</#if></td>
