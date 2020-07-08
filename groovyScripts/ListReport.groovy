@@ -40,6 +40,7 @@ sectors = from("Enumeration").where("enumTypeId", "BFIN_SECTOR").orderBy("sequen
 List<HashMap<String,Object>> hashMaps = new ArrayList<HashMap<String,Object>>()
 List<HashMap<String,Object>> sectorsList = new ArrayList<HashMap<String,Object>>()
 BigDecimal totMktValue = BigDecimal.ZERO
+BigDecimal totDivUSD = BigDecimal.ZERO
 Map<String,Object> se = new HashMap<String,Object>()
 for (GenericValue entry: pricesList){
 
@@ -50,6 +51,8 @@ for (GenericValue entry: pricesList){
 	e.put("prodSym",entry.get("prodSym"))
 	e.put("prodName",entry.get("prodName"))
 	e.put("sectorId",sectorId)
+	String currentUOMId =entry.get("currencyUomId")
+	e.put("currencyUomId",currentUOMId)
 	//se.put("sectorId",sectorId)
 	BigDecimal qtySum =(BigDecimal)entry.get("quantitySum")
 	e.put("quantitySum",qtySum)
@@ -75,6 +78,20 @@ for (GenericValue entry: pricesList){
 		if (divFreqId !=null && divFreqId.equals("MON")){
 			forwardAnnualDiv = amount.multiply(new BigDecimal(12))
 		}
+		//convert Dividend
+		if (currentUOMId && !"USD".equals(currentUOMId)) {
+			serviceResults = runService('convertUom',
+					[uomId : currentUOMId, uomIdTo : "USD", originalValue : forwardAnnualDiv])
+			if (ServiceUtil.isError(serviceResults)) {
+				request.setAttribute("_ERROR_MESSAGE_", ServiceUtil.getErrorMessage(serviceResults))
+				return
+			} else {
+				convertedForwartAnnDiv = serviceResults.convertedValue
+				totDivUSD=totDivUSD.add(convertedForwartAnnDiv.multiply(qtySum))
+			}
+		}else{
+			totDivUSD=totDivUSD.add(forwardAnnualDiv.multiply(qtySum))
+		}
 	}
 	//extract Last Price
 	price = from("BfinPrice").where("prodId",prodId).orderBy("date DESC").cache(false).queryFirst()
@@ -84,10 +101,8 @@ for (GenericValue entry: pricesList){
 		e.put("lastMktPriceDate",sdf.format(price.date))
 		BigDecimal mktValue =qtySum.multiply(priceNow).setScale(3,RoundingMode.HALF_UP)
 		e.put("mktValue",mktValue)
-		//convert currency
-		String currentUOMId =entry.get("currencyUomId")
 
-		e.put("currencyUomId",currentUOMId)
+		//convert Market Value
 		if (currentUOMId && !"USD".equals(currentUOMId)) {
 			serviceResults = runService('convertUom',
 					[uomId : currentUOMId, uomIdTo : "USD", originalValue : mktValue])
@@ -96,11 +111,11 @@ for (GenericValue entry: pricesList){
 				return
 			} else {
 				convertedValue = serviceResults.convertedValue
-				
-					e.put("mktValueConverted",convertedValue)
-					UtilMisc.addToBigDecimalInMap(se, sectorId, convertedValue)
-					totMktValue= totMktValue.add(convertedValue)
-				
+
+				e.put("mktValueConverted",convertedValue)
+				UtilMisc.addToBigDecimalInMap(se, sectorId, convertedValue)
+				totMktValue= totMktValue.add(convertedValue)
+
 			}
 		}else{
 			e.put("mktValueConverted",mktValue)
@@ -121,7 +136,7 @@ for (e in hashMaps){
 	if (totMktValue && mktValueConverted) {
 		e.put("percentage", mktValueConverted.divide(totMktValue,3,RoundingMode.HALF_UP).multiply(new BigDecimal(100)))
 
-		}
+	}
 }
 
 
@@ -143,6 +158,14 @@ if (totMktValue){
 	sector.put("sectorId","TOT PORT VALUE (USD)")
 	sector.put("mktValue",totMktValue)
 	sector.put("percentage",totMktValue.divide(totMktValue,3,RoundingMode.HALF_UP))
+	sectorsList.add(sector)
+}
+//total Dividend
+sector  = new HashMap<String,Object>()
+if (totDivUSD){
+	sector.put("sectorId","TOT DIV ANN FORWARD VALUE (USD)")
+	sector.put("mktValue",totDivUSD)
+	sector.put("percentage",totDivUSD.divide(totMktValue,3,RoundingMode.HALF_UP))
 	sectorsList.add(sector)
 }
 
