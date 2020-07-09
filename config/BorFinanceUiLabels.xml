@@ -44,6 +44,10 @@
         <value xml:lang="en">Finance Products</value>
         <value xml:lang="it">Prodotti Finanziari</value>
     </property>
+    <property key="PageTitleMain">
+        <value xml:lang="en">Main</value>
+        <value xml:lang="it">Main</value>
+    </property>
     <property key="PageTitleFindBfinPurchase">
         <value xml:lang="en">Purchases list</value>
         <value xml:lang="it">Acquisti</value>
@@ -168,5 +172,9 @@
     <property key="DateLastCheckForPopulation">
         <value xml:lang="en">DateLastCheckForPopulation</value>
         <value xml:lang="it">DateLastCheckForPopulation</value>
+    </property>
+    <property key="MktGainPerc">
+        <value xml:lang="en">Gain %</value>
+        <value xml:lang="it">Diff %</value>
     </property>
 </resource>

@@ -2,14 +2,31 @@
 <screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ofbiz.apache.org/Widget-Screen"
 	xsi:schemaLocation="http://ofbiz.apache.org/Widget-Screen http://ofbiz.apache.org/dtds/widget-screen.xsd">
 
-	<screen name="main">
+	<!-- <screen name="main">
 		<section>
 			<actions>
-				<set field="headerItem" value="main" /><!-- this highlights the selected menu-item with name "main" -->
+				<set field="headerItem" value="main" />this highlights the selected menu-item with name "main"
 			</actions>
 			<widgets>
 				<decorator-screen name="BorFinanceCommonDecorator" location="${parameters.mainDecoratorLocation}">
 					<decorator-section name="body">
+					</decorator-section>
+				</decorator-screen>
+			</widgets>
+		</section>
+	</screen> -->
+	
+	
+	<screen name="main">
+		<section>
+			<actions>
+				<set field="headerItem" value="main" />	
+				<set field="titleProperty" value="PageTitleMain" />			
+			</actions>
+			<widgets>
+				<decorator-screen name="BorFinanceCommonDecoratorBs" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+						
 					</decorator-section>
 				</decorator-screen>
 			</widgets>
@@ -130,6 +147,12 @@
 										</container>
 									</fail-widgets>
 								</section>
+								<container style="h2">
+									<label>${uiLabelMap.NewBfinPurchase}</label>
+								</container>
+								<container>
+									<include-form name="EditBfinPurchase" location="component://borFinance/widget/BorFinanceForms.xml" />
+								</container>
 								<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
 									<decorator-section name="search-options">
 										<include-form name="FindBfinPurchase" location="component://borFinance/widget/BorFinanceForms.xml" />
@@ -138,12 +161,6 @@
 										<include-form name="ListBfinPurchase" location="component://borFinance/widget/BorFinanceForms.xml" />
 									</decorator-section>
 								</decorator-screen>
-								<container style="h2">
-									<label>${uiLabelMap.NewBfinPurchase}</label>
-								</container>
-								<container>
-									<include-form name="EditBfinPurchase" location="component://borFinance/widget/BorFinanceForms.xml" />
-								</container>
 							</widgets>
 							<fail-widgets>
 								<label style="h3">${uiLabelMap.BorFinanceViewPermissionError}</label>

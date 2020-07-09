@@ -40,6 +40,7 @@ sectors = from("Enumeration").where("enumTypeId", "BFIN_SECTOR").orderBy("sequen
 List<HashMap<String,Object>> hashMaps = new ArrayList<HashMap<String,Object>>()
 List<HashMap<String,Object>> sectorsList = new ArrayList<HashMap<String,Object>>()
 BigDecimal totMktValue = BigDecimal.ZERO
+BigDecimal totPurchValue = BigDecimal.ZERO
 BigDecimal totDivUSD = BigDecimal.ZERO
 Map<String,Object> se = new HashMap<String,Object>()
 for (GenericValue entry: pricesList){
@@ -56,8 +57,24 @@ for (GenericValue entry: pricesList){
 	//se.put("sectorId",sectorId)
 	BigDecimal qtySum =(BigDecimal)entry.get("quantitySum")
 	e.put("quantitySum",qtySum)
-	e.put("avgPurchPrice",(BigDecimal)entry.get("avgPurchPrice").setScale(3,RoundingMode.HALF_UP))
+	BigDecimal avgPurchPrice =(BigDecimal)entry.get("avgPurchPrice").setScale(3,RoundingMode.HALF_UP)
+	e.put("avgPurchPrice",avgPurchPrice)
 	prodId = entry.get("prodId")
+	//convert Purchased Avg Price for Sum
+	BigDecimal avgPurchPriceStock =avgPurchPrice.multiply(qtySum)
+	if (currentUOMId && !"USD".equals(currentUOMId)) {
+		serviceResults = runService('convertUom',
+				[uomId : currentUOMId, uomIdTo : "USD", originalValue : avgPurchPriceStock])
+		if (ServiceUtil.isError(serviceResults)) {
+			request.setAttribute("_ERROR_MESSAGE_", ServiceUtil.getErrorMessage(serviceResults))
+			return
+		} else {
+			converted = serviceResults.convertedValue
+			totPurchValue=totPurchValue.add(converted)
+		}
+	}else{
+		totPurchValue=totPurchValue.add(avgPurchPriceStock)
+	}
 	//extract Last Dividend
 	BigDecimal forwardAnnualDiv = BigDecimal.ZERO
 	dividend = from("BfinDividend").where("prodId",prodId).orderBy("date DESC").cache(false).queryFirst()
@@ -101,6 +118,10 @@ for (GenericValue entry: pricesList){
 		e.put("lastMktPriceDate",sdf.format(price.date))
 		BigDecimal mktValue =qtySum.multiply(priceNow).setScale(3,RoundingMode.HALF_UP)
 		e.put("mktValue",mktValue)
+		//market Gain
+		BigDecimal gain = priceNow.subtract(avgPurchPrice)
+		e.put("mktGainPerc",gain.divide(avgPurchPrice,3,RoundingMode.HALF_UP).multiply(new BigDecimal(100)))
+		
 
 		//convert Market Value
 		if (currentUOMId && !"USD".equals(currentUOMId)) {
@@ -152,8 +173,15 @@ for (e in se){
 
 	sectorsList.add(sector)
 }
-//total Market Value
+//total Purchased Avg Value
 Map<String,Object> sector  = new HashMap<String,Object>()
+if (totPurchValue){
+	sector.put("sectorId","TOT PURCHASED PRICE (USD)")
+	sector.put("mktValue",totPurchValue)
+	sectorsList.add(sector)
+}
+//total Market Value
+sector  = new HashMap<String,Object>()
 if (totMktValue){
 	sector.put("sectorId","TOT PORT VALUE (USD)")
 	sector.put("mktValue",totMktValue)

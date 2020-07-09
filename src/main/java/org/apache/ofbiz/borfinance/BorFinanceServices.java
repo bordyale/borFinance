@@ -130,7 +130,7 @@ public class BorFinanceServices {
 					}
 				}
 				i++;
-				JSONObject resp = sendGet(symbol, apikey[0]);
+				JSONObject resp = sendGet(symbol, apikey[5]);
 				JSONObject arr;
 				try {
 					arr = resp.getJSONObject("Monthly Adjusted Time Series");
