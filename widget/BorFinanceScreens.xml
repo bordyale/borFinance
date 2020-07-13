@@ -321,6 +321,10 @@
 					<label style="h2" text="${uiLabelMap.BfinReport}" />
 				</container>
 				<include-form name="ReportStocksCsv" location="component://borFinance/widget/BorFinanceForms.xml" />
+				<container>
+					<label style="h2" text="${uiLabelMap.Sector}" />
+				</container>
+				<include-form name="ReportSectorsCsv" location="component://borFinance/widget/BorFinanceForms.xml" />
 
 			</widgets>
 		</section>

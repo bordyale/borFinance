@@ -470,5 +470,18 @@
 		</field>
 
 	</form>
+	<form name="ReportSectorsCsv" type="list" list-name="sectorList" odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+		<field name="sectorId" title="${uiLabelMap.Sector}">
+			<display />
+		</field>
+		<field name="mktValue" title="${uiLabelMap.mktValue}">
+			<display />
+		</field>
+		<field name="percentage" title="${uiLabelMap.percentage}">
+			<display />
+		</field>
+		
+
+	</form>
 
 </forms>
