@@ -57,6 +57,9 @@
 				<option key="N" description="${uiLabelMap.CommonN}" />
 			</drop-down>
 		</field>
+		<field name="note" title="${uiLabelMap.Note}" sort-field="true">
+			<text />
+		</field>
 		<field name="sectorId" title="${uiLabelMap.Sector}" sort-field="true">
 			<drop-down allow-empty="true">
 				<entity-options entity-name="Enumeration" key-field-name="enumId" description="${description} [${enumCode}]">
@@ -125,6 +128,9 @@
 				<option key="Y" description="${uiLabelMap.CommonY}" />
 				<option key="N" description="${uiLabelMap.CommonN}" />
 			</drop-down>
+		</field>
+		<field name="note" title="${uiLabelMap.Note}" sort-field="true">
+			<text />
 		</field>
 		<field name="submitButton" use-when="bfinProduct==null" title="${uiLabelMap.CommonCreate}">
 			<submit button-type="button" />

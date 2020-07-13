@@ -65,9 +65,6 @@
 
 $(document).ready(function(){
     $('#myTable').dataTable({
-    	"language": {
-                "url": "dataTables.german.lang"
-            },
         dom: 'Bfrtip',
         buttons: [
             'colvis'

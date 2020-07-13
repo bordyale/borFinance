@@ -14,6 +14,7 @@
 		<field name="prodSym" type="value"></field>
 		<field name="prodName" type="value"></field>
 		<field name="productType" type="value"></field>
+		<field name="note" type="value"></field>
 		<field name="skipApi" type="value"></field>
 		<field name="divFreqId" type="id-ne"></field>
 		<field name="sectorId" type="id-ne"></field>

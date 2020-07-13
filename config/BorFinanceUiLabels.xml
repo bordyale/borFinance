@@ -20,6 +20,10 @@
         <value xml:lang="en">Finance Products</value>
         <value xml:lang="it">Prodotti Finanziari</value>
     </property>
+    <property key="Note">
+        <value xml:lang="en">Note</value>
+        <value xml:lang="it">Note</value>
+    </property>
     <property key="BfinPurchase">
         <value xml:lang="en">Purchases list</value>
         <value xml:lang="it">Acquisti</value>
