@@ -121,7 +121,7 @@ for (GenericValue entry: pricesList){
 		//market Gain
 		BigDecimal gain = priceNow.subtract(avgPurchPrice)
 		e.put("mktGainPerc",gain.divide(avgPurchPrice,3,RoundingMode.HALF_UP).multiply(new BigDecimal(100)))
-		
+
 
 		//convert Market Value
 		if (currentUOMId && !"USD".equals(currentUOMId)) {
@@ -173,15 +173,9 @@ for (e in se){
 
 	sectorsList.add(sector)
 }
-//total Purchased Avg Value
-Map<String,Object> sector  = new HashMap<String,Object>()
-if (totPurchValue){
-	sector.put("sectorId","TOT PURCHASED PRICE (USD)")
-	sector.put("mktValue",totPurchValue)
-	sectorsList.add(sector)
-}
+
 //total Market Value
-sector  = new HashMap<String,Object>()
+Map<String,Object> sector  = new HashMap<String,Object>()
 if (totMktValue){
 	sector.put("sectorId","TOT PORT VALUE (USD)")
 	sector.put("mktValue",totMktValue)
@@ -196,6 +190,21 @@ if (totDivUSD){
 	sector.put("percentage",totDivUSD.divide(totMktValue,3,RoundingMode.HALF_UP))
 	sectorsList.add(sector)
 }
+//total Purchased Avg Value
+sector  = new HashMap<String,Object>()
+if (totPurchValue){
+	sector.put("sectorId","TOT PURCHASED PRICE (USD)")
+	sector.put("mktValue",totPurchValue)
+	sectorsList.add(sector)
+}
+//portfolio Size
+sector  = new HashMap<String,Object>()
+
+sector.put("sectorId","# OF STOCK IN PORTFOLIO")
+sector.put("mktValue",hashMaps.size())
+sectorsList.add(sector)
+
+
 
 context.reportList = hashMaps;
 context.sectorList = sectorsList;

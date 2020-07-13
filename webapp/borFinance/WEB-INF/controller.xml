@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://ofbiz.apache.org/Site-Conf http://ofbiz.apache.org/dtds/site-conf.xsd">
 	<!-- The controller elements that are common to all OFBiz components can be found in the following xml file. A component can override 
 		the elements found in the common-controller.xml file. -->
-	 <include location="component://borFinance/webapp/borFinance/WEB-INF/common-controller.xml" />
+	<include location="component://borFinance/webapp/borFinance/WEB-INF/common-controller.xml" />
 	<!-- <include location="component://common/webcommon/WEB-INF/common-controller.xml" /> -->
 
 	<description>BorFinance Component Site Configuration File</description>
@@ -132,10 +132,15 @@
 		<response name="success" type="view" value="findBfinPrice" />
 		<response name="error" type="view" value="findBfinPrice" />
 	</request-map>
-	
+
 	<request-map uri="findBfinReport">
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="findBfinReport" />
+	</request-map>
+
+	<request-map uri="ReportExport.csv">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="ReportExport" />
 	</request-map>
 
 
@@ -174,4 +179,7 @@
 
 
 	<view-map name="LookupProduct" type="screen" page="component://borFinance/widget/LookupScreens.xml#LookupProduct" />
+
+	<view-map name="ReportExport" type="screencsv" page="component://borFinance/widget/BorFinanceScreens.xml#ReportExportCsv"
+		content-type="text/csv" encoding="none" />
 </site-conf>

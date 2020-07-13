@@ -2,31 +2,21 @@
 <screens xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ofbiz.apache.org/Widget-Screen"
 	xsi:schemaLocation="http://ofbiz.apache.org/Widget-Screen http://ofbiz.apache.org/dtds/widget-screen.xsd">
 
-	<!-- <screen name="main">
-		<section>
-			<actions>
-				<set field="headerItem" value="main" />this highlights the selected menu-item with name "main"
-			</actions>
-			<widgets>
-				<decorator-screen name="BorFinanceCommonDecorator" location="${parameters.mainDecoratorLocation}">
-					<decorator-section name="body">
-					</decorator-section>
-				</decorator-screen>
-			</widgets>
-		</section>
-	</screen> -->
-	
-	
+	<!-- <screen name="main"> <section> <actions> <set field="headerItem" value="main" />this highlights the selected menu-item with name 
+		"main" </actions> <widgets> <decorator-screen name="BorFinanceCommonDecorator" location="${parameters.mainDecoratorLocation}"> <decorator-section 
+		name="body"> </decorator-section> </decorator-screen> </widgets> </section> </screen> -->
+
+
 	<screen name="main">
 		<section>
 			<actions>
-				<set field="headerItem" value="main" />	
-				<set field="titleProperty" value="PageTitleMain" />			
+				<set field="headerItem" value="main" />
+				<set field="titleProperty" value="PageTitleMain" />
 			</actions>
 			<widgets>
 				<decorator-screen name="BorFinanceCommonDecoratorBs" location="${parameters.mainDecoratorLocation}">
 					<decorator-section name="body">
-						
+
 					</decorator-section>
 				</decorator-screen>
 			</widgets>
@@ -291,20 +281,16 @@
 			<widgets>
 				<decorator-screen name="BorFinanceCommonDecoratorBs" location="${parameters.mainDecoratorLocation}">
 					<decorator-section name="body">
-						<label style="h4" text="${uiLabelMap.BfinReport}" />
-						
-						
+						<!-- <label style="h4" text="${uiLabelMap.BfinReport}" /> -->
+
+
 						<platform-specific>
 							<html>
 								<html-template location="component://borFinance/template/FilterReport.ftl" />
 							</html>
 						</platform-specific>
-						<!-- <platform-specific>
-							<html>
-								<html-template location="component://borFinance/template/ListReport.ftl" />
-							</html>
-						</platform-specific> -->
-						
+						<!-- <platform-specific> <html> <html-template location="component://borFinance/template/ListReport.ftl" /> </html> </platform-specific> -->
+
 						<platform-specific>
 							<html>
 								<html-template location="component://borFinance/template/BootStrapTable.ftl" />
@@ -318,7 +304,29 @@
 		</section>
 	</screen>
 
-	
+	<screen name="ReportExportCsv">
+		<section>
+			<actions>
+				<property-map resource="BorFinanceUiLabels" map-name="uiLabelMap" global="true" />
+				<property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true" />
+
+				<set field="prodId" from-field="parameters.prodId" />
+
+				<set field="viewSize" value="10000" />
+				<script location="component://borFinance/groovyScripts/ListReport.groovy" />
+
+			</actions>
+			<widgets>
+				<container>
+					<label style="h2" text="${uiLabelMap.BfinReport}" />
+				</container>
+				<include-form name="ReportStocksCsv" location="component://borFinance/widget/BorFinanceForms.xml" />
+
+			</widgets>
+		</section>
+	</screen>
+
+
 
 
 

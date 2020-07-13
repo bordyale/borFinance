@@ -25,10 +25,11 @@
 
 
 
+<div class="table-responsive">
+	<a href="<@ofbizUrl>ReportExport.csv</@ofbizUrl>" class="btn btn-primary btn-lg active btn-sm" role="button" aria-pressed="true">Export CSV</a>
+</div>
 
-
-
-
+<div class="table-responsive" style="margin-top: 2.0em">
   <form action="<@ofbizUrl>findBfinReport</@ofbizUrl>">
     <div class="form-group">
       <label for="text">${uiLabelMap.LookupProduct}</label>
@@ -37,4 +38,4 @@
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 
-
+</div>

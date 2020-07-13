@@ -148,7 +148,7 @@
 			</service>
 			<set field="sortField" from-field="parameters.sortField" />
 		</actions>
-		
+
 		<field name="prodId" title="${uiLabelMap.CommonId}">
 			<hidden />
 		</field>
@@ -224,15 +224,15 @@
 		<field name="purchId">
 			<hidden />
 		</field>
-		
+
 		<field name="currencyUomId" title="${uiLabelMap.CommonCurrency}">
-            <drop-down allow-empty="true" no-current-selected-key="USD">
-                <entity-options key-field-name="uomId" description="${abbreviation}" entity-name="Uom">
-                    <entity-constraint name="uomTypeId" operator="equals" value="CURRENCY_MEASURE"/>
-                    <entity-order-by field-name="description"/>
-                </entity-options>
-            </drop-down>
-        </field>
+			<drop-down allow-empty="true" no-current-selected-key="USD">
+				<entity-options key-field-name="uomId" description="${abbreviation}" entity-name="Uom">
+					<entity-constraint name="uomTypeId" operator="equals" value="CURRENCY_MEASURE" />
+					<entity-order-by field-name="description" />
+				</entity-options>
+			</drop-down>
+		</field>
 		<field name="exchangeId" title="${uiLabelMap.Exchange}">
 			<drop-down allow-empty="false">
 				<entity-options entity-name="Enumeration" key-field-name="enumId" description="${description} [${enumCode}]">
@@ -423,6 +423,52 @@
 		<field name="submitButton" use-when="bfinProduct!=null" title="${uiLabelMap.CommonUpdate}">
 			<submit button-type="button" />
 		</field>
+	</form>
+
+	<form name="ReportStocksCsv" type="list" list-name="reportList" odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+		<field name="prodSym" title="${uiLabelMap.Symbol}">
+			<display />
+		</field>
+		<field name="quantitySum" title="${uiLabelMap.Quantity}">
+			<display />
+		</field>
+		<field name="currencyUomId" title="${uiLabelMap.CommonCurrency}">
+			<display />
+		</field>
+		<field name="avgPurchPrice" title="${uiLabelMap.AvgBoughtPrice}">
+			<display />
+		</field>
+		<field name="lastMktPrice" title="${uiLabelMap.LastMktPrice}">
+			<display />
+		</field>
+		<field name="mktGainPerc" title="${uiLabelMap.MktGainPerc}">
+			<display />
+		</field>
+		<field name="mktValue" title="${uiLabelMap.mktValue}">
+			<display />
+		</field>
+		<field name="mktValueConverted" title="${uiLabelMap.mktValueConverted}">
+			<display />
+		</field>
+		<field name="currYield" title="${uiLabelMap.currYield}">
+			<display />
+		</field>
+		<field name="lastDividend" title="${uiLabelMap.lastDividend}">
+			<display />
+		</field>
+		<field name="lastDividendDate" title="${uiLabelMap.lastDividendDate}">
+			<display type="date" />
+		</field>
+		<field name="percentage" title="${uiLabelMap.percentage}">
+			<display />
+		</field>
+		<field name="prodName" title="${uiLabelMap.CommonName}">
+			<display />
+		</field>
+		<field name="lastMktPriceDate" title="${uiLabelMap.LastMktPriceDate}">
+			<display type="date" />
+		</field>
+
 	</form>
 
 </forms>
