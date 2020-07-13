@@ -87,11 +87,10 @@ public class BorFinanceServices {
 		d.setTime(today);
 		int dayOfWeek = d.get(Calendar.DAY_OF_WEEK);
 
-		
-		  if (dayOfWeek == 1 || dayOfWeek == 2) { Debug.logWarning("ON DAY: " +
-		  new SimpleDateFormat("EE").format(today) +
-		  " DON'T EXECUTE populateDividendTable()", module); return result; }
-		 
+		if (dayOfWeek == 1 || dayOfWeek == 2) {
+			Debug.logWarning("ON DAY: " + new SimpleDateFormat("EE").format(today) + " DON'T EXECUTE populateDividendTable()", module);
+			return result;
+		}
 
 		long startTime = System.currentTimeMillis();
 		try {
@@ -108,8 +107,8 @@ public class BorFinanceServices {
 				String prodId = (String) stock.get("prodId");
 				String divFreqId = (String) stock.get("divFreqId");
 				String skipApi = (String) stock.get("skipApi");
-				
-				if(skipApi!=null && "Y".equals(skipApi)) {
+
+				if (skipApi != null && "Y".equals(skipApi)) {
 					continue;
 				}
 
