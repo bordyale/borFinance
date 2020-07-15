@@ -17,6 +17,43 @@ specific language governing permissions and limitations
 under the License.
 -->
 
+<script language="JavaScript" type="text/javascript">
+
+$(document).ready(function(){
+    $('#myTable').dataTable({
+        dom: 'Bfrtip',
+        buttons: [
+            'colvis'
+        ],
+       "pageLength": 30,
+       "columns": [
+    			null,
+    			null,
+    			null,
+    			{ "type": "numeric-comma" },
+			    { "type": "numeric-comma" },
+    			{ "type": "numeric-comma" },
+    			{ "type": "numeric-comma" },
+			    { "type": "numeric-comma" },    		
+    			{ "type": "numeric-comma" },
+    			null,
+    			null,
+    			{ "type": "numeric-comma" },
+			    null,
+    			null
+  ]
+     
+    } );
+    
+
+
+
+});
+
+
+
+</script>
+
 <#setting number_format="0.##">
 <div class="table-responsive" style="margin-top: 2.0em">
 <table id="myTable" class="display responsive nowrap compact" style="width:100%">  

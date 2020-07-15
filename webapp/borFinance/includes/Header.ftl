@@ -42,7 +42,8 @@
 
 
 <link rel="stylesheet" href="/rainbowstone/javascript.css" type="text/css">
-<link rel="stylesheet" href="/borFinance/css//bootstrap.min.css" type="text/css">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <!--
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css"></style>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
@@ -59,38 +60,11 @@
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.colVis.min.js"></script>
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/numeric-comma.js"></script>
+<script type="text/javascript" language="javascript" src="/borFinance/js/jquery.tabledit.min.js"></script>
+<script type="text/javascript" language="javascript" src="/borFinance/js/jquery.tabledit.js"></script>
 
 
-<script language="JavaScript" type="text/javascript">
 
-$(document).ready(function(){
-    $('#myTable').dataTable({
-        dom: 'Bfrtip',
-        buttons: [
-            'colvis'
-        ],
-       "pageLength": 30,
-       "columns": [
-    			null,
-    			null,
-    			null,
-    			{ "type": "numeric-comma" },
-			    null,
-    			{ "type": "numeric-comma" },
-    			{ "type": "numeric-comma" },
-			    { "type": "numeric-comma" },    		
-    			{ "type": "numeric-comma" },
-    			null,
-    			null,
-    			{ "type": "numeric-comma" },
-			    null,
-    			null
-  ]
-     
-    } );
-});
-
-</script>
 
 
 </head>
