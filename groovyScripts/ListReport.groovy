@@ -21,6 +21,7 @@ import java.util.Locale
 import java.util.Map
 
 
+DecimalFormat df = new DecimalFormat("###.##");
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 prodId = parameters.prodId
 
@@ -58,7 +59,7 @@ for (GenericValue entry: pricesList){
 	BigDecimal qtySum =(BigDecimal)entry.get("quantitySum")
 	e.put("quantitySum",qtySum)
 	BigDecimal avgPurchPrice =(BigDecimal)entry.get("avgPurchPrice").setScale(3,RoundingMode.HALF_UP)
-	e.put("avgPurchPrice",avgPurchPrice)
+	e.put("avgPurchPrice",df.format(avgPurchPrice))
 	prodId = entry.get("prodId")
 	//convert Purchased Avg Price for Sum
 	BigDecimal avgPurchPriceStock =avgPurchPrice.multiply(qtySum)
@@ -80,7 +81,7 @@ for (GenericValue entry: pricesList){
 	dividend = from("BfinDividend").where("prodId",prodId).orderBy("date DESC").cache(false).queryFirst()
 	if (dividend){
 		BigDecimal amount =dividend.amount
-		e.put("lastDividend",amount)
+		e.put("lastDividend",df.format(amount))
 		e.put("lastDividendDate",sdf.format(dividend.date))
 		String divFreqId = divFreqId = dividend.divFreqId
 		if (divFreqId !=null && divFreqId.equals("QUAR")){
@@ -114,10 +115,10 @@ for (GenericValue entry: pricesList){
 	price = from("BfinPrice").where("prodId",prodId).orderBy("date DESC").cache(false).queryFirst()
 	if (price){
 		BigDecimal priceNow = price.price
-		e.put("lastMktPrice",priceNow)
+		e.put("lastMktPrice",df.format(priceNow))
 		e.put("lastMktPriceDate",sdf.format(price.date))
 		BigDecimal mktValue =qtySum.multiply(priceNow).setScale(3,RoundingMode.HALF_UP)
-		e.put("mktValue",mktValue)
+		e.put("mktValue",df.format(mktValue))
 		//market Gain
 		BigDecimal gain = priceNow.subtract(avgPurchPrice)
 		e.put("mktGainPerc",gain.divide(avgPurchPrice,3,RoundingMode.HALF_UP).multiply(new BigDecimal(100)))
@@ -168,7 +169,7 @@ for (e in hashMaps){
 for (e in se){
 	Map<String,Object> sector  = new HashMap<String,Object>()
 	sector.put("sectorId",e.key)
-	sector.put("mktValue",e.value)
+	sector.put("mktValue",df.format(e.value))
 	sector.put("percentage",(BigDecimal)e.value.divide(totMktValue,3,RoundingMode.HALF_UP))
 
 	sectorsList.add(sector)
@@ -178,7 +179,7 @@ for (e in se){
 Map<String,Object> sector  = new HashMap<String,Object>()
 if (totMktValue){
 	sector.put("sectorId","TOT PORT VALUE (USD)")
-	sector.put("mktValue",totMktValue)
+	sector.put("mktValue",df.format(totMktValue))
 	sector.put("percentage",totMktValue.divide(totMktValue,3,RoundingMode.HALF_UP))
 	sectorsList.add(sector)
 }
@@ -186,7 +187,7 @@ if (totMktValue){
 sector  = new HashMap<String,Object>()
 if (totDivUSD){
 	sector.put("sectorId","TOT DIV ANN FORWARD VALUE (USD)")
-	sector.put("mktValue",totDivUSD)
+	sector.put("mktValue",df.format(totDivUSD))
 	sector.put("percentage",totDivUSD.divide(totMktValue,3,RoundingMode.HALF_UP))
 	sectorsList.add(sector)
 }
@@ -194,7 +195,7 @@ if (totDivUSD){
 sector  = new HashMap<String,Object>()
 if (totPurchValue){
 	sector.put("sectorId","TOT PURCHASED PRICE (USD)")
-	sector.put("mktValue",totPurchValue)
+	sector.put("mktValue",df.format(totPurchValue))
 	sectorsList.add(sector)
 }
 //portfolio Size
