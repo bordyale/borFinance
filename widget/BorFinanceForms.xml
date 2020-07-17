@@ -16,7 +16,7 @@
 
 		<on-event-update-area event-type="paginate" area-id="ListBfinProductAjax" area-target="ListBfinProductFormOnly" />
 	</form>
-	<form name="ListBfinProduct" type="list" list-name="listIt" target="updateBfinProductAjax" paginate-target="authview/findBfinProductAjax"
+	<form name="ListBfinProduct" type="list" list-name="listIt" target="updateBfinProduct" paginate-target="authview/findBfinProductAjax"
 		default-entity-name="BfinProduct" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2"
 		default-table-style="basic-table hover-bar">
 		<actions>

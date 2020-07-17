@@ -56,6 +56,7 @@ import org.apache.ofbiz.service.ModelService;
 import org.apache.ofbiz.service.ServiceUtil;
 import org.json.JSONObject;
 import org.json.JSONException;
+import java.util.Locale;
 
 /**
  * Services for Agreement (Accounting)
@@ -73,6 +74,9 @@ public class BorFinanceServices {
 			"NRXCKC71QSMJQZYA", "NRXCKC71QSMJQZYA", "NRXCKC71QSMJQZYA", "NRXCKC71QSMJQZYA" };
 
 	public static Map<String, Object> populateDividendTable(DispatchContext ctx, Map<String, Object> context) {
+		//TO:DO remove locale set default
+		//Locale us = new Locale("en", "US", "USD");
+		//Locale.setDefault(us);
 		Delegator delegator = ctx.getDelegator();
 		LocalDispatcher dispatcher = ctx.getDispatcher();
 		Locale locale = (Locale) context.get("locale");
@@ -123,13 +127,13 @@ public class BorFinanceServices {
 					c.setTime(new Date());
 					int backDayytocheck = -1;
 					c.add(Calendar.DATE, backDayytocheck);
-					if (c.getTime().compareTo(lastDividendStoredDateCheck) < 0) {
+					if (lastDividendStoredDateCheck!= null && c.getTime().compareTo(lastDividendStoredDateCheck) < 0) {
 						Debug.logWarning(symbol + " " + "LAST DIVIDEND ALREADY SAVED IN THE LAST " + backDayytocheck + " DAYS, SKiP API REQUEST", module);
 						continue;
 					}
 				}
 				i++;
-				JSONObject resp = sendGet(symbol, apikey[5]);
+				JSONObject resp = sendGet(symbol, apikey[0]);
 				JSONObject arr;
 				try {
 					arr = resp.getJSONObject("Monthly Adjusted Time Series");

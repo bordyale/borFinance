@@ -34,8 +34,8 @@
 	<request-map uri="updateBfinProductAjax">
 		<security https="true" auth="true" />
 		<event type="service" invoke="updateBfinProduct" />
-		<response name="success" type="view" value="findBfinProductAjax" />
-		<response name="error" type="view" value="findBfinProductAjax" />
+		<response name="success" type="request" value="json"/>
+        <response name="error" type="request" value="json"/>
 	</request-map>
 	<request-map uri="createBfinProduct">
 		<security https="true" auth="true" />
