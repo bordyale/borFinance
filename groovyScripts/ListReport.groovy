@@ -141,15 +141,21 @@ for (GenericValue entry: pricesList){
 				request.setAttribute("_ERROR_MESSAGE_", ServiceUtil.getErrorMessage(serviceResults))
 				return
 			} else {
-				convertedValue = serviceResults.convertedValue
+				BigDecimal convertedValue = serviceResults.convertedValue
+				e.put("mktValueConverted",new DecimalFormat(
+						"###.##",
+						DecimalFormatSymbols.getInstance(customLocale)).format(convertedValue))
+				e.put("mktValueConvertedBigDec",convertedValue)
 
-				e.put("mktValueConverted",convertedValue)
 				UtilMisc.addToBigDecimalInMap(se, sectorId, convertedValue)
 				totMktValue= totMktValue.add(convertedValue)
 
 			}
 		}else{
-			e.put("mktValueConverted",mktValue)
+			e.put("mktValueConverted",new DecimalFormat(
+					"###.##",
+					DecimalFormatSymbols.getInstance(customLocale)).format(mktValue))
+			e.put("mktValueConvertedBigDec",mktValue)
 			UtilMisc.addToBigDecimalInMap(se, sectorId, mktValue)
 			totMktValue= totMktValue.add(mktValue)
 		}
@@ -163,7 +169,7 @@ for (GenericValue entry: pricesList){
 	hashMaps.add(e)
 }
 for (e in hashMaps){
-	BigDecimal mktValueConverted = (BigDecimal)e.mktValueConverted
+	BigDecimal mktValueConverted = (BigDecimal)e.mktValueConvertedBigDec
 	if (totMktValue && mktValueConverted) {
 		e.put("percentage", mktValueConverted.divide(totMktValue,3,RoundingMode.HALF_UP).multiply(new BigDecimal(100)))
 
@@ -211,8 +217,8 @@ sector  = new HashMap<String,Object>()
 if (totPurchValue){
 	sector.put("sectorId","TOT PURCHASED PRICE (USD)")
 	sector.put("mktValue",new DecimalFormat(
-				"###.##",
-				DecimalFormatSymbols.getInstance(customLocale)).format(totPurchValue))
+			"###.##",
+			DecimalFormatSymbols.getInstance(customLocale)).format(totPurchValue))
 	sectorsList.add(sector)
 }
 //portfolio Size
