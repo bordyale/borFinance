@@ -42,6 +42,7 @@ sectors = from("Enumeration").where("enumTypeId", "BFIN_SECTOR").orderBy("sequen
 
 
 List<HashMap<String,Object>> hashMaps = new ArrayList<HashMap<String,Object>>()
+List<HashMap<String,Object>> prodsNotInPortfolio = new ArrayList<HashMap<String,Object>>()
 List<HashMap<String,Object>> sectorsList = new ArrayList<HashMap<String,Object>>()
 BigDecimal totMktValue = BigDecimal.ZERO
 BigDecimal totPurchValue = BigDecimal.ZERO
@@ -60,6 +61,13 @@ for (GenericValue entry: pricesList){
 	e.put("currencyUomId",currentUOMId)
 	//se.put("sectorId",sectorId)
 	BigDecimal qtySum =(BigDecimal)entry.get("quantitySum")
+	//populate not in portfolio products
+	if (qtySum==null){
+		prodsNotInPortfolio.add(e)
+		continue
+	}
+
+
 	e.put("quantitySum",qtySum)
 	BigDecimal avgPurchPrice =(BigDecimal)entry.get("avgPurchPrice").setScale(3,RoundingMode.HALF_UP)
 	e.put("avgPurchPrice",new DecimalFormat(
@@ -232,3 +240,6 @@ sectorsList.add(sector)
 
 context.reportList = hashMaps;
 context.sectorList = sectorsList;
+context.prodsNotInPortfolio = prodsNotInPortfolio;
+
+

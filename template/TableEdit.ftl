@@ -8,12 +8,12 @@ $('#example2').dataTable({
         buttons: [
             'colvis'
         ],
-       "pageLength": 30,
+       "paging": false,
      
     } );
 
 $('#example2').Tabledit({
-    url: 'updateBfinProductAjax',
+    url: 'inLineTableSwitch?service=BfinProduct',
     columns: {
         identifier: [0, 'prodId'],
         editable: [[1, 'prodSym']]
@@ -38,7 +38,8 @@ $('#example2').Tabledit({
             <th>${uiLabelMap.CommonId}</th>  
             <th${uiLabelMap.Symbol}</th>  
             <th>${uiLabelMap.CommonName}</th>  
-            <th>Salary</th>  
+            <th></th>  
+            
           </tr>  
         </thead>  
         <tbody>  

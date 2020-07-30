@@ -73,7 +73,7 @@
 		<alias entity-alias="PROD" name="prodSym" group-by="true" />
 		<alias entity-alias="PROD" name="prodName" group-by="true" />
 		<alias entity-alias="PROD" name="sectorId" group-by="true" />
-		<alias entity-alias="PURCH" name="prodId" group-by="true" />
+		<alias entity-alias="PROD" name="prodId" group-by="true" />
 		<alias entity-alias="PURCH" name="currencyUomId" group-by="true" />
 		<alias entity-alias="PURCH" name="quantitySum" group-by="true" />
 		<alias entity-alias="PURCH" name="priceSum" group-by="true" />
@@ -83,7 +83,7 @@
 				<complex-alias-field entity-alias="PURCH" field="quantitySum" />
 			</complex-alias>
 		</alias>
-		<view-link entity-alias="PURCH" rel-entity-alias="PROD">
+		<view-link entity-alias="PROD" rel-entity-alias="PURCH" rel-optional="true">
 			<key-map field-name="prodId" />
 		</view-link>
 	</view-entity>
