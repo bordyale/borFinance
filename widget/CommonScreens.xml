@@ -52,7 +52,7 @@
 				<property-map resource="BorFinanceUiLabels" map-name="uiLabelMap" global="true" />
 				<property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true" />
 
-				<set field="layoutSettings.companyName" from-field="uiLabelMap.OfbizDemoCompanyName" global="true" />
+				<set field="layoutSettings.companyName" from-field="uiLabelMap.BorFinanceCompanyName" global="true" />
 
 				<!-- Including custom CSS Styles that you want to use in your application view. [] in field can be used to set the order of loading 
 					CSS files to load if there are multiple -->
@@ -103,7 +103,7 @@
 			<actions>
 				<property-map resource="BorFinanceUiLabels" map-name="uiLabelMap" global="true" />
 				<property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true" />
-				<set field="layoutSettings.companyName" from-field="uiLabelMap.OfbizDemoCompanyName" global="true" />
+				<set field="layoutSettings.companyName" from-field="uiLabelMap.BorFinanceCompanyName" global="true" />
 				<set field="titleProperty" value="PageTitleLogin" />
 			</actions>
 			<widgets>

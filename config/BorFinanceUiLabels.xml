@@ -4,7 +4,7 @@
         <value xml:lang="en">BorFinance Application</value>
     </property>
     <property key="BorFinanceCompanyName">
-        <value xml:lang="en">OFBiz: BorFinance</value>
+        <value xml:lang="en">BorFinance</value>
     </property>
     <property key="BorFinanceCompanySubtitle">
         <value xml:lang="en">Part of the Apache OFBiz Family of Open Source Software</value>
