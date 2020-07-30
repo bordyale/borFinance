@@ -127,3 +127,30 @@ $(document).ready(function(){
       </table>
 
 </div>
+
+<div class="table-responsive" style="margin-top: 2.0em">
+<table id="sectors" class="table table-hover table-sm">  
+        <thead>  
+          <tr>  
+            <th>${uiLabelMap.Symbol}</th>   
+            <th>${uiLabelMap.CommonName}</th> 
+            <th>${uiLabelMap.Sector}</th>   
+             
+          </tr>  
+        </thead>  
+        <tbody>  
+        <#list prodsNotInPortfolio as item>
+   
+        	<tr>  
+        		<td>${item.prodSym}</td>  
+        		<td>${item.prodName}</td>
+            	<td><#if item.sectorId?has_content>${item.sectorId}<#else>0</#if></td>
+            	
+          	</tr> 
+	                        
+	    </#list>
+        
+        </tbody>  
+      </table>
+
+</div>
