@@ -20,9 +20,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.Map
 //TO:DO check session locale
-Locale italian = new Locale("it", "IT", "EURO");
-Locale.setDefault(italian);
-DecimalFormat df = new DecimalFormat("###.##");
+
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 prodId = parameters.prodId
 
