@@ -264,7 +264,7 @@
 		</field>
 	</form>
 
-	<form name="ListBfinDividend" type="list" list-name="listIt" paginate-target="findBfinDividend" default-entity-name="BfinProdDivView"
+	<form name="ListBfinDividend" type="list" list-name="listIt" target="updateBfinDividend" paginate-target="findBfinDividend" default-entity-name="BfinDividend"
 		separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
 		<actions>
 			<set field="requestParameters.noConditionFind" value="Y" />
@@ -281,6 +281,9 @@
 		<field name="prodId">
 			<hidden />
 		</field>
+		<field name="divId">
+			<hidden />
+		</field>
 
 		<field name="prodSym" title="${uiLabelMap.Symbol}" sort-field="true">
 			<display />
@@ -292,16 +295,27 @@
 			<display />
 		</field>
 		<field name="amount" title="${uiLabelMap.Amount}" sort-field="true">
-			<display />
+			<text />
+		</field>
+		<field name="divFreqId" title="${uiLabelMap.divFreq}" sort-field="true">
+			<drop-down allow-empty="true">
+				<entity-options entity-name="Enumeration" key-field-name="enumId" description="${description} [${enumCode}]">
+					<entity-constraint name="enumTypeId" value="BFIN_DIVFREQ" />
+					<entity-order-by field-name="sequenceId" />
+				</entity-options>
+			</drop-down>
 		</field>
 		<field name="dateLastCheckForPopulation" title="${uiLabelMap.DateLastCheckForPopulation}" sort-field="true">
 			<display />
+		</field>
+		<field name="submitButton" title="${uiLabelMap.CommonUpdate}">
+			<submit button-type="button" />
 		</field>
 
 		<field name="deleteLink" title=" " widget-style="buttontext">
 			<hyperlink description="${uiLabelMap.CommonDelete}" target="deleteBfinDividend" also-hidden="false"
 				confirmation-message="${uiLabelMap.CommonConfirmDelete}" image-location="${iconsLocation}/delete.png">
-				<parameter param-name="purchId" />
+				<parameter param-name="divId" />
 
 			</hyperlink>
 		</field>
