@@ -50,6 +50,7 @@
 	<view-entity entity-name="BfinPurchaseProdView" package-name="org.apache.ofbiz.borFinance">
 		<member-entity entity-alias="PURCH" entity-name="BfinPurchase" />
 		<alias entity-alias="PURCH" name="prodId" group-by="true" />
+		<alias entity-alias="PURCH" name="brokerId" group-by="true" />
 		<alias entity-alias="PURCH" name="currencyUomId" group-by="true" />
 		<alias entity-alias="PURCH" name="quantity" group-by="true" />
 		<alias entity-alias="PURCH" name="price" group-by="true" />
@@ -65,6 +66,15 @@
 	<view-entity entity-name="BfinPurchaseSumView" package-name="org.apache.ofbiz.borFinance">
 		<member-entity entity-alias="PURCH" entity-name="BfinPurchaseProdView" />
 		<alias entity-alias="PURCH" name="prodId" group-by="true" />
+		<alias entity-alias="PURCH" name="currencyUomId" group-by="true" />
+		<alias entity-alias="PURCH" name="quantitySum" field="quantity" function="sum" />
+		<alias entity-alias="PURCH" name="priceSum" field="priceTot" function="sum" />
+	</view-entity>
+	
+	<view-entity entity-name="BfinPurchaseSumViewBroker" package-name="org.apache.ofbiz.borFinance">
+		<member-entity entity-alias="PURCH" entity-name="BfinPurchaseProdView" />
+		<alias entity-alias="PURCH" name="prodId" group-by="true" />
+		<alias entity-alias="PURCH" name="brokerId" group-by="true" />
 		<alias entity-alias="PURCH" name="currencyUomId" group-by="true" />
 		<alias entity-alias="PURCH" name="quantitySum" field="quantity" function="sum" />
 		<alias entity-alias="PURCH" name="priceSum" field="priceTot" function="sum" />
@@ -90,6 +100,30 @@
 			<key-map field-name="prodId" />
 		</view-link>
 	</view-entity>
+	
+	<view-entity entity-name="BfinPurchaseAvgPriceViewBroker" package-name="org.apache.ofbiz.borFinance">
+		<member-entity entity-alias="PROD" entity-name="BfinProduct" />
+		<member-entity entity-alias="PURCH" entity-name="BfinPurchaseSumViewBroker" />
+		<alias entity-alias="PROD" name="prodSym" group-by="true" />
+		<alias entity-alias="PROD" name="prodName" group-by="true" />
+		<alias entity-alias="PROD" name="sectorId" group-by="true" />
+		<alias entity-alias="PROD" name="prodId" group-by="true" />
+		<alias entity-alias="PURCH" name="currencyUomId" group-by="true" />
+		<alias entity-alias="PURCH" name="brokerId" group-by="true" />
+		<alias entity-alias="PURCH" name="quantitySum" group-by="true" />
+		<alias entity-alias="PURCH" name="priceSum" group-by="true" />
+		<alias name="avgPurchPrice" group-by="true">
+			<complex-alias operator="/">
+				<complex-alias-field entity-alias="PURCH" field="priceSum" />
+				<complex-alias-field entity-alias="PURCH" field="quantitySum" />
+			</complex-alias>
+		</alias>
+		<view-link entity-alias="PROD" rel-entity-alias="PURCH" rel-optional="true">
+			<key-map field-name="prodId" />
+		</view-link>
+	</view-entity>
+	
+	
 
 
 </entitymodel>

@@ -27,15 +27,24 @@ Locale customLocale = new Locale("it", "IT");
 DecimalFormat df = new DecimalFormat("###.##");
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 prodId = parameters.prodId
+brokerId = parameters.brokerId
 
 List filCond = []
 if (prodId) {
 	filCond.add(EntityCondition.makeCondition("prodId", EntityOperator.EQUALS, prodId))
 }
+if (brokerId) {
+	filCond.add(EntityCondition.makeCondition("brokerId", EntityOperator.EQUALS, brokerId))
+}
 
 filCondAND = EntityCondition.makeCondition(filCond, EntityOperator.AND)
+if(brokerId)
+{
+	pricesList = from("BfinPurchaseAvgPriceViewBroker").where(filCondAND).orderBy("prodName").cache(false).queryList()
+}else{
+	pricesList = from("BfinPurchaseAvgPriceView").where(filCondAND).orderBy("prodName").cache(false).queryList()
+}
 
-pricesList = from("BfinPurchaseAvgPriceView").where(filCondAND).orderBy("prodName").cache(false).queryList()
 
 
 sectors = from("Enumeration").where("enumTypeId", "BFIN_SECTOR").orderBy("sequenceId").queryList()
@@ -241,5 +250,9 @@ sectorsList.add(sector)
 context.reportList = hashMaps;
 context.sectorList = sectorsList;
 context.prodsNotInPortfolio = prodsNotInPortfolio;
+
+// brokers
+brokers = from("Enumeration").where("enumTypeId", "BFIN_BROKER").orderBy("sequenceId").queryList()
+context.brokers = brokers
 
 

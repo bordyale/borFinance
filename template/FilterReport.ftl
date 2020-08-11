@@ -30,11 +30,20 @@
 </div>
 
 <div class="table-responsive" style="margin-top: 2.0em">
-  <form action="<@ofbizUrl>findBfinReport</@ofbizUrl>">
+  <form action="<@ofbizUrl>findBfinReport</@ofbizUrl>" method="POST">
     <div class="form-group">
       <label for="text">${uiLabelMap.LookupProduct}</label>
       <input type="text" class="form-control" id="autocomplete-4" name="prodId">
     </div>
+    <div class="form-group">
+    <label for="brokerId">${uiLabelMap.Broker}</label>
+    <select class="form-control" name="brokerId" id="brokerId">
+    	<option disabled selected value> -- select an option -- </option>
+      <#list brokers as broker>
+                <option value="${broker.enumId}">${broker.get("description",locale)}</option>
+      </#list>
+    </select>
+  </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
 
