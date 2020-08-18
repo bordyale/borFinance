@@ -102,15 +102,15 @@
     </property>
     <property key="Quantity">
         <value xml:lang="en">Quantity</value>
-        <value xml:lang="it">Quantitá</value>
+        <value xml:lang="it">Qtá</value>
     </property>
     <property key="AvgBoughtPrice">
         <value xml:lang="en">Avg Bought Price</value>
-        <value xml:lang="it">Prezzo Medio Acquisto</value>
+        <value xml:lang="it">Pr. Med. Acq.</value>
     </property>
     <property key="LastMktPrice">
         <value xml:lang="en">Last Market Price</value>
-        <value xml:lang="it">Ultimo Prezzo Mercato</value>
+        <value xml:lang="it">Pr. Ultimo</value>
     </property>
     <property key="LastMktPriceDate">
         <value xml:lang="en">Last Market Price Date</value>
@@ -118,19 +118,19 @@
     </property>
     <property key="mktValue">
         <value xml:lang="en">Market Value</value>
-        <value xml:lang="it">Valore di mercato</value>
+        <value xml:lang="it">Valore</value>
     </property>
     <property key="mktValueConverted">
         <value xml:lang="en">Market Value USD</value>
-        <value xml:lang="it">Valore di mercato USD</value>
+        <value xml:lang="it">Valore USD</value>
     </property>
     <property key="lastDividend">
         <value xml:lang="en">Last Div</value>
-        <value xml:lang="it">Ultimo Dividendo</value>
+        <value xml:lang="it">Ult.Div.</value>
     </property>
     <property key="lastDividendDate">
         <value xml:lang="en">Last Div Date</value>
-        <value xml:lang="it">Date Ultimo Dividendo</value>
+        <value xml:lang="it">Data Ult.Div.</value>
     </property>
     <property key="currYield">
         <value xml:lang="en">Curr Yield</value>
