@@ -134,7 +134,7 @@
     </property>
     <property key="currYield">
         <value xml:lang="en">Curr Yield</value>
-        <value xml:lang="it">Yield Attuale</value>
+        <value xml:lang="it">Yield Act.</value>
     </property>
     <property key="divFreq">
         <value xml:lang="en">Dividend Frequency</value>
@@ -145,8 +145,8 @@
         <value xml:lang="it">Settore</value>
     </property>
     <property key="Percentage">
-        <value xml:lang="en">Percentage</value>
-        <value xml:lang="it">Percentuale</value>
+        <value xml:lang="en">Port.%</value>
+        <value xml:lang="it">Port.%</value>
     </property>
     <property key="Amount">
         <value xml:lang="en">Amount</value>

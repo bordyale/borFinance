@@ -20,12 +20,12 @@
 			<widgets>
 				<decorator-screen name="BorFinanceCommonDecoratorBs" location="${parameters.mainDecoratorLocation}">
 					<decorator-section name="body">
-
+<!-- 
 						<platform-specific>
 							<html>
 								<html-template location="component://borFinance/template/TableEdit.ftl" />
 							</html>
-						</platform-specific>
+						</platform-specific> -->
 
 					</decorator-section>
 				</decorator-screen>
@@ -117,6 +117,35 @@
 			<widgets>
 				<!-- <include-form name="EditBfinProductBackgroundSubmit" location="component://borFinance/widget/BorFinanceForms.xml" /> -->
 				<include-form name="EditBfinProduct" location="component://borFinance/widget/BorFinanceForms.xml" />
+			</widgets>
+		</section>
+	</screen>
+
+	<screen name="BfinPurchase2">
+		<section>
+			<actions>
+				<set field="titleProperty" value="PageTitleFindBfinPurchase" />
+				<set field="headerItem" value="BfinPurchase" />
+				<script location="component://borFinance/groovyScripts/ListPurchase.groovy" />
+			</actions>
+			<widgets>
+				<decorator-screen name="BorFinanceCommonDecoratorBs" location="${parameters.mainDecoratorLocation}">
+					<decorator-section name="body">
+
+
+						 <!-- <platform-specific>
+							<html>
+								<html-template location="component://borFinance/template/FindBfinPurchase.ftl" />
+							</html>
+						</platform-specific> -->
+
+						<platform-specific>
+							<html>
+								<html-template location="component://borFinance/template/ListBfinPurchase.ftl" />
+							</html>
+						</platform-specific>
+					</decorator-section>
+				</decorator-screen>
 			</widgets>
 		</section>
 	</screen>
@@ -295,7 +324,7 @@
 						<!-- <label style="h4" text="${uiLabelMap.BfinReport}" /> -->
 
 
-						<platform-specific>
+						 <platform-specific>
 							<html>
 								<html-template location="component://borFinance/template/FilterReport.ftl" />
 							</html>

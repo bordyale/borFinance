@@ -20,13 +20,16 @@ under the License.
 <script language="JavaScript" type="text/javascript">
 
 $(document).ready(function(){
-    $('#myTable').dataTable({
-        dom: 'Bfrtip',
-        buttons: [
+    $('#myTable').DataTable({
+       "sPaginationType": "full_numbers",
+		dom: 'Bfrtip',        // Needs button container
+          select: 'single',
+          responsive: true,
+          buttons: [
             'colvis'
-        ],
-       "pageLength": 30,
-       "columns": [
+          ],
+          "pageLength": 30,
+          "columns": [
     			null,
     			null,
     			null,
@@ -34,16 +37,16 @@ $(document).ready(function(){
 			    { "type": "numeric-comma" },
     			{ "type": "numeric-comma" },
     			{ "type": "numeric-comma" },
+			    { "type": "numeric-comma" },
 			    { "type": "numeric-comma" },    		
     			{ "type": "numeric-comma" },
-    			null,
-    			null,
     			{ "type": "numeric-comma" },
+    			null,
 			    null,
     			null
-  ]
-     
-    } );
+  		]
+  });
+   
     
 
 
@@ -67,10 +70,10 @@ $(document).ready(function(){
             <th>${uiLabelMap.MktGainPerc}</th>
             <th>${uiLabelMap.mktValue}</th>
             <th>${uiLabelMap.mktValueConverted}</th>
+            <th>${uiLabelMap.Percentage}</th>
             <th>${uiLabelMap.currYield}</th>
             <th>${uiLabelMap.lastDividend}</th>
-            <th>${uiLabelMap.lastDividendDate}</th>
-            <th>${uiLabelMap.percentage}</th>
+            <th>${uiLabelMap.lastDividendDate}</th>            
             <th>${uiLabelMap.CommonName}</th> 
             <th>${uiLabelMap.LastMktPriceDate}</th> 
           </tr>  
@@ -87,10 +90,11 @@ $(document).ready(function(){
             	<td><#if item.mktGainPerc?has_content>${item.mktGainPerc} %<#else>0</#if></td>
             	<td><#if item.mktValue?has_content>${item.mktValue}<#else>0</#if></td>
             	<td><#if item.mktValueConverted?has_content>${item.mktValueConverted}<#else>0</#if></td>
+            	<td><#if item.percentage?has_content>${item.percentage}<#else></#if>%</td>
             	<td><#if item.currYield?has_content>${item.currYield}<#else></#if>%</td>
             	<td><#if item.lastDividend?has_content>${item.lastDividend}<#else>0</#if></td>
             	<td><#if item.lastDividendDate?has_content>${item.lastDividendDate}<#else>0</#if></td>
-            	<td><#if item.percentage?has_content>${item.percentage}<#else></#if>%</td>
+            	
             	<td>${item.prodName}</td>
             	<td><#if item.lastMktPriceDate?has_content>${item.lastMktPriceDate}<#else>0</#if></td>
           	</tr> 
