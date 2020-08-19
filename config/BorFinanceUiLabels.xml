@@ -121,8 +121,8 @@
         <value xml:lang="it">Valore</value>
     </property>
     <property key="mktValueConverted">
-        <value xml:lang="en">Market Value USD</value>
-        <value xml:lang="it">Valore USD</value>
+        <value xml:lang="en">Market Value$</value>
+        <value xml:lang="it">Valore$</value>
     </property>
     <property key="lastDividend">
         <value xml:lang="en">Last Div</value>
@@ -149,8 +149,8 @@
         <value xml:lang="it">Port.%</value>
     </property>
     <property key="Amount">
-        <value xml:lang="en">Amount</value>
-        <value xml:lang="it">Ammontare</value>
+        <value xml:lang="en">Amount(base currency)</value>
+        <value xml:lang="it">Ult.Div.(base currency)</value>
     </property>
     
     <property key="Type">

@@ -170,6 +170,9 @@
 		<field name="quantity" title="${uiLabelMap.Quantity}" sort-field="true">
 			<text />
 		</field>
+		<field name="currencyUomId" title="${uiLabelMap.CommonCurrency}" sort-field="true">
+			<text />
+		</field>
 		<field name="price" title="${uiLabelMap.Price}" sort-field="true">
 			<text />
 		</field>
