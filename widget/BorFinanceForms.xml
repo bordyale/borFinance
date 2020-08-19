@@ -406,7 +406,7 @@
 		<field name="deleteLink" title=" " widget-style="buttontext">
 			<hyperlink description="${uiLabelMap.CommonDelete}" target="deleteBfinPrice" also-hidden="false"
 				confirmation-message="${uiLabelMap.CommonConfirmDelete}" image-location="${iconsLocation}/delete.png">
-				<parameter param-name="purchId" />
+				<parameter param-name="priceId" />
 
 			</hyperlink>
 		</field>
