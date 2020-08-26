@@ -28,13 +28,19 @@ DecimalFormat df = new DecimalFormat("###.##");
 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 prodId = parameters.prodId
 brokerId = parameters.brokerId
+sectorId = parameters.sectorId
 
 List filCond = []
 if (prodId) {
 	filCond.add(EntityCondition.makeCondition("prodId", EntityOperator.EQUALS, prodId))
+}else{
+	prodId=""
 }
 if (brokerId) {
 	filCond.add(EntityCondition.makeCondition("brokerId", EntityOperator.EQUALS, brokerId))
+}
+if (sectorId) {
+	filCond.add(EntityCondition.makeCondition("sectorId", EntityOperator.EQUALS, sectorId))
 }
 
 filCondAND = EntityCondition.makeCondition(filCond, EntityOperator.AND)
@@ -254,5 +260,7 @@ context.prodsNotInPortfolio = prodsNotInPortfolio;
 // brokers
 brokers = from("Enumeration").where("enumTypeId", "BFIN_BROKER").orderBy("sequenceId").queryList()
 context.brokers = brokers
+context.sectors = sectors
+
 
 

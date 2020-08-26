@@ -316,6 +316,9 @@
 			<actions>
 				<set field="titleProperty" value="PageTitleFindBfinReport" />
 				<set field="headerItem" value="BfinReport" />
+				<set field="prodId" from-field="parameters.prodId"/>
+				<set field="brokerId" from-field="parameters.brokerId"/>
+				<set field="sectorId" from-field="parameters.sectorId"/>
 				<script location="component://borFinance/groovyScripts/ListReport.groovy" />
 			</actions>
 			<widgets>

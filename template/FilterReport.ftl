@@ -33,14 +33,21 @@
   <form action="<@ofbizUrl>findBfinReport</@ofbizUrl>" method="POST">
     <div class="form-group">
       <label for="text">${uiLabelMap.LookupProduct}</label>
-      <input type="text" class="form-control" id="autocomplete-4" name="prodId">
+      <input type="text" class="form-control" id="autocomplete-4" name="prodId" value="<#if (prodId)?has_content>${prodId}</#if>">
     </div>
     <div class="form-group">
     <label for="brokerId">${uiLabelMap.Broker}</label>
-    <select class="form-control" name="brokerId" id="brokerId">
-    	<option disabled selected value> -- select an option -- </option>
+    <select class="form-control" name="brokerId" id="brokerId" >
+    	<option disabled <#if !(brokerId)?has_content>selected</#if> value> -- select an option -- </option>
       <#list brokers as broker>
-                <option value="${broker.enumId}">${broker.get("description",locale)}</option>
+                <option value="${broker.enumId}" <#if broker.enumId.equals(brokerId)>selected</#if>>${broker.get("description",locale)}</option>
+      </#list>
+    </select>
+    <label for="brokerId">${uiLabelMap.Sector}</label>
+    <select class="form-control" name="sectorId" id="sectorId">
+    	<option disabled <#if !(sectorId)?has_content>selected</#if> value> -- select an option -- </option>
+      <#list sectors as sector>
+                <option value="${sector.enumId}" <#if sector.enumId.equals(sectorId)>selected</#if>>${sector.get("description",locale)}</option>
       </#list>
     </select>
   </div>
