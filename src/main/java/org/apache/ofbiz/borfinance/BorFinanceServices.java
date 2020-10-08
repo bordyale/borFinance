@@ -23,6 +23,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.net.HttpURLConnection;
+import java.net.URLConnection;
 import java.net.URL;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -58,6 +59,14 @@ import org.json.JSONObject;
 import org.json.JSONException;
 import java.util.Locale;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+import java.security.cert.X509Certificate;
+
 /**
  * Services for Agreement (Accounting)
  */
@@ -74,9 +83,9 @@ public class BorFinanceServices {
 			"NRXCKC71QSMJQZYA", "NRXCKC71QSMJQZYA", "NRXCKC71QSMJQZYA", "NRXCKC71QSMJQZYA" };
 
 	public static Map<String, Object> populateDividendTable(DispatchContext ctx, Map<String, Object> context) {
-		//TO:DO remove locale set default
-		//Locale us = new Locale("en", "US", "USD");
-		//Locale.setDefault(us);
+		// TO:DO remove locale set default
+		Locale us = new Locale("en", "US", "USD");
+		Locale.setDefault(us);
 		Delegator delegator = ctx.getDelegator();
 		LocalDispatcher dispatcher = ctx.getDispatcher();
 		Locale locale = (Locale) context.get("locale");
@@ -127,13 +136,13 @@ public class BorFinanceServices {
 					c.setTime(new Date());
 					int backDayytocheck = -1;
 					c.add(Calendar.DATE, backDayytocheck);
-					if (lastDividendStoredDateCheck!= null && c.getTime().compareTo(lastDividendStoredDateCheck) < 0) {
+					if (lastDividendStoredDateCheck != null && c.getTime().compareTo(lastDividendStoredDateCheck) < 0) {
 						Debug.logWarning(symbol + " " + "LAST DIVIDEND ALREADY SAVED IN THE LAST " + backDayytocheck + " DAYS, SKiP API REQUEST", module);
 						continue;
 					}
 				}
 				i++;
-				JSONObject resp = sendGet(symbol, apikey[0]);
+				JSONObject resp = sendGet(symbol, apikey[5]);
 				JSONObject arr;
 				try {
 					arr = resp.getJSONObject("Monthly Adjusted Time Series");
@@ -262,17 +271,43 @@ public class BorFinanceServices {
 
 	private static JSONObject sendGet(String symbol, String apikey) throws Exception {
 
+		// Create a trust manager that does not validate certificate chains
+		TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+			public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+				return null;
+			}
+
+			public void checkClientTrusted(X509Certificate[] certs, String authType) {
+			}
+
+			public void checkServerTrusted(X509Certificate[] certs, String authType) {
+			}
+		} };
+
+		// Install the all-trusting trust manager
+		SSLContext sc = SSLContext.getInstance("SSL");
+		sc.init(null, trustAllCerts, new java.security.SecureRandom());
+		HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+		// Create all-trusting host name verifier
+		HostnameVerifier allHostsValid = new HostnameVerifier() {
+			public boolean verify(String hostname, SSLSession session) {
+				return true;
+			}
+		};
+
+		// Install the all-trusting host verifier
+		HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+		
+		
+        
+
 		String url = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=" + symbol + "&apikey=" + apikey + "\"";
 
 		URL obj = new URL(url);
-		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		URLConnection con = obj.openConnection();
 
-		// optional default is GET
-		con.setRequestMethod("GET");
-
-		// add request header
-		con.setRequestProperty("User-Agent", USER_AGENT);
-
+		
 		// int responseCode = con.getResponseCode();
 		// System.out.println("\nSending 'GET' request to URL : " + url);
 		// System.out.println("Response Code : " + responseCode);
