@@ -87,6 +87,10 @@
 		auth="true">
 		<description>Populate Dividend Table Job</description>
 	</service>
+	<service name="populPriceEODH" engine="java" location="org.apache.ofbiz.borfinance.BorFinanceServices" invoke="populPriceEODH"
+		auth="true">
+		<description>Populate populPriceEODH table Job</description>
+	</service>
 
 
 

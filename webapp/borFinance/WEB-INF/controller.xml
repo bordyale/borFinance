@@ -10,6 +10,16 @@
 
 
 
+	<request-map uri="populPriceEODH">
+		<security https="true" auth="true" />
+		<event type="service" path="" invoke="populPriceEODH" />
+		<response name="success" type="view" value="findBfinPrice">
+
+		</response>
+		<response name="error" type="view" value="findBfinPrice">
+
+		</response>
+	</request-map>
 	<request-map uri="populateDividendTable">
 		<security https="true" auth="true" />
 		<event type="service" path="" invoke="populateDividendTable" />

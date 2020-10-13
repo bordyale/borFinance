@@ -55,6 +55,7 @@
 			<drop-down allow-empty="true">
 				<option key="Y" description="${uiLabelMap.CommonY}" />
 				<option key="N" description="${uiLabelMap.CommonN}" />
+				<option key="EODH" description="${uiLabelMap.EODHistorical}" />
 			</drop-down>
 		</field>
 		<field name="note" title="${uiLabelMap.Note}" sort-field="true">
@@ -127,6 +128,7 @@
 			<drop-down allow-empty="true">
 				<option key="Y" description="${uiLabelMap.CommonY}" />
 				<option key="N" description="${uiLabelMap.CommonN}" />
+				<option key="EODH" description="${uiLabelMap.EODHistorical}" />
 			</drop-down>
 		</field>
 		<field name="note" title="${uiLabelMap.Note}" sort-field="true">

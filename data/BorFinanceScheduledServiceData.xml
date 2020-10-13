@@ -1,33 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-Licensed to the Apache Software Foundation (ASF) under one
-or more contributor license agreements.  See the NOTICE file
-distributed with this work for additional information
-regarding copyright ownership.  The ASF licenses this file
-to you under the Apache License, Version 2.0 (the
-"License"); you may not use this file except in compliance
-with the License.  You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing,
-software distributed under the License is distributed on an
-"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-KIND, either express or implied.  See the License for the
-specific language governing permissions and limitations
-under the License.
--->
+<!-- Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed 
+	with this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, 
+	Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License 
+	at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable law or agreed to in writing, software distributed under 
+	the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License 
+	for the specific language governing permissions and limitations under the License. -->
 
 <entity-engine-xml>
-    
-    
-    <RecurrenceRule recurrenceRuleId="BFIND" untilDateTime="" frequency="MINUTELY" intervalNumber="5" countNumber="-1"/>
-    <RecurrenceInfo recurrenceInfoId="BFIND" startDateTime="2000-01-01 00:00:00.000" recurrenceRuleId="BFIND" recurrenceCount="0"/>
-    <JobSandbox jobId="BFIND" jobName="populateDividendTable" runTime="2000-01-01 00:00:00.000" serviceName="populateDividendTable" poolId="pool" runAsUser="admin" recurrenceInfoId="BFIND"/>
-    
-    <!-- The following three elements set up a regularly scheduled job that will automatically create
-        fixed asset maintenances from ProductMaint time intervals. -->
-    <!-- <TemporalExpression tempExprId="FAM_AUTO_CREATE" tempExprTypeId="FREQUENCY" description="Every Hour" integer1="12" integer2="60"/>
-    <JobSandbox jobId="FAM_AUTO_CREATE" jobName="Auto-create Fixed Asset Maintenances" runTime="2000-01-01 00:00:00.000" serviceName="createMaintsFromTimeInterval" poolId="pool" runAsUser="system" tempExprId="FAM_AUTO_CREATE" maxRecurrenceCount="-1"/> -->
-    
+
+
+	<RecurrenceRule recurrenceRuleId="BFIND" untilDateTime="" frequency="MINUTELY" intervalNumber="5" countNumber="-1" />
+	<RecurrenceInfo recurrenceInfoId="BFIND" startDateTime="2000-01-01 00:00:00.000" recurrenceRuleId="BFIND"
+		recurrenceCount="0" />
+	<JobSandbox jobId="BFIND" jobName="populateDividendTable" runTime="2000-01-01 00:00:00.000" serviceName="populateDividendTable"
+		poolId="pool" runAsUser="admin" recurrenceInfoId="BFIND" />
+
+	<RecurrenceRule recurrenceRuleId="BFINDD" untilDateTime="" frequency="DAILY" intervalNumber="1" countNumber="-1" />
+	<RecurrenceInfo recurrenceInfoId="BFINDD" startDateTime="2000-01-01 00:00:00.000" recurrenceRuleId="BFINDD"
+		recurrenceCount="0" />
+
+
+	<JobSandbox jobId="BFINDD" jobName="populPriceEODH" runTime="2000-01-01 00:00:00.000" serviceName="populPriceEODH" poolId="pool"
+		runAsUser="admin" recurrenceInfoId="BFINDD" />
+
+	<!-- The following three elements set up a regularly scheduled job that will automatically create fixed asset maintenances from ProductMaint 
+		time intervals. -->
+	<!-- <TemporalExpression tempExprId="FAM_AUTO_CREATE" tempExprTypeId="FREQUENCY" description="Every Hour" integer1="12" integer2="60"/> 
+		<JobSandbox jobId="FAM_AUTO_CREATE" jobName="Auto-create Fixed Asset Maintenances" runTime="2000-01-01 00:00:00.000" serviceName="createMaintsFromTimeInterval" 
+		poolId="pool" runAsUser="system" tempExprId="FAM_AUTO_CREATE" maxRecurrenceCount="-1"/> -->
+
 </entity-engine-xml>
