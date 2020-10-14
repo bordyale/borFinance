@@ -60,6 +60,7 @@ import org.apache.ofbiz.service.ServiceUtil;
 import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
+
 import java.util.Locale;
 
 import javax.net.ssl.HostnameVerifier;
@@ -68,6 +69,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+
 import java.security.cert.X509Certificate;
 
 /**
@@ -85,7 +87,122 @@ public class BorFinanceServices {
 			"TCWC4KTESJIY8UL5", "TCWC4KTESJIY8UL5", "TCWC4KTESJIY8UL5", "WRFKAPP9TCNWQUKC", "WRFKAPP9TCNWQUKC", "WRFKAPP9TCNWQUKC", "WRFKAPP9TCNWQUKC", "WRFKAPP9TCNWQUKC", "NRXCKC71QSMJQZYA",
 			"NRXCKC71QSMJQZYA", "NRXCKC71QSMJQZYA", "NRXCKC71QSMJQZYA", "NRXCKC71QSMJQZYA" };
 
+	public static Map<String, Object> populDataYahooFin(DispatchContext ctx, Map<String, Object> context) {
+
+		Debug.logWarning("Executing populDataYahooFin", module);
+
+		Map<String, Object> result = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+		Locale locale = (Locale) context.get("locale");
+		LocalDispatcher dispatcher = ctx.getDispatcher();
+		String errMsg = null;
+		GenericValue userLogin = (GenericValue) context.get("userLogin");
+
+		long startTime = System.currentTimeMillis();
+		try {
+			List<EntityExpr> exprs = UtilMisc.toList(EntityCondition.makeCondition("productType", EntityOperator.EQUALS, "STOCK"),
+					EntityCondition.makeCondition("skipApi", EntityOperator.EQUALS, "EODH"));
+			EntityCondition cond = EntityCondition.makeCondition(exprs, EntityOperator.AND);
+			List<GenericValue> conditions = EntityQuery.use(delegator).from("BfinProduct").where(cond).orderBy("prodId ASC").queryList();
+
+			SortedMap<String, Date> divMap = new TreeMap<String, Date>();
+			for (GenericValue stock : conditions) {
+				String symbol = (String) stock.get("prodSym");
+				String prodId = (String) stock.get("prodId");
+				String divFreqId = (String) stock.get("divFreqId");
+				// String skipApi = (String) stock.get("skipApi");
+
+				// Create a Map with symbol and last saved dividend.
+				Calendar c = Calendar.getInstance();
+				c.setTime(new Date());
+				int backDayytocheck = -180;
+				c.add(Calendar.DATE, backDayytocheck);
+				GenericValue lastSavedDividend = EntityQuery.use(delegator).from("BfinDividend").where("prodId", prodId).cache().orderBy("date DESC").queryFirst();
+				if (lastSavedDividend != null) {
+					Date divDate = (Date) lastSavedDividend.get("dateLastCheckForPopulation");
+					if (divDate == null) {
+						divDate = c.getTime();
+					}
+					divMap.put((String) lastSavedDividend.get("divId"), divDate);
+				} else {
+					divMap.put((String) lastSavedDividend.get("divId"), c.getTime());
+				}
+
+			}
+			// sort the map by value
+			Map<String, Date> sortedDivMap = divMap.entrySet().stream().sorted(Map.Entry.comparingByValue())
+					.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+
+			int i = 0;
+			for (String divId : sortedDivMap.keySet()) {
+
+				GenericValue lastSavedDividend = EntityQuery.use(delegator).from("BfinDividend").where("divId", divId).cache().queryFirst();
+				String prodId = (String) lastSavedDividend.get("prodId");
+				GenericValue product = EntityQuery.use(delegator).from("BfinProduct").where("prodId", prodId).cache().queryFirst();
+				String symbol = (String) product.get("prodSym");
+				String divFreqId = (String) product.get("divFreqId");
+
+				// Debug.logWarning("POPULPRICE: " + key + " " + symbol + " " +
+				// sortedPriceMap.get(key), module);
+
+				String url = "https://rapidapi.p.rapidapi.com/stock/v2/get-summary?symbol=" + symbol;
+
+				Map<String, String> headers = UtilMisc.toMap("x-rapidapi-host", "apidojo-yahoo-finance-v1.p.rapidapi.com", "x-rapidapi-key", "ed85e408ccmshd4093ee8f8f03a6p1b071bjsne338369de93a");
+				String resp = sendGet(url, headers);
+				if (resp == null) {
+					Map<String, String> messageMap = UtilMisc.toMap("errMessage", "error populDataYahooFin");
+					errMsg = UtilProperties.getMessage(resource, "populDataYahooFin", messageMap, locale);
+					return ServiceUtil.returnError(errMsg);
+				}
+				JSONObject respJson = new JSONObject(resp);
+
+				JSONObject defaultKeyStatistics = respJson.getJSONObject("defaultKeyStatistics");
+
+				BigDecimal lastDividendValue = BigDecimal.valueOf((Double) defaultKeyStatistics.getJSONObject("lastDividendValue").get("raw"));
+				String lastDividendDate = defaultKeyStatistics.getJSONObject("lastDividendDate").getString("fmt");
+
+				Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(lastDividendDate);
+
+				Date lastSavedPDate = (Date) lastSavedDividend.get("date");
+				if (date1.compareTo(lastSavedPDate) > 0) {
+					// System.out.println("Date 1 occurs after Date 2");
+					try {
+						if (lastDividendValue.compareTo(BigDecimal.ZERO) != 0) {
+							Map<String, Object> tmpResult = dispatcher.runSync("createBfinDividend", UtilMisc.<String, Object> toMap("userLogin", userLogin, "prodId", prodId,
+									"dateLastCheckForPopulation", new Date(), "divFreqId", divFreqId, "amount", lastDividendValue, "date", date1));
+						}
+					} catch (GenericServiceException e) {
+						Debug.logError(e, module);
+					}
+				}
+
+				// API limit x day
+				if (i >= 10) {
+					break;
+				}
+				i++;
+			}
+		} catch (GenericEntityException e) {
+			Debug.logWarning(e, module);
+			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
+			errMsg = UtilProperties.getMessage(resource, "RefRevenueZero", messageMap, locale);
+			return ServiceUtil.returnError(errMsg);
+		} catch (Exception e) {
+			long stopTime = System.currentTimeMillis();
+			long elapsedTime = stopTime - startTime;
+			Debug.logWarning("Exiting populPriceEODH JOB time with exception: " + elapsedTime, module);
+			Debug.logWarning(e, module);
+			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
+			errMsg = UtilProperties.getMessage(resource, "populPrice", messageMap, locale);
+			return ServiceUtil.returnError(errMsg);
+		}
+
+		return result;
+	}
+
 	public static Map<String, Object> populPriceEODH(DispatchContext ctx, Map<String, Object> context) {
+
+		Debug.logWarning("Executing populPriceEODH", module);
 
 		Map<String, Object> result = ServiceUtil.returnSuccess();
 		Delegator delegator = ctx.getDelegator();
@@ -100,11 +217,10 @@ public class BorFinanceServices {
 		d.setTime(today);
 		int dayOfWeek = d.get(Calendar.DAY_OF_WEEK);
 
-		/*
-		 * if (dayOfWeek == 1 || dayOfWeek == 2) { Debug.logWarning("ON DAY: " +
-		 * new SimpleDateFormat("EE").format(today) +
-		 * " DON'T EXECUTE populPrice()", module); return result; }
-		 */
+		if (dayOfWeek == 1 || dayOfWeek == 2) {
+			Debug.logWarning("ON DAY: " + new SimpleDateFormat("EE").format(today) + " DON'T EXECUTE populPriceEODH()", module);
+			return result;
+		}
 
 		long startTime = System.currentTimeMillis();
 		try {
@@ -146,10 +262,11 @@ public class BorFinanceServices {
 				GenericValue product = EntityQuery.use(delegator).from("BfinProduct").where("prodId", key).cache().queryFirst();
 				String symbol = (String) product.get("prodSym");
 
-				Debug.logWarning("POPULPRICE: " + key + " " + symbol + " " + sortedPriceMap.get(key), module);
+				// Debug.logWarning("POPULPRICE: " + key + " " + symbol + " " +
+				// sortedPriceMap.get(key), module);
 
 				String url = "https://eodhistoricaldata.com/api/eod/" + symbol + "?order=d&api_token=5eaaa2678afb71.95618257&period=d&fmt=json";
-				String resp = sendGet(url);
+				String resp = sendGet(url, null);
 				if (resp == null) {
 					Map<String, String> messageMap = UtilMisc.toMap("errMessage", "error eodhistoricaldata");
 					errMsg = UtilProperties.getMessage(resource, "eodhistoricaldata", messageMap, locale);
@@ -159,7 +276,7 @@ public class BorFinanceServices {
 				JSONObject lastDay = arr.getJSONObject(0);
 
 				String date = (String) lastDay.get("date");
-				BigDecimal lastClosePrice = BigDecimal.valueOf((Double)lastDay.get("close"));
+				BigDecimal lastClosePrice = BigDecimal.valueOf((Double) lastDay.get("close"));
 
 				Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(date);
 				Date lastSavedPDate = (Date) sortedPriceMap.get(key);
@@ -187,7 +304,7 @@ public class BorFinanceServices {
 		} catch (Exception e) {
 			long stopTime = System.currentTimeMillis();
 			long elapsedTime = stopTime - startTime;
-			Debug.logWarning("Exiting populPrice JOB time with exception: " + elapsedTime, module);
+			Debug.logWarning("Exiting populPriceEODH JOB time with exception: " + elapsedTime, module);
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 			errMsg = UtilProperties.getMessage(resource, "populPrice", messageMap, locale);
@@ -198,6 +315,8 @@ public class BorFinanceServices {
 	}
 
 	public static Map<String, Object> populateDividendTable(DispatchContext ctx, Map<String, Object> context) {
+
+		Debug.logWarning("Executing populateDividendTable", module);
 		// TO:DO remove locale set default
 		Locale us = new Locale("en", "US", "USD");
 		Locale.setDefault(us);
@@ -258,7 +377,7 @@ public class BorFinanceServices {
 				}
 				i++;
 				String url = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=" + symbol + "&apikey=" + apikey[5] + "\"";
-				String respStr = sendGet(url);
+				String respStr = sendGet(url, null);
 				// TODO: check if respStr == null;
 				JSONObject resp = new JSONObject(respStr);
 				JSONObject arr;
@@ -387,7 +506,7 @@ public class BorFinanceServices {
 		return result;
 	}
 
-	private static String sendGet(String url) throws Exception {
+	private static String sendGet(String url, Map<String, String> headers) throws Exception {
 
 		// Create a trust manager that does not validate certificate chains
 		TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
@@ -419,6 +538,12 @@ public class BorFinanceServices {
 
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		if (headers != null) {
+			for (String key : headers.keySet()) {
+				con.setRequestProperty(key, headers.get(key));
+
+			}
+		}
 		// URLConnection con = obj.openConnection();
 
 		int code = con.getResponseCode();

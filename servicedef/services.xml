@@ -91,6 +91,11 @@
 		auth="true">
 		<description>Populate populPriceEODH table Job</description>
 	</service>
+	
+	<service name="populDataYahooFin" engine="java" location="org.apache.ofbiz.borfinance.BorFinanceServices" invoke="populDataYahooFin"
+		auth="true">
+		<description>Populate populDataYahooFin table Job</description>
+	</service>
 
 
 

@@ -22,6 +22,16 @@
 
 	<JobSandbox jobId="BFINDD" jobName="populPriceEODH" runTime="2000-01-01 00:00:00.000" serviceName="populPriceEODH" poolId="pool"
 		runAsUser="admin" recurrenceInfoId="BFINDD" />
+		
+		
+		
+	<RecurrenceRule recurrenceRuleId="BFINDDD" untilDateTime="" frequency="DAILY" intervalNumber="5" countNumber="-1" />
+	<RecurrenceInfo recurrenceInfoId="BFINDDD" startDateTime="2000-01-01 00:00:00.000" recurrenceRuleId="BFINDDD"
+		recurrenceCount="0" />
+
+
+	<JobSandbox jobId="BFINDDD" jobName="populDataYahooFin" runTime="2000-01-01 00:00:00.000" serviceName="populDataYahooFin" poolId="pool"
+		runAsUser="admin" recurrenceInfoId="BFINDDD" />
 
 	<!-- The following three elements set up a regularly scheduled job that will automatically create fixed asset maintenances from ProductMaint 
 		time intervals. -->
