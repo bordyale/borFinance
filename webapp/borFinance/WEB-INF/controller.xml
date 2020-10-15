@@ -10,6 +10,16 @@
 
 
 
+	<request-map uri="sendBfinEmail">
+		<security https="true" auth="true" />
+		<event type="service" path="" invoke="sendBfinEmail" />
+		<response name="success" type="view" value="findBfinDividend">
+
+		</response>
+		<response name="error" type="view" value="findBfinDividend">
+
+		</response>
+	</request-map>
 
 	<request-map uri="populDataYahooFin">
 		<security https="true" auth="true" />

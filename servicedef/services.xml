@@ -96,6 +96,11 @@
 		auth="true">
 		<description>Populate populDataYahooFin table Job</description>
 	</service>
+	
+	<service name="sendBfinEmail" engine="java" location="org.apache.ofbiz.borfinance.BorFinanceServices" invoke="sendBfinEmail"
+		auth="true">
+		<description>Populate populDataYahooFin table Job</description>
+	</service>
 
 
 

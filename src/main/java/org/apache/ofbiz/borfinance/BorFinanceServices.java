@@ -45,6 +45,7 @@ import org.apache.ofbiz.base.util.UtilDateTime;
 import org.apache.ofbiz.base.util.UtilMisc;
 import org.apache.ofbiz.base.util.UtilNumber;
 import org.apache.ofbiz.base.util.UtilProperties;
+import org.apache.ofbiz.base.util.UtilValidate;
 import org.apache.ofbiz.entity.Delegator;
 import org.apache.ofbiz.entity.GenericEntityException;
 import org.apache.ofbiz.service.GenericServiceException;
@@ -81,13 +82,42 @@ public class BorFinanceServices {
 	public static final String module = BorFinanceServices.class.getName();
 
 	public static final String resource = "BorFinanceUiLabels";
+	public static final String emailTo = "alessio.bordignon@gmail.com";
+	public static final String emailFrom = "alessio.bordignon@gmail.com";
+	public static final String emailSbjct = module + " ";
 	private static final String USER_AGENT = "Mozilla/5.0";
 
 	private static final String[] apikey = { "IJMOD1FFWEBG5VWY", "IJMOD1FFWEBG5VWY", "IJMOD1FFWEBG5VWY", "IJMOD1FFWEBG5VWY", "IJMOD1FFWEBG5VWY", "TCWC4KTESJIY8UL5", "TCWC4KTESJIY8UL5",
 			"TCWC4KTESJIY8UL5", "TCWC4KTESJIY8UL5", "TCWC4KTESJIY8UL5", "WRFKAPP9TCNWQUKC", "WRFKAPP9TCNWQUKC", "WRFKAPP9TCNWQUKC", "WRFKAPP9TCNWQUKC", "WRFKAPP9TCNWQUKC", "NRXCKC71QSMJQZYA",
 			"NRXCKC71QSMJQZYA", "NRXCKC71QSMJQZYA", "NRXCKC71QSMJQZYA", "NRXCKC71QSMJQZYA" };
 
-	public static Map<String, Object> populDataYahooFin(DispatchContext ctx, Map<String, Object> context) {
+	public static void sendBfinEmailVoid(LocalDispatcher dispatcher, GenericValue userLogin, Map<String, String> ctx) {
+
+		String errMsg = null;
+
+		Map<String, Object> sendMap = new HashMap<String, Object>();
+		sendMap.put("userLogin", userLogin);
+		sendMap.put("subject", emailSbjct + ctx.get("subject"));
+
+		sendMap.put("sendFrom", emailFrom);
+
+		sendMap.put("sendTo", emailTo);
+		sendMap.put("body", ctx.get("body"));
+
+		try {
+
+			dispatcher.runSync("sendMail", sendMap);
+
+		} catch (GenericServiceException e) {
+
+			Debug.logError(e, errMsg, module);
+
+		}
+		return;
+
+	}
+
+	public static Map<String, Object> sendBfinEmail(DispatchContext ctx, Map<String, Object> context) {
 
 		Debug.logWarning("Executing populDataYahooFin", module);
 
@@ -98,6 +128,44 @@ public class BorFinanceServices {
 		String errMsg = null;
 		GenericValue userLogin = (GenericValue) context.get("userLogin");
 
+		/*
+		 * Map<String, Object> sendMap = new HashMap<String, Object>();
+		 * sendMap.put("userLogin", userLogin); sendMap.put("subject", "test");
+		 * 
+		 * sendMap.put("sendFrom", "alessio.bordignon@gmail.com");
+		 * 
+		 * sendMap.put("sendTo", "alessio.bordignon@gmail.com");
+		 * sendMap.put("body", "body Test");
+		 * 
+		 * try {
+		 * 
+		 * dispatcher.runSync("sendMail", sendMap);
+		 * 
+		 * } catch (GenericServiceException e) {
+		 * 
+		 * Debug.logError(e, errMsg, module); return
+		 * ServiceUtil.returnError(errMsg); }
+		 */
+		sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "test email", "body", "prova body"));
+
+		return result;
+	}
+
+	public static Map<String, Object> populDataYahooFin(DispatchContext ctx, Map<String, Object> context) {
+
+		LocalDispatcher dispatcher = ctx.getDispatcher();
+		
+		Debug.logWarning("Executing populDataYahooFin", module);
+
+		Map<String, Object> result = ServiceUtil.returnSuccess();
+		Delegator delegator = ctx.getDelegator();
+		Locale locale = (Locale) context.get("locale");
+		
+		String errMsg = null;
+		GenericValue userLogin = (GenericValue) context.get("userLogin");
+
+		sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populDataYahooFin", "body", "populDataYahooFin exec"));
+		
 		long startTime = System.currentTimeMillis();
 		try {
 			List<EntityExpr> exprs = UtilMisc.toList(EntityCondition.makeCondition("productType", EntityOperator.EQUALS, "STOCK"),
@@ -124,6 +192,9 @@ public class BorFinanceServices {
 						divDate = c.getTime();
 					}
 					divMap.put((String) lastSavedDividend.get("divId"), divDate);
+					dispatcher
+							.runSync("updateBfinDividend", UtilMisc.<String, Object> toMap("divId", lastSavedDividend.get("divId"), "dateLastCheckForPopulation", new Date(), "userLogin", userLogin));
+
 				} else {
 					divMap.put((String) lastSavedDividend.get("divId"), c.getTime());
 				}
@@ -147,7 +218,9 @@ public class BorFinanceServices {
 
 				String url = "https://rapidapi.p.rapidapi.com/stock/v2/get-summary?symbol=" + symbol;
 
+				
 				Map<String, String> headers = UtilMisc.toMap("x-rapidapi-host", "apidojo-yahoo-finance-v1.p.rapidapi.com", "x-rapidapi-key", "ed85e408ccmshd4093ee8f8f03a6p1b071bjsne338369de93a");
+				Debug.logWarning("populDataYahooFin: " + symbol, module);
 				String resp = sendGet(url, headers);
 				if (resp == null) {
 					Map<String, String> messageMap = UtilMisc.toMap("errMessage", "error populDataYahooFin");
@@ -185,11 +258,13 @@ public class BorFinanceServices {
 		} catch (GenericEntityException e) {
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
+			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populDataYahooFin", "body", e.getMessage()));
 			errMsg = UtilProperties.getMessage(resource, "RefRevenueZero", messageMap, locale);
 			return ServiceUtil.returnError(errMsg);
 		} catch (Exception e) {
 			long stopTime = System.currentTimeMillis();
 			long elapsedTime = stopTime - startTime;
+			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populDataYahooFin", "body", e.getMessage()));
 			Debug.logWarning("Exiting populPriceEODH JOB time with exception: " + elapsedTime, module);
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
@@ -265,6 +340,7 @@ public class BorFinanceServices {
 				// Debug.logWarning("POPULPRICE: " + key + " " + symbol + " " +
 				// sortedPriceMap.get(key), module);
 
+				Debug.logWarning("populPriceEODH: " + symbol, module);
 				String url = "https://eodhistoricaldata.com/api/eod/" + symbol + "?order=d&api_token=5eaaa2678afb71.95618257&period=d&fmt=json";
 				String resp = sendGet(url, null);
 				if (resp == null) {
@@ -299,7 +375,8 @@ public class BorFinanceServices {
 		} catch (GenericEntityException e) {
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
-			errMsg = UtilProperties.getMessage(resource, "RefRevenueZero", messageMap, locale);
+			errMsg = UtilProperties.getMessage(resource, "populPriceEODH", messageMap, locale);
+			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populPriceEODH", "body", e.getMessage()));
 			return ServiceUtil.returnError(errMsg);
 		} catch (Exception e) {
 			long stopTime = System.currentTimeMillis();
@@ -307,7 +384,8 @@ public class BorFinanceServices {
 			Debug.logWarning("Exiting populPriceEODH JOB time with exception: " + elapsedTime, module);
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
-			errMsg = UtilProperties.getMessage(resource, "populPrice", messageMap, locale);
+			errMsg = UtilProperties.getMessage(resource, "populPriceEODH", messageMap, locale);
+			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populPriceEODH", "body", e.getMessage()));
 			return ServiceUtil.returnError(errMsg);
 		}
 
@@ -377,6 +455,7 @@ public class BorFinanceServices {
 				}
 				i++;
 				String url = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=" + symbol + "&apikey=" + apikey[5] + "\"";
+				Debug.logWarning("populateDividendTable: " + symbol, module);
 				String respStr = sendGet(url, null);
 				// TODO: check if respStr == null;
 				JSONObject resp = new JSONObject(respStr);
@@ -486,12 +565,14 @@ public class BorFinanceServices {
 		} catch (GenericEntityException e) {
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
-			errMsg = UtilProperties.getMessage(resource, "RefRevenueZero", messageMap, locale);
+			errMsg = UtilProperties.getMessage(resource, "populateDividendTable", messageMap, locale);
+			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populateDividendTable", "body", e.getMessage()));
 			return ServiceUtil.returnError(errMsg);
 		} catch (InterruptedException e) {
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
-			errMsg = UtilProperties.getMessage(resource, "RefRevenueZero", messageMap, locale);
+			errMsg = UtilProperties.getMessage(resource, "populateDividendTable", messageMap, locale);
+			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populateDividendTable", "body", e.getMessage()));
 			return ServiceUtil.returnError(errMsg);
 		} catch (Exception e) {
 			long stopTime = System.currentTimeMillis();
@@ -499,7 +580,8 @@ public class BorFinanceServices {
 			Debug.logWarning("Exiting JOB time with exception: " + elapsedTime, module);
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
-			errMsg = UtilProperties.getMessage(resource, "RefRevenueZero", messageMap, locale);
+			errMsg = UtilProperties.getMessage(resource, "populateDividendTable", messageMap, locale);
+			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populateDividendTable", "body", e.getMessage()));
 			return ServiceUtil.returnError(errMsg);
 		}
 
