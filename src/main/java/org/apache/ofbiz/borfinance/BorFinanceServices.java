@@ -154,18 +154,18 @@ public class BorFinanceServices {
 	public static Map<String, Object> populDataYahooFin(DispatchContext ctx, Map<String, Object> context) {
 
 		LocalDispatcher dispatcher = ctx.getDispatcher();
-		
+
 		Debug.logWarning("Executing populDataYahooFin", module);
 
 		Map<String, Object> result = ServiceUtil.returnSuccess();
 		Delegator delegator = ctx.getDelegator();
 		Locale locale = (Locale) context.get("locale");
-		
+
 		String errMsg = null;
 		GenericValue userLogin = (GenericValue) context.get("userLogin");
 
 		sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populDataYahooFin", "body", "populDataYahooFin exec"));
-		
+
 		long startTime = System.currentTimeMillis();
 		try {
 			List<EntityExpr> exprs = UtilMisc.toList(EntityCondition.makeCondition("productType", EntityOperator.EQUALS, "STOCK"),
@@ -192,8 +192,6 @@ public class BorFinanceServices {
 						divDate = c.getTime();
 					}
 					divMap.put((String) lastSavedDividend.get("divId"), divDate);
-					dispatcher
-							.runSync("updateBfinDividend", UtilMisc.<String, Object> toMap("divId", lastSavedDividend.get("divId"), "dateLastCheckForPopulation", new Date(), "userLogin", userLogin));
 
 				} else {
 					divMap.put((String) lastSavedDividend.get("divId"), c.getTime());
@@ -218,7 +216,6 @@ public class BorFinanceServices {
 
 				String url = "https://rapidapi.p.rapidapi.com/stock/v2/get-summary?symbol=" + symbol;
 
-				
 				Map<String, String> headers = UtilMisc.toMap("x-rapidapi-host", "apidojo-yahoo-finance-v1.p.rapidapi.com", "x-rapidapi-key", "ed85e408ccmshd4093ee8f8f03a6p1b071bjsne338369de93a");
 				Debug.logWarning("populDataYahooFin: " + symbol, module);
 				String resp = sendGet(url, headers);
@@ -247,6 +244,8 @@ public class BorFinanceServices {
 					} catch (GenericServiceException e) {
 						Debug.logError(e, module);
 					}
+				} else {
+					dispatcher.runSync("updateBfinDividend", UtilMisc.<String, Object> toMap("divId", divId, "dateLastCheckForPopulation", new Date(), "userLogin", userLogin));
 				}
 
 				// API limit x day
