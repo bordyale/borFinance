@@ -205,7 +205,7 @@ public class BorFinanceServices {
 			int i = 0;
 			for (String prodId : sortedDivMap.keySet()) {
 
-				GenericValue lastSavedDividend = EntityQuery.use(delegator).from("BfinDividend").where("prodID", prodId).cache().orderBy("date DESC").queryFirst();
+				GenericValue lastSavedDividend = EntityQuery.use(delegator).from("BfinDividend").where("prodId", prodId).cache().orderBy("date DESC").queryFirst();
 				//String prodId = (String) lastSavedDividend.get("prodId");
 				GenericValue product = EntityQuery.use(delegator).from("BfinProduct").where("prodId", prodId).cache().queryFirst();
 				String symbol = (String) product.get("prodSym");
