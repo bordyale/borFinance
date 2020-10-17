@@ -235,7 +235,11 @@ public class BorFinanceServices {
 
 				Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(lastDividendDate);
 
-				Date lastSavedPDate = (Date) lastSavedDividend.get("date");
+				Date lastSavedPDate = null;
+				if (lastSavedDividend != null) {
+					lastSavedPDate = (Date) lastSavedDividend.get("date");
+				}
+
 				if (lastSavedPDate == null || date1.compareTo(lastSavedPDate) > 0) {
 					// System.out.println("Date 1 occurs after Date 2");
 					try {
