@@ -223,7 +223,8 @@ public class BorFinanceServices {
 					Map<String, String> messageMap = UtilMisc.toMap("errMessage", "error jSON populDataYahooFin");
 					errMsg = UtilProperties.getMessage(resource, "populDataYahooFin", messageMap, locale);
 					sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populDataYahooFin", "body", "error jSON populDataYahooFin"));
-					return ServiceUtil.returnError(errMsg);
+					// return ServiceUtil.returnError(errMsg);
+					break;
 				}
 				JSONObject respJson = new JSONObject(resp);
 
@@ -260,7 +261,7 @@ public class BorFinanceServices {
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populDataYahooFin", "body", e.getStackTrace()));
 			errMsg = UtilProperties.getMessage(resource, "RefRevenueZero", messageMap, locale);
-			return ServiceUtil.returnError(errMsg);
+			// return ServiceUtil.returnError(errMsg);
 		} catch (Exception e) {
 			long stopTime = System.currentTimeMillis();
 			long elapsedTime = stopTime - startTime;
@@ -269,7 +270,7 @@ public class BorFinanceServices {
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 			errMsg = UtilProperties.getMessage(resource, "populPrice", messageMap, locale);
-			return ServiceUtil.returnError(errMsg);
+			// return ServiceUtil.returnError(errMsg);
 		}
 
 		return result;
@@ -344,9 +345,11 @@ public class BorFinanceServices {
 				String url = "https://eodhistoricaldata.com/api/eod/" + symbol + "?order=d&api_token=5eaaa2678afb71.95618257&period=d&fmt=json";
 				String resp = sendGet(url, null);
 				if (resp == null) {
-					Map<String, String> messageMap = UtilMisc.toMap("errMessage", "error eodhistoricaldata");
+					Map<String, String> messageMap = UtilMisc.toMap("errMessage", "error jSON eodhistoricaldata");
 					errMsg = UtilProperties.getMessage(resource, "eodhistoricaldata", messageMap, locale);
-					return ServiceUtil.returnError(errMsg);
+					sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populPriceEODH", "body", "error jSON eodhistoricaldata"));
+					// return ServiceUtil.returnError(errMsg);
+					break;
 				}
 				JSONArray arr = new JSONArray(resp);
 				JSONObject lastDay = arr.getJSONObject(0);
@@ -378,7 +381,7 @@ public class BorFinanceServices {
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 			errMsg = UtilProperties.getMessage(resource, "populPriceEODH", messageMap, locale);
 			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populPriceEODH", "body", e.getStackTrace()));
-			return ServiceUtil.returnError(errMsg);
+			// return ServiceUtil.returnError(errMsg);
 		} catch (Exception e) {
 			long stopTime = System.currentTimeMillis();
 			long elapsedTime = stopTime - startTime;
@@ -387,7 +390,7 @@ public class BorFinanceServices {
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 			errMsg = UtilProperties.getMessage(resource, "populPriceEODH", messageMap, locale);
 			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populPriceEODH", "body", e.getStackTrace()));
-			return ServiceUtil.returnError(errMsg);
+			// return ServiceUtil.returnError(errMsg);
 		}
 
 		return result;
@@ -469,7 +472,8 @@ public class BorFinanceServices {
 					Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 					errMsg = UtilProperties.getMessage(resource, "JSONExpection", messageMap, locale);
 					sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populateDividendTable", "body", e.getStackTrace()));
-					return ServiceUtil.returnError(errMsg);
+					// return ServiceUtil.returnError(errMsg);
+					break;
 				}
 				SortedMap<String, String> divMap = new TreeMap<String, String>(Collections.reverseOrder());
 				Iterator it = arr.keys();
@@ -569,13 +573,13 @@ public class BorFinanceServices {
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 			errMsg = UtilProperties.getMessage(resource, "populateDividendTable", messageMap, locale);
 			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populateDividendTable", "body", e.getStackTrace()));
-			return ServiceUtil.returnError(errMsg);
+			// return ServiceUtil.returnError(errMsg);
 		} catch (InterruptedException e) {
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 			errMsg = UtilProperties.getMessage(resource, "populateDividendTable", messageMap, locale);
 			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populateDividendTable", "body", e.getStackTrace()));
-			return ServiceUtil.returnError(errMsg);
+			// return ServiceUtil.returnError(errMsg);
 		} catch (Exception e) {
 			long stopTime = System.currentTimeMillis();
 			long elapsedTime = stopTime - startTime;
@@ -584,7 +588,7 @@ public class BorFinanceServices {
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 			errMsg = UtilProperties.getMessage(resource, "populateDividendTable", messageMap, locale);
 			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populateDividendTable", "body", e.getStackTrace()));
-			return ServiceUtil.returnError(errMsg);
+			// return ServiceUtil.returnError(errMsg);
 		}
 
 		return result;
