@@ -206,7 +206,7 @@ public class BorFinanceServices {
 			for (String prodId : sortedDivMap.keySet()) {
 
 				GenericValue lastSavedDividend = EntityQuery.use(delegator).from("BfinDividend").where("prodId", prodId).cache().orderBy("date DESC").queryFirst();
-				//String prodId = (String) lastSavedDividend.get("prodId");
+				// String prodId = (String) lastSavedDividend.get("prodId");
 				GenericValue product = EntityQuery.use(delegator).from("BfinProduct").where("prodId", prodId).cache().queryFirst();
 				String symbol = (String) product.get("prodSym");
 				String divFreqId = (String) product.get("divFreqId");
@@ -230,13 +230,13 @@ public class BorFinanceServices {
 
 				JSONObject defaultKeyStatistics = respJson.getJSONObject("defaultKeyStatistics");
 
-				BigDecimal lastDividendValue = BigDecimal.valueOf((Double) defaultKeyStatistics.getJSONObject("lastDividendValue").get("raw"));
+				BigDecimal lastDividendValue = new BigDecimal(String.valueOf(defaultKeyStatistics.getJSONObject("lastDividendValue").get("raw")));
 				String lastDividendDate = defaultKeyStatistics.getJSONObject("lastDividendDate").getString("fmt");
 
 				Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(lastDividendDate);
 
 				Date lastSavedPDate = (Date) lastSavedDividend.get("date");
-				if (lastSavedPDate== null || date1.compareTo(lastSavedPDate) > 0) {
+				if (lastSavedPDate == null || date1.compareTo(lastSavedPDate) > 0) {
 					// System.out.println("Date 1 occurs after Date 2");
 					try {
 						if (lastDividendValue.compareTo(BigDecimal.ZERO) != 0) {
@@ -247,7 +247,8 @@ public class BorFinanceServices {
 						Debug.logError(e, module);
 					}
 				} else {
-					dispatcher.runSync("updateBfinDividend", UtilMisc.<String, Object> toMap("divId", lastSavedDividend.get("divId"), "dateLastCheckForPopulation", new Date(), "userLogin", userLogin));
+					dispatcher
+							.runSync("updateBfinDividend", UtilMisc.<String, Object> toMap("divId", lastSavedDividend.get("divId"), "dateLastCheckForPopulation", new Date(), "userLogin", userLogin));
 				}
 
 				// API limit x day
