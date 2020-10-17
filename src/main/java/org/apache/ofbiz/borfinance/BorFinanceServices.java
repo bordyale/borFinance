@@ -183,7 +183,7 @@ public class BorFinanceServices {
 				// Create a Map with symbol and last saved dividend.
 				Calendar c = Calendar.getInstance();
 				c.setTime(new Date());
-				int backDayytocheck = -180;
+				int backDayytocheck = -360;
 				c.add(Calendar.DATE, backDayytocheck);
 				GenericValue lastSavedDividend = EntityQuery.use(delegator).from("BfinDividend").where("prodId", prodId).cache().orderBy("date DESC").queryFirst();
 				if (lastSavedDividend != null) {
@@ -191,10 +191,10 @@ public class BorFinanceServices {
 					if (divDate == null) {
 						divDate = c.getTime();
 					}
-					divMap.put((String) lastSavedDividend.get("divId"), divDate);
+					divMap.put(prodId, divDate);
 
 				} else {
-					divMap.put((String) lastSavedDividend.get("divId"), c.getTime());
+					divMap.put(prodId, c.getTime());
 				}
 
 			}
@@ -203,10 +203,10 @@ public class BorFinanceServices {
 					.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
 
 			int i = 0;
-			for (String divId : sortedDivMap.keySet()) {
+			for (String prodId : sortedDivMap.keySet()) {
 
-				GenericValue lastSavedDividend = EntityQuery.use(delegator).from("BfinDividend").where("divId", divId).cache().queryFirst();
-				String prodId = (String) lastSavedDividend.get("prodId");
+				GenericValue lastSavedDividend = EntityQuery.use(delegator).from("BfinDividend").where("prodID", prodId).cache().orderBy("date DESC").queryFirst();
+				//String prodId = (String) lastSavedDividend.get("prodId");
 				GenericValue product = EntityQuery.use(delegator).from("BfinProduct").where("prodId", prodId).cache().queryFirst();
 				String symbol = (String) product.get("prodSym");
 				String divFreqId = (String) product.get("divFreqId");
@@ -236,7 +236,7 @@ public class BorFinanceServices {
 				Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(lastDividendDate);
 
 				Date lastSavedPDate = (Date) lastSavedDividend.get("date");
-				if (date1.compareTo(lastSavedPDate) > 0) {
+				if (lastSavedPDate== null || date1.compareTo(lastSavedPDate) > 0) {
 					// System.out.println("Date 1 occurs after Date 2");
 					try {
 						if (lastDividendValue.compareTo(BigDecimal.ZERO) != 0) {
@@ -247,7 +247,7 @@ public class BorFinanceServices {
 						Debug.logError(e, module);
 					}
 				} else {
-					dispatcher.runSync("updateBfinDividend", UtilMisc.<String, Object> toMap("divId", divId, "dateLastCheckForPopulation", new Date(), "userLogin", userLogin));
+					dispatcher.runSync("updateBfinDividend", UtilMisc.<String, Object> toMap("divId", lastSavedDividend.get("divId"), "dateLastCheckForPopulation", new Date(), "userLogin", userLogin));
 				}
 
 				// API limit x day
@@ -259,13 +259,13 @@ public class BorFinanceServices {
 		} catch (GenericEntityException e) {
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
-			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populDataYahooFin", "body", e.getStackTrace()));
+			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populDataYahooFin", "body", e.getMessage()));
 			errMsg = UtilProperties.getMessage(resource, "RefRevenueZero", messageMap, locale);
 			// return ServiceUtil.returnError(errMsg);
 		} catch (Exception e) {
 			long stopTime = System.currentTimeMillis();
 			long elapsedTime = stopTime - startTime;
-			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populDataYahooFin", "body", e.getStackTrace()));
+			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populDataYahooFin", "body", e.getMessage()));
 			Debug.logWarning("Exiting populPriceEODH JOB time with exception: " + elapsedTime, module);
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
@@ -380,7 +380,7 @@ public class BorFinanceServices {
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 			errMsg = UtilProperties.getMessage(resource, "populPriceEODH", messageMap, locale);
-			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populPriceEODH", "body", e.getStackTrace()));
+			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populPriceEODH", "body", e.getMessage()));
 			// return ServiceUtil.returnError(errMsg);
 		} catch (Exception e) {
 			long stopTime = System.currentTimeMillis();
@@ -389,7 +389,7 @@ public class BorFinanceServices {
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 			errMsg = UtilProperties.getMessage(resource, "populPriceEODH", messageMap, locale);
-			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populPriceEODH", "body", e.getStackTrace()));
+			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populPriceEODH", "body", e.getMessage()));
 			// return ServiceUtil.returnError(errMsg);
 		}
 
@@ -572,13 +572,13 @@ public class BorFinanceServices {
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 			errMsg = UtilProperties.getMessage(resource, "populateDividendTable", messageMap, locale);
-			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populateDividendTable", "body", e.getStackTrace()));
+			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populateDividendTable", "body", e.getMessage()));
 			// return ServiceUtil.returnError(errMsg);
 		} catch (InterruptedException e) {
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 			errMsg = UtilProperties.getMessage(resource, "populateDividendTable", messageMap, locale);
-			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populateDividendTable", "body", e.getStackTrace()));
+			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populateDividendTable", "body", e.getMessage()));
 			// return ServiceUtil.returnError(errMsg);
 		} catch (Exception e) {
 			long stopTime = System.currentTimeMillis();
@@ -587,7 +587,7 @@ public class BorFinanceServices {
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 			errMsg = UtilProperties.getMessage(resource, "populateDividendTable", messageMap, locale);
-			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populateDividendTable", "body", e.getStackTrace()));
+			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populateDividendTable", "body", e.getMessage()));
 			// return ServiceUtil.returnError(errMsg);
 		}
 
