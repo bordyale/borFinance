@@ -211,6 +211,8 @@ public class BorFinanceServices {
 				String symbol = (String) product.get("prodSym");
 				String divFreqId = (String) product.get("divFreqId");
 
+				Debug.logWarning("populDataYahooFin: " + symbol + " " + sortedDivMap.get(prodId), module);
+
 				// Debug.logWarning("POPULPRICE: " + key + " " + symbol + " " +
 				// sortedPriceMap.get(key), module);
 
@@ -346,7 +348,8 @@ public class BorFinanceServices {
 				// Debug.logWarning("POPULPRICE: " + key + " " + symbol + " " +
 				// sortedPriceMap.get(key), module);
 
-				Debug.logWarning("populPriceEODH: " + symbol, module);
+				Debug.logWarning("populPriceEODH: " + symbol + " " + sortedPriceMap.get(key), module);
+
 				String url = "https://eodhistoricaldata.com/api/eod/" + symbol + "?order=d&api_token=5eaaa2678afb71.95618257&period=d&fmt=json";
 				String resp = sendGet(url, null);
 				if (resp == null) {
@@ -463,7 +466,7 @@ public class BorFinanceServices {
 					}
 				}
 				i++;
-				String url = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=" + symbol + "&apikey=" + apikey[5] + "\"";
+				String url = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=" + symbol + "&apikey=" + apikey[0] + "\"";
 				Debug.logWarning("populateDividendTable: " + symbol, module);
 				String respStr = sendGet(url, null);
 				// TODO: check if respStr == null;
