@@ -10,27 +10,27 @@
 
 
 	<RecurrenceRule recurrenceRuleId="BFIND" untilDateTime="" frequency="MINUTELY" intervalNumber="5" countNumber="-1" />
-	<RecurrenceInfo recurrenceInfoId="BFIND" startDateTime="2000-01-01 00:00:00.000" recurrenceRuleId="BFIND"
+	<RecurrenceInfo recurrenceInfoId="BFIND" startDateTime="2000-01-01 00:10:00.000" recurrenceRuleId="BFIND"
 		recurrenceCount="0" />
-	<JobSandbox jobId="BFIND" jobName="populateDividendTable" runTime="2000-01-01 00:00:00.000" serviceName="populateDividendTable"
+	<JobSandbox jobId="BFIND" jobName="populateDividendTable" runTime="2000-01-01 00:10:00.000" serviceName="populateDividendTable"
 		poolId="pool" runAsUser="admin" recurrenceInfoId="BFIND" />
 
 	<RecurrenceRule recurrenceRuleId="BFINDD" untilDateTime="" frequency="DAILY" intervalNumber="1" countNumber="-1" />
-	<RecurrenceInfo recurrenceInfoId="BFINDD" startDateTime="2000-01-01 00:00:00.000" recurrenceRuleId="BFINDD"
+	<RecurrenceInfo recurrenceInfoId="BFINDD" startDateTime="2000-01-01 05:00:00.000" recurrenceRuleId="BFINDD"
 		recurrenceCount="0" />
 
 
-	<JobSandbox jobId="BFINDD" jobName="populPriceEODH" runTime="2000-01-01 00:00:00.000" serviceName="populPriceEODH" poolId="pool"
+	<JobSandbox jobId="BFINDD" jobName="populPriceEODH" runTime="2000-01-01 05:00:00.000" serviceName="populPriceEODH" poolId="pool"
 		runAsUser="admin" recurrenceInfoId="BFINDD" />
 		
 		
 		
 	<RecurrenceRule recurrenceRuleId="BFINDDD" untilDateTime="" frequency="DAILY" intervalNumber="5" countNumber="-1" />
-	<RecurrenceInfo recurrenceInfoId="BFINDDD" startDateTime="2000-01-01 00:00:00.000" recurrenceRuleId="BFINDDD"
+	<RecurrenceInfo recurrenceInfoId="BFINDDD" startDateTime="2000-01-01 04:00:00.000" recurrenceRuleId="BFINDDD"
 		recurrenceCount="0" />
 
 
-	<JobSandbox jobId="BFINDDD" jobName="populDataYahooFin" runTime="2000-01-01 00:00:00.000" serviceName="populDataYahooFin" poolId="pool"
+	<JobSandbox jobId="BFINDDD" jobName="populDataYahooFin" runTime="2000-01-01 04:00:00.000" serviceName="populDataYahooFin" poolId="pool"
 		runAsUser="admin" recurrenceInfoId="BFINDDD" />
 
 	<!-- The following three elements set up a regularly scheduled job that will automatically create fixed asset maintenances from ProductMaint 
