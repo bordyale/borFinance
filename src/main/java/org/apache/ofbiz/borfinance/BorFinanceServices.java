@@ -479,9 +479,9 @@ public class BorFinanceServices {
 					Debug.logError(symbol + " " + i + " " + resp.toString(), module);
 					Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 					errMsg = UtilProperties.getMessage(resource, "JSONExpection", messageMap, locale);
-					sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populateDividendTable", "body", e.getStackTrace()));
+					sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populateDividendTable", "body", e.getMessage()));
 					// return ServiceUtil.returnError(errMsg);
-					break;
+					continue;
 				}
 				SortedMap<String, String> divMap = new TreeMap<String, String>(Collections.reverseOrder());
 				Iterator it = arr.keys();
