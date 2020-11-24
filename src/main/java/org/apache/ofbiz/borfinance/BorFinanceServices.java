@@ -258,7 +258,7 @@ public class BorFinanceServices {
 				}
 
 				// API limit x day
-				if (i >= 10) {
+				if (i >= 5) {
 					break;
 				}
 				i++;
