@@ -167,6 +167,7 @@ public class BorFinanceServices {
 		sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populDataYahooFin", "body", "populDataYahooFin exec"));
 
 		long startTime = System.currentTimeMillis();
+		String symbol = null;
 		try {
 			List<EntityExpr> exprs = UtilMisc.toList(EntityCondition.makeCondition("productType", EntityOperator.EQUALS, "STOCK"),
 					EntityCondition.makeCondition("skipApi", EntityOperator.EQUALS, "EODH"));
@@ -175,7 +176,7 @@ public class BorFinanceServices {
 
 			SortedMap<String, Date> divMap = new TreeMap<String, Date>();
 			for (GenericValue stock : conditions) {
-				String symbol = (String) stock.get("prodSym");
+				symbol = (String) stock.get("prodSym");
 				String prodId = (String) stock.get("prodId");
 				String divFreqId = (String) stock.get("divFreqId");
 				// String skipApi = (String) stock.get("skipApi");
@@ -208,7 +209,7 @@ public class BorFinanceServices {
 				GenericValue lastSavedDividend = EntityQuery.use(delegator).from("BfinDividend").where("prodId", prodId).cache().orderBy("date DESC").queryFirst();
 				// String prodId = (String) lastSavedDividend.get("prodId");
 				GenericValue product = EntityQuery.use(delegator).from("BfinProduct").where("prodId", prodId).cache().queryFirst();
-				String symbol = (String) product.get("prodSym");
+				symbol = (String) product.get("prodSym");
 				String divFreqId = (String) product.get("divFreqId");
 
 				Debug.logWarning("populDataYahooFin: " + symbol + " " + sortedDivMap.get(prodId), module);
@@ -224,7 +225,7 @@ public class BorFinanceServices {
 				if (resp == null) {
 					Map<String, String> messageMap = UtilMisc.toMap("errMessage", "error jSON populDataYahooFin");
 					errMsg = UtilProperties.getMessage(resource, "populDataYahooFin", messageMap, locale);
-					sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populDataYahooFin", "body", "error jSON populDataYahooFin"));
+					sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populDataYahooFin", "body", "Symbol: " + symbol + " error jSON populDataYahooFin"));
 					// return ServiceUtil.returnError(errMsg);
 					break;
 				}
@@ -266,16 +267,16 @@ public class BorFinanceServices {
 		} catch (GenericEntityException e) {
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
-			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populDataYahooFin", "body", e.getMessage()));
+			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populDataYahooFin", "body", "Symbol: " + symbol + " " + e.getMessage()));
 			errMsg = UtilProperties.getMessage(resource, "RefRevenueZero", messageMap, locale);
 			// return ServiceUtil.returnError(errMsg);
 		} catch (Exception e) {
 			long stopTime = System.currentTimeMillis();
 			long elapsedTime = stopTime - startTime;
-			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populDataYahooFin", "body", e.getMessage()));
+			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populDataYahooFin", "body", "Symbol: " + symbol + " " + e.getMessage()));
 			Debug.logWarning("Exiting populPriceEODH JOB time with exception: " + elapsedTime, module);
 			Debug.logWarning(e, module);
-			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
+			Map<String, String> messageMap = UtilMisc.toMap("errMessage", "Symbol: " + symbol + " " + e.getMessage());
 			errMsg = UtilProperties.getMessage(resource, "populPrice", messageMap, locale);
 			// return ServiceUtil.returnError(errMsg);
 		}
@@ -306,6 +307,7 @@ public class BorFinanceServices {
 		}
 
 		long startTime = System.currentTimeMillis();
+		String symbol = null;
 		try {
 			List<EntityExpr> exprs = UtilMisc.toList(EntityCondition.makeCondition("productType", EntityOperator.EQUALS, "STOCK"),
 					EntityCondition.makeCondition("skipApi", EntityOperator.EQUALS, "EODH"));
@@ -314,7 +316,7 @@ public class BorFinanceServices {
 
 			SortedMap<String, Date> priceMap = new TreeMap<String, Date>();
 			for (GenericValue stock : conditions) {
-				String symbol = (String) stock.get("prodSym");
+				symbol = (String) stock.get("prodSym");
 				String prodId = (String) stock.get("prodId");
 				String divFreqId = (String) stock.get("divFreqId");
 				// String skipApi = (String) stock.get("skipApi");
@@ -343,7 +345,7 @@ public class BorFinanceServices {
 			for (String key : sortedPriceMap.keySet()) {
 
 				GenericValue product = EntityQuery.use(delegator).from("BfinProduct").where("prodId", key).cache().queryFirst();
-				String symbol = (String) product.get("prodSym");
+				symbol = (String) product.get("prodSym");
 
 				// Debug.logWarning("POPULPRICE: " + key + " " + symbol + " " +
 				// sortedPriceMap.get(key), module);
@@ -355,7 +357,7 @@ public class BorFinanceServices {
 				if (resp == null) {
 					Map<String, String> messageMap = UtilMisc.toMap("errMessage", "error jSON eodhistoricaldata");
 					errMsg = UtilProperties.getMessage(resource, "eodhistoricaldata", messageMap, locale);
-					sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populPriceEODH", "body", "error jSON eodhistoricaldata"));
+					sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populPriceEODH", "body", "Symbol: " + symbol + " error jSON eodhistoricaldata"));
 					// return ServiceUtil.returnError(errMsg);
 					break;
 				}
@@ -388,7 +390,7 @@ public class BorFinanceServices {
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 			errMsg = UtilProperties.getMessage(resource, "populPriceEODH", messageMap, locale);
-			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populPriceEODH", "body", e.getMessage()));
+			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populPriceEODH", "body", "Symbol: " + symbol + " " + e.getMessage()));
 			// return ServiceUtil.returnError(errMsg);
 		} catch (Exception e) {
 			long stopTime = System.currentTimeMillis();
@@ -397,7 +399,7 @@ public class BorFinanceServices {
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 			errMsg = UtilProperties.getMessage(resource, "populPriceEODH", messageMap, locale);
-			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populPriceEODH", "body", e.getMessage()));
+			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populPriceEODH", "body", "Symbol: " + symbol + " " + e.getMessage()));
 			// return ServiceUtil.returnError(errMsg);
 		}
 
@@ -430,6 +432,7 @@ public class BorFinanceServices {
 		}
 
 		long startTime = System.currentTimeMillis();
+		String symbol = null;
 		try {
 			List<EntityExpr> exprs = UtilMisc.toList(EntityCondition.makeCondition("productType", EntityOperator.EQUALS, "STOCK"));
 			EntityCondition cond = EntityCondition.makeCondition(exprs, EntityOperator.AND);
@@ -440,7 +443,7 @@ public class BorFinanceServices {
 			boolean reset = false;
 
 			for (GenericValue stock : conditions) {
-				String symbol = (String) stock.get("prodSym");
+				symbol = (String) stock.get("prodSym");
 				String prodId = (String) stock.get("prodId");
 				String divFreqId = (String) stock.get("divFreqId");
 				String skipApi = (String) stock.get("skipApi");
@@ -479,7 +482,7 @@ public class BorFinanceServices {
 					Debug.logError(symbol + " " + i + " " + resp.toString(), module);
 					Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 					errMsg = UtilProperties.getMessage(resource, "JSONExpection", messageMap, locale);
-					sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populateDividendTable", "body", e.getMessage()));
+					sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populateDividendTable", "body", "Symbol: " + symbol + " " + e.getMessage()));
 					// return ServiceUtil.returnError(errMsg);
 					continue;
 				}
@@ -580,13 +583,13 @@ public class BorFinanceServices {
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 			errMsg = UtilProperties.getMessage(resource, "populateDividendTable", messageMap, locale);
-			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populateDividendTable", "body", e.getMessage()));
+			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populateDividendTable", "body", "Symbol: " + symbol + " " + e.getMessage()));
 			// return ServiceUtil.returnError(errMsg);
 		} catch (InterruptedException e) {
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 			errMsg = UtilProperties.getMessage(resource, "populateDividendTable", messageMap, locale);
-			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populateDividendTable", "body", e.getMessage()));
+			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populateDividendTable", "body", "Symbol: " + symbol + " " + e.getMessage()));
 			// return ServiceUtil.returnError(errMsg);
 		} catch (Exception e) {
 			long stopTime = System.currentTimeMillis();
@@ -595,7 +598,7 @@ public class BorFinanceServices {
 			Debug.logWarning(e, module);
 			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
 			errMsg = UtilProperties.getMessage(resource, "populateDividendTable", messageMap, locale);
-			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populateDividendTable", "body", e.getMessage()));
+			sendBfinEmailVoid(dispatcher, userLogin, UtilMisc.<String, String> toMap("subject", "populateDividendTable", "body", "Symbol: " + symbol + " " + e.getMessage()));
 			// return ServiceUtil.returnError(errMsg);
 		}
 
