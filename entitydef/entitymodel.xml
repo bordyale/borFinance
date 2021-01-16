@@ -10,14 +10,14 @@
 
 
 	<entity entity-name="BfinProduct" package-name="org.apache.ofbiz.order.borfinance" never-cache="true" title="Finance product Entity">
-		<field name="prodId" type="id-ne"></field>
+		<field name="prodId" type="id"></field>
 		<field name="prodSym" type="value"></field>
 		<field name="prodName" type="value"></field>
 		<field name="productType" type="value"></field>
 		<field name="note" type="value"></field>
 		<field name="skipApi" type="value"></field>
-		<field name="divFreqId" type="id-ne"></field>
-		<field name="sectorId" type="id-ne"></field>
+		<field name="divFreqId" type="id"></field>
+		<field name="sectorId" type="id"></field>
 
 		<prim-key field="prodId" />
 
@@ -25,14 +25,14 @@
 
 	<entity entity-name="BfinPurchase" package-name="org.apache.ofbiz.order.borfinance" never-cache="true" title="Purchase Entity">
 
-		<field name="purchId" type="id-ne"></field>
-		<field name="prodId" type="id-ne"></field>
+		<field name="purchId" type="id"></field>
+		<field name="prodId" type="id"></field>
 		<field name="purchDate" type="date-time"></field>
 		<field name="quantity" type="fixed-point"></field>
 		<field name="price" type="fixed-point"></field>
-		<field name="currencyUomId" type="id-ne"></field>
-		<field name="exchangeId" type="id-ne"></field>
-		<field name="brokerId" type="id-ne"></field>
+		<field name="currencyUomId" type="id"></field>
+		<field name="exchangeId" type="id"></field>
+		<field name="brokerId" type="id"></field>
 		<prim-key field="purchId" />
 		<relation type="one" fk-name="prodId" rel-entity-name="BfinProduct">
 			<key-map field-name="prodId" />
@@ -42,12 +42,12 @@
 
 	<entity entity-name="BfinDividend" package-name="org.apache.ofbiz.order.borfinance" never-cache="true" title="Dividend History Entity">
 
-		<field name="divId" type="id-ne"></field>
-		<field name="prodId" type="id-ne"></field>
+		<field name="divId" type="id"></field>
+		<field name="prodId" type="id"></field>
 		<field name="date" type="date-time"></field>
 		<field name="dateLastCheckForPopulation" type="date-time"></field>
 		<field name="amount" type="fixed-point"></field>
-		<field name="divFreqId" type="id-ne"></field>
+		<field name="divFreqId" type="id"></field>
 		<prim-key field="divId" />
 		<relation type="one" fk-name="prodId" rel-entity-name="BfinProduct">
 			<key-map field-name="prodId" />
@@ -56,8 +56,8 @@
 	</entity>
 	<entity entity-name="BfinPrice" package-name="org.apache.ofbiz.order.borfinance" never-cache="true" title="Close Price History Entity">
 
-		<field name="priceId" type="id-ne"></field>
-		<field name="prodId" type="id-ne"></field>
+		<field name="priceId" type="id"></field>
+		<field name="prodId" type="id"></field>
 		<field name="date" type="date-time"></field>
 		<field name="price" type="fixed-point"></field>
 		<prim-key field="priceId" />
