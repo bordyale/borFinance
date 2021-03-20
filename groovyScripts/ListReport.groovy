@@ -195,7 +195,7 @@ for (e in hashMaps){
 	BigDecimal mktValueConverted = (BigDecimal)e.mktValueConvertedBigDec
 	if (totMktValue && mktValueConverted) {
 		e.put("percentage", mktValueConverted.divide(totMktValue,3,RoundingMode.HALF_UP).multiply(new BigDecimal(100)))
-
+		e.put("percString",df.format(e.("percentage")))
 	}
 }
 

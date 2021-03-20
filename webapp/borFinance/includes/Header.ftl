@@ -10,7 +10,8 @@
     <title>${layoutSettings.companyName}: <#if (titleProperty)?has_content>${uiLabelMap[titleProperty]}<#else>${title!}</#if></title>
 <#if layoutSettings.shortcutIcon?has_content>
     <#assign shortcutIcon = layoutSettings.shortcutIcon/>
-
+<#elseif layoutSettings.VT_SHORTCUT_ICON?has_content>
+    <#assign shortcutIcon = layoutSettings.VT_SHORTCUT_ICON.get(0)/>
 </#if>
 <#if shortcutIcon?has_content>
     <link rel="shortcut icon" href="<@ofbizContentUrl>${StringUtil.wrapString(shortcutIcon)}</@ofbizContentUrl>" />
@@ -61,6 +62,7 @@
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.colVis.min.js"></script>
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/numeric-comma.js"></script>
 <script type="text/javascript" language="javascript" src="/borFinance/js/dataTables.altEditor.free.js"></script>
+<script src="/borFinance/js/canvasjs.min.js"></script>
 	
 
 
