@@ -62,6 +62,7 @@
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.colVis.min.js"></script>
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/plug-ins/1.10.21/sorting/numeric-comma.js"></script>
 <script type="text/javascript" language="javascript" src="/borFinance/js/dataTables.altEditor.free.js"></script>
+<script src="/borFinance/js/canvasjs.min.js"></script>
 	
 
 
