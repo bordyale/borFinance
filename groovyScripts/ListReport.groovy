@@ -214,15 +214,37 @@ for (e in se){
 
 	sectorsList.add(sector)
 }
-
-//total Market Value
 Map<String,Object> sector  = new HashMap<String,Object>()
+//total Purchased Avg Value
+
+
+sector  = new HashMap<String,Object>()
+if (totPurchValue){
+	sector.put("sectorId","TOT PURCHASED PRICE (USD)")
+	sector.put("mktValue",new DecimalFormat(
+			"###.##",
+			DecimalFormatSymbols.getInstance(customLocale)).format(totPurchValue))
+	sectorsList.add(sector)
+}
+//total Market Value
+sector  = new HashMap<String,Object>()
 if (totMktValue){
 	sector.put("sectorId","TOT PORT VALUE (USD)")
 	sector.put("mktValue",new DecimalFormat(
 			"###.##",
 			DecimalFormatSymbols.getInstance(customLocale)).format(totMktValue))
 	sector.put("percentage",totMktValue.divide(totMktValue,3,RoundingMode.HALF_UP))
+	sectorsList.add(sector)
+}
+//total Market Gain
+sector  = new HashMap<String,Object>()
+if (totMktValue){
+	BigDecimal marketGain =totMktValue.subtract(totPurchValue)
+	sector.put("sectorId","MARKET GAIN")
+	sector.put("mktValue",new DecimalFormat(
+			"###.##",
+			DecimalFormatSymbols.getInstance(customLocale)).format(marketGain))
+	sector.put("percentage",marketGain.divide(totPurchValue,3,RoundingMode.HALF_UP))
 	sectorsList.add(sector)
 }
 //total Dividend
@@ -232,18 +254,10 @@ if (totDivUSD){
 	sector.put("mktValue",new DecimalFormat(
 			"###.##",
 			DecimalFormatSymbols.getInstance(customLocale)).format(totDivUSD))
-	sector.put("percentage",totDivUSD.divide(totMktValue,3,RoundingMode.HALF_UP))
+	sector.put("percentage",totDivUSD.divide(totMktValue,4,RoundingMode.DOWN))
 	sectorsList.add(sector)
 }
-//total Purchased Avg Value
-sector  = new HashMap<String,Object>()
-if (totPurchValue){
-	sector.put("sectorId","TOT PURCHASED PRICE (USD)")
-	sector.put("mktValue",new DecimalFormat(
-			"###.##",
-			DecimalFormatSymbols.getInstance(customLocale)).format(totPurchValue))
-	sectorsList.add(sector)
-}
+
 //portfolio Size
 sector  = new HashMap<String,Object>()
 
