@@ -142,7 +142,7 @@ chart.render();
 
 
 
-
+<#setting number_format="0.0##">
 <div class="table-responsive" style="margin-top: 2.0em">
 <table id="sectors" class="table table-hover table-sm">  
         <thead>  
@@ -159,7 +159,7 @@ chart.render();
         	<tr>  
             	<td><#if item.sectorId?has_content>${item.sectorId}<#else>0</#if></td>
             	<td>$<#if item.mktValue?has_content>${item.mktValue}<#else>0</#if></td>
-            	<td><#if item.percentage?has_content>${item.percentage?string.percent}<#else>0</#if></td>
+            	<td><#if item.percentage?has_content>${item.percentage}<#else>0</#if></td>
           	</tr> 
 	                        
 	    </#list>
