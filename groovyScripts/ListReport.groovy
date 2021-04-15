@@ -210,7 +210,7 @@ for (e in se){
 	sector.put("mktValue",new DecimalFormat(
 			"###.##",
 			DecimalFormatSymbols.getInstance(customLocale)).format(e.value))
-	sector.put("percentage",(BigDecimal)e.value.divide(totMktValue,3,RoundingMode.HALF_UP))
+	sector.put("percentage",(BigDecimal)e.value.divide(totMktValue,3,RoundingMode.HALF_UP).multiply(new BigDecimal(100)))
 
 	sectorsList.add(sector)
 }
@@ -233,7 +233,7 @@ if (totMktValue){
 	sector.put("mktValue",new DecimalFormat(
 			"###.##",
 			DecimalFormatSymbols.getInstance(customLocale)).format(totMktValue))
-	sector.put("percentage",totMktValue.divide(totMktValue,3,RoundingMode.HALF_UP))
+	sector.put("percentage",totMktValue.divide(totMktValue,3,RoundingMode.HALF_UP).multiply(new BigDecimal(100)))
 	sectorsList.add(sector)
 }
 //total Market Gain
@@ -244,7 +244,7 @@ if (totMktValue){
 	sector.put("mktValue",new DecimalFormat(
 			"###.##",
 			DecimalFormatSymbols.getInstance(customLocale)).format(marketGain))
-	sector.put("percentage",marketGain.divide(totPurchValue,3,RoundingMode.HALF_UP))
+	sector.put("percentage",marketGain.divide(totPurchValue,3,RoundingMode.HALF_UP).multiply(new BigDecimal(100)))
 	sectorsList.add(sector)
 }
 //total Dividend
@@ -254,7 +254,7 @@ if (totDivUSD){
 	sector.put("mktValue",new DecimalFormat(
 			"###.##",
 			DecimalFormatSymbols.getInstance(customLocale)).format(totDivUSD))
-	sector.put("percentage",totDivUSD.divide(totMktValue,4,RoundingMode.DOWN))
+	sector.put("percentage",totDivUSD.divide(totMktValue,4,RoundingMode.DOWN).multiply(new BigDecimal(100)))
 	sectorsList.add(sector)
 }
 
