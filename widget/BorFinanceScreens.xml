@@ -20,12 +20,11 @@
 			<widgets>
 				<decorator-screen name="BorFinanceCommonDecoratorBs" location="${parameters.mainDecoratorLocation}">
 					<decorator-section name="body">
-<!-- 
 						<platform-specific>
 							<html>
-								<html-template location="component://borFinance/template/TableEdit.ftl" />
+								<html-template location="component://borFinance/template/Main.ftl" />
 							</html>
-						</platform-specific> -->
+						</platform-specific>
 
 					</decorator-section>
 				</decorator-screen>
@@ -133,11 +132,7 @@
 					<decorator-section name="body">
 
 
-						 <!-- <platform-specific>
-							<html>
-								<html-template location="component://borFinance/template/FindBfinPurchase.ftl" />
-							</html>
-						</platform-specific> -->
+						<!-- <platform-specific> <html> <html-template location="component://borFinance/template/FindBfinPurchase.ftl" /> </html> </platform-specific> -->
 
 						<platform-specific>
 							<html>
@@ -316,9 +311,9 @@
 			<actions>
 				<set field="titleProperty" value="PageTitleFindBfinReport" />
 				<set field="headerItem" value="BfinReport" />
-				<set field="prodId" from-field="parameters.prodId"/>
-				<set field="brokerId" from-field="parameters.brokerId"/>
-				<set field="sectorId" from-field="parameters.sectorId"/>
+				<set field="prodId" from-field="parameters.prodId" />
+				<set field="brokerId" from-field="parameters.brokerId" />
+				<set field="sectorId" from-field="parameters.sectorId" />
 				<script location="component://borFinance/groovyScripts/ListReport.groovy" />
 			</actions>
 			<widgets>
@@ -327,7 +322,7 @@
 						<!-- <label style="h4" text="${uiLabelMap.BfinReport}" /> -->
 
 
-						 <platform-specific>
+						<platform-specific>
 							<html>
 								<html-template location="component://borFinance/template/FilterReport.ftl" />
 							</html>
