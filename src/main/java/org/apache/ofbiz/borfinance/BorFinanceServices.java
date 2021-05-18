@@ -434,9 +434,9 @@ public class BorFinanceServices {
 		long startTime = System.currentTimeMillis();
 		String symbol = null;
 		try {
-			List<EntityExpr> exprs = UtilMisc.toList(EntityCondition.makeCondition("productType", EntityOperator.EQUALS, "STOCK"));
-			EntityCondition cond = EntityCondition.makeCondition(exprs, EntityOperator.AND);
-			List<GenericValue> conditions = EntityQuery.use(delegator).from("BfinProduct").where(cond).orderBy("prodId ASC").queryList();
+			//List<EntityExpr> exprs = UtilMisc.toList(EntityCondition.makeCondition("productType", EntityOperator.EQUALS, "STOCK"));
+			//EntityCondition cond = EntityCondition.makeCondition(exprs, EntityOperator.AND);
+			List<GenericValue> conditions = EntityQuery.use(delegator).from("BfinProduct").orderBy("prodId ASC").queryList();
 
 			int i = 0;
 			int apiindex = 0;
