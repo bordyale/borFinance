@@ -71,6 +71,7 @@ for (GenericValue entry: pricesList){
 	e.put("prodId",entry.get("prodId"))
 	e.put("prodSym",entry.get("prodSym"))
 	e.put("prodName",entry.get("prodName"))
+	e.put("productType",entry.get("productType"))
 	e.put("sectorId",sectorId)
 	String currentUOMId =entry.get("currencyUomId")
 	e.put("currencyUomId",currentUOMId)

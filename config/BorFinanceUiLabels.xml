@@ -181,6 +181,10 @@
         <value xml:lang="en">Gain %</value>
         <value xml:lang="it">Diff %</value>
     </property>
+    <property key="productType">
+        <value xml:lang="en">Pr.Type</value>
+        <value xml:lang="it">Tipo Prod</value>
+    </property>
     <property key="EODHistorical">
         <value xml:lang="en">EODHistorical</value>
         <value xml:lang="it">EODHistorical</value>
