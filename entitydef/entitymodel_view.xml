@@ -49,6 +49,7 @@
 
 	<view-entity entity-name="BfinPurchaseProdView" package-name="org.apache.ofbiz.borFinance">
 		<member-entity entity-alias="PURCH" entity-name="BfinPurchase" />
+		<alias entity-alias="PURCH" name="purchId" group-by="true" />
 		<alias entity-alias="PURCH" name="prodId" group-by="true" />
 		<alias entity-alias="PURCH" name="brokerId" group-by="true" />
 		<alias entity-alias="PURCH" name="currencyUomId" group-by="true" />
