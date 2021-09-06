@@ -107,38 +107,58 @@ for (GenericValue entry: pricesList){
 	}
 	//extract Last Dividend
 	BigDecimal forwardAnnualDiv = BigDecimal.ZERO
-	dividend = from("BfinDividend").where("prodId",prodId).orderBy("date DESC").cache(false).queryFirst()
-	if (dividend){
-		BigDecimal amount =dividend.amount
-		e.put("lastDividend",amount)
-		e.put("lastDividendDate",sdf.format(dividend.date))
-		String divFreqId = divFreqId = dividend.divFreqId
-		if (divFreqId !=null && divFreqId.equals("QUAR")){
-			forwardAnnualDiv = amount.divide(new BigDecimal(3),3,RoundingMode.HALF_UP).multiply(new BigDecimal(12))
-		}
-		if (divFreqId !=null && divFreqId.equals("SEMES")){
-			forwardAnnualDiv = amount.divide(new BigDecimal(6),3,RoundingMode.HALF_UP).multiply(new BigDecimal(12))
-		}
-		if (divFreqId !=null && divFreqId.equals("ANN")){
-			forwardAnnualDiv = amount
-		}
-		if (divFreqId !=null && divFreqId.equals("MON")){
-			forwardAnnualDiv = amount.multiply(new BigDecimal(12))
-		}
-		//convert Dividend
-		if (currentUOMId && !"USD".equals(currentUOMId)) {
-			serviceResults = runService('convertUom',
-					[uomId : currentUOMId, uomIdTo : "USD", originalValue : forwardAnnualDiv])
-			if (ServiceUtil.isError(serviceResults)) {
-				request.setAttribute("_ERROR_MESSAGE_", ServiceUtil.getErrorMessage(serviceResults))
-				return
-			} else {
-				convertedForwartAnnDiv = serviceResults.convertedValue
-				totDivUSD=totDivUSD.add(convertedForwartAnnDiv.multiply(qtySum))
+	dividends = from("BfinDividend").where("prodId",prodId).orderBy("date DESC").cache(false).queryList()
+	if (dividends){
+
+		int i = 0
+		dividends.each { dividend ->
+
+			if (i==0){
+				//last dividend
+				BigDecimal amount =dividend.amount
+				e.put("lastDividend",amount)
+				e.put("lastDividendDate",sdf.format(dividend.date))
+				String divFreqId = divFreqId = dividend.divFreqId
+				if (divFreqId !=null && divFreqId.equals("QUAR")){
+					forwardAnnualDiv = amount.divide(new BigDecimal(3),3,RoundingMode.HALF_UP).multiply(new BigDecimal(12))
+				}
+				if (divFreqId !=null && divFreqId.equals("SEMES")){
+					forwardAnnualDiv = amount.divide(new BigDecimal(6),3,RoundingMode.HALF_UP).multiply(new BigDecimal(12))
+				}
+				if (divFreqId !=null && divFreqId.equals("ANN")){
+					forwardAnnualDiv = amount
+				}
+				if (divFreqId !=null && divFreqId.equals("MON")){
+					forwardAnnualDiv = amount.multiply(new BigDecimal(12))
+				}
+				//convert Dividend
+				if (currentUOMId && !"USD".equals(currentUOMId)) {
+					serviceResults = runService('convertUom',
+							[uomId : currentUOMId, uomIdTo : "USD", originalValue : forwardAnnualDiv])
+					if (ServiceUtil.isError(serviceResults)) {
+						request.setAttribute("_ERROR_MESSAGE_", ServiceUtil.getErrorMessage(serviceResults))
+						return
+					} else {
+						convertedForwartAnnDiv = serviceResults.convertedValue
+						totDivUSD=totDivUSD.add(convertedForwartAnnDiv.multiply(qtySum))
+					}
+				}else{
+					totDivUSD=totDivUSD.add(forwardAnnualDiv.multiply(qtySum))
+				}
+
+			}else if (i==1){
+				//previous dividend
+				BigDecimal amount =dividend.amount
+				e.put("lastPrevDividend",amount)
+			}else{
+				true
 			}
-		}else{
-			totDivUSD=totDivUSD.add(forwardAnnualDiv.multiply(qtySum))
+			i++
 		}
+
+
+
+
 	}
 	//extract Last Price
 	price = from("BfinPrice").where("prodId",prodId).orderBy("date DESC").cache(false).queryFirst()

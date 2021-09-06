@@ -41,6 +41,7 @@ $(document).ready(function(){
 			    { "type": "numeric-comma" },    		
     			{ "type": "numeric-comma" },
     			{ "type": "numeric-comma" },
+    			{ "type": "numeric-comma" },
     			null,
 			    null,
     			null,
@@ -74,7 +75,8 @@ $(document).ready(function(){
             <th>${uiLabelMap.Percentage}</th>
             <th>${uiLabelMap.currYield}</th>
             <th>${uiLabelMap.lastDividend}</th>
-            <th>${uiLabelMap.lastDividendDate}</th>            
+            <th>${uiLabelMap.lastDividendDate}</th>
+            <th>${uiLabelMap.lastPrevDividend}</th>            
             <th>${uiLabelMap.CommonName}</th> 
             <th>${uiLabelMap.LastMktPriceDate}</th>
             <th>${uiLabelMap.productType}</th> 
@@ -96,7 +98,7 @@ $(document).ready(function(){
             	<td><#if item.currYield?has_content>${item.currYield}<#else></#if>%</td>
             	<td><#if item.lastDividend?has_content>${item.lastDividend}<#else>0</#if></td>
             	<td><#if item.lastDividendDate?has_content>${item.lastDividendDate}<#else>0</#if></td>
-            	
+            	<td><#if item.lastPrevDividend?has_content>${item.lastPrevDividend}<#else>0</#if></td>
             	<td>${item.prodName}</td>
             	<td><#if item.lastMktPriceDate?has_content>${item.lastMktPriceDate}<#else>0</#if></td>
             	<td>${item.productType}</td>
