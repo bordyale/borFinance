@@ -41,8 +41,8 @@ $(document).ready(function(){
 			    { "type": "numeric-comma" },    		
     			{ "type": "numeric-comma" },
     			{ "type": "numeric-comma" },
-    			{ "type": "numeric-comma" },
     			null,
+    			{ "type": "numeric-comma" },
 			    null,
     			null,
     			null
