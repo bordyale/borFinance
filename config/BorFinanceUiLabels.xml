@@ -193,4 +193,8 @@
         <value xml:lang="en">EODHistorical</value>
         <value xml:lang="it">EODHistorical</value>
     </property>
+    <property key="brokers">
+        <value xml:lang="en">Brks</value>
+        <value xml:lang="it">Brks</value>
+    </property>
 </resource>

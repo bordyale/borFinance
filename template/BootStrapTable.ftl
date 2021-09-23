@@ -45,6 +45,7 @@ $(document).ready(function(){
     			{ "type": "numeric-comma" },
 			    null,
     			null,
+    			null,
     			null
   		]
   });
@@ -80,6 +81,7 @@ $(document).ready(function(){
             <th>${uiLabelMap.CommonName}</th> 
             <th>${uiLabelMap.LastMktPriceDate}</th>
             <th>${uiLabelMap.productType}</th> 
+            <th>${uiLabelMap.brokers}</th> 
           </tr>  
         </thead>  
         <tbody>  
@@ -102,6 +104,7 @@ $(document).ready(function(){
             	<td>${item.prodName}</td>
             	<td><#if item.lastMktPriceDate?has_content>${item.lastMktPriceDate}<#else>0</#if></td>
             	<td>${item.productType}</td>
+            	<td>${item.brokers}</td>
           	</tr> 
 	                        
 	    </#list>
