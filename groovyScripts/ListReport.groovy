@@ -210,6 +210,21 @@ for (GenericValue entry: pricesList){
 		e.put("currYield",curryield)
 	}
 
+
+	//extract Purchases
+	purchases = from("BfinPurchase").where("prodId",prodId).orderBy("purchDate DESC").cache(false).queryList()
+	if (purchases){
+		StringBuilder sb= new StringBuilder()
+		purchases.each { purchase ->
+			if (sb.indexOf(purchase.brokerId)==-1){
+				sb.append(purchase.brokerId)
+				sb.append(" ")}
+		}
+		e.put("brokers",sb.toString())
+	}
+
+
+
 	hashMaps.add(e)
 }
 for (e in hashMaps){
