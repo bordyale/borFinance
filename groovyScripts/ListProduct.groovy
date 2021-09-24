@@ -38,3 +38,9 @@ productList = from("BfinProduct").where(filCondAND).orderBy("prodName").cache(fa
 
 
 context.productList = productList;
+
+
+
+// brokers
+brokers = from("Enumeration").where("enumTypeId", "BFIN_BROKER").orderBy("sequenceId").queryList()
+context.brokers = brokers

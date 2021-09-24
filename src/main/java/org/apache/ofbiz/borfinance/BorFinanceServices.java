@@ -434,8 +434,11 @@ public class BorFinanceServices {
 		long startTime = System.currentTimeMillis();
 		String symbol = null;
 		try {
-			//List<EntityExpr> exprs = UtilMisc.toList(EntityCondition.makeCondition("productType", EntityOperator.EQUALS, "STOCK"));
-			//EntityCondition cond = EntityCondition.makeCondition(exprs, EntityOperator.AND);
+			// List<EntityExpr> exprs =
+			// UtilMisc.toList(EntityCondition.makeCondition("productType",
+			// EntityOperator.EQUALS, "STOCK"));
+			// EntityCondition cond = EntityCondition.makeCondition(exprs,
+			// EntityOperator.AND);
 			List<GenericValue> conditions = EntityQuery.use(delegator).from("BfinProduct").orderBy("prodId ASC").queryList();
 
 			int i = 0;
@@ -671,6 +674,89 @@ public class BorFinanceServices {
 		// jsonObj.getJSONObject("Meta Data").get("2. Symbol"));
 		// return jsonObj;
 
+	}
+
+	public static Map<String, Object> createBkr(DispatchContext ctx, Map<String, Object> context) {
+		Delegator delegator = ctx.getDelegator();
+		LocalDispatcher dispatcher = ctx.getDispatcher();
+		Locale locale = (Locale) context.get("locale");
+		String errMsg = null;
+		Map<String, Object> result = ServiceUtil.returnSuccess();
+
+		GenericValue userLogin = (GenericValue) context.get("userLogin");
+
+		String brokerId = (String) context.get("brokerId");
+		try {
+			GenericValue broker = delegator.findOne("BfinBroker", UtilMisc.toMap("brokerId", brokerId), false);
+
+			if (broker == null) {
+				Map<String, Object> tmpResult = dispatcher.runSync("createBfinBroker", context);
+			} else {
+				Map<String, Object> tmpResult = dispatcher.runSync("updateBfinBroker", context);
+			}
+
+			// Map<String, Object> tmpResult =
+			// dispatcher.runSync("createPromotion", context);
+			// result.put("brokerId", tmpResult.get("brokerId"));
+
+		} catch (GenericServiceException e) {
+			Debug.logWarning(e, module);
+			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
+			errMsg = UtilProperties.getMessage(resource, "RefRevenueZero", messageMap, locale);
+			return ServiceUtil.returnError(errMsg);
+		} catch (GenericEntityException e) {
+			Debug.logWarning(e, module);
+			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
+			errMsg = UtilProperties.getMessage(resource, "broker find error", messageMap, locale);
+			return ServiceUtil.returnError(errMsg);
+		}
+		return result;
+	}
+
+	public static Map<String, Object> createBfinPurchase(DispatchContext ctx, Map<String, Object> context) {
+		Delegator delegator = ctx.getDelegator();
+		LocalDispatcher dispatcher = ctx.getDispatcher();
+		Locale locale = (Locale) context.get("locale");
+		String errMsg = null;
+		Map<String, Object> result = ServiceUtil.returnSuccess();
+
+		GenericValue userLogin = (GenericValue) context.get("userLogin");
+
+		try {
+			// todo: update broker cash value print on report page brokers cash
+
+			Map<String, Object> tmpResult = dispatcher.runSync("createBfinPurchase", context);
+
+			result.put("purchId", tmpResult.get("purchId"));
+
+			String brokerId = (String) context.get("brokerId");
+
+			GenericValue broker = delegator.findOne("BfinBroker", UtilMisc.toMap("brokerId", brokerId), false);
+
+			if (broker != null) {
+				BigDecimal brkCash = broker.getBigDecimal("cash");
+				BigDecimal quantity = (BigDecimal) context.get("quantity");
+				BigDecimal price = (BigDecimal) context.get("price");
+				BigDecimal amount = quantity.multiply(price);
+				BigDecimal newCash = brkCash.subtract(amount);
+
+				context.put("cash", newCash);
+				dispatcher.runSync("updateBfinBroker", context);
+
+			}
+
+		} catch (GenericServiceException e) {
+			Debug.logWarning(e, module);
+			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
+			errMsg = UtilProperties.getMessage(resource, "RefRevenueZero", messageMap, locale);
+			return ServiceUtil.returnError(errMsg);
+		} catch (GenericEntityException e) {
+			Debug.logWarning(e, module);
+			Map<String, String> messageMap = UtilMisc.toMap("errMessage", e.getMessage());
+			errMsg = UtilProperties.getMessage(resource, "broker find error", messageMap, locale);
+			return ServiceUtil.returnError(errMsg);
+		}
+		return result;
 	}
 
 }

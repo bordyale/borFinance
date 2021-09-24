@@ -147,7 +147,7 @@
 		default-table-style="basic-table hover-bar">
 		<actions>
 			<set field="requestParameters.noConditionFind" value="Y" />
-			<set field="sortField" from-field="parameters.sortField" default-value="-purchDate"/>
+			<set field="sortField" from-field="parameters.sortField" default-value="-purchDate" />
 			<service service-name="performFind" result-map="result" result-map-list="listIt">
 				<field-map field-name="inputFields" from-field="requestParameters" />
 				<field-map field-name="entityName" value="BfinProdPurchView" />
@@ -269,8 +269,9 @@
 		</field>
 	</form>
 
-	<form name="ListBfinDividend" type="list" list-name="listIt" target="updateBfinDividend" paginate-target="findBfinDividend" default-entity-name="BfinDividend"
-		separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2" default-table-style="basic-table hover-bar">
+	<form name="ListBfinDividend" type="list" list-name="listIt" target="updateBfinDividend" paginate-target="findBfinDividend"
+		default-entity-name="BfinDividend" separate-columns="true" odd-row-style="alternate-row" header-row-style="header-row-2"
+		default-table-style="basic-table hover-bar">
 		<actions>
 			<set field="requestParameters.noConditionFind" value="Y" />
 			<service service-name="performFind" result-map="result" result-map-list="listIt">
@@ -505,7 +506,25 @@
 		<field name="percentage" title="${uiLabelMap.percentage}">
 			<display />
 		</field>
-		
+
+
+	</form>
+
+	<form name="EditBrokerCash" type="single" target="createBfinBroker" title="" default-map-name="example" default-entity-name="BfinBroker">
+
+		<auto-fields-service service-name="updateBfinBroker" />
+		<field name="brokerId" title="${uiLabelMap.Broker}">
+			<drop-down allow-empty="false">
+				<entity-options entity-name="Enumeration" key-field-name="enumId" description="${description} [${enumCode}]">
+					<entity-constraint name="enumTypeId" value="BFIN_BROKER" />
+					<entity-order-by field-name="sequenceId" />
+				</entity-options>
+			</drop-down>
+		</field>
+
+		<field name="submitButton" title="${uiLabelMap.CommonCreate}">
+			<submit button-type="button" />
+		</field>
 
 	</form>
 
