@@ -313,4 +313,24 @@ context.brokers = brokers
 context.sectors = sectors
 
 
+// brokers cash
+sector  = new HashMap<String,Object>()
 
+sector.put("sectorId","CASH LEFT ON BROKERS")
+sector.put("mktValue","")
+sectorsList.add(sector)
+
+brokers = from("BfinBroker").cache(false).queryList()
+
+if (brokers){
+
+	brokers.each { broker ->
+		sector  = new HashMap<String,Object>()
+
+		sector.put("sectorId",broker.brokerId)
+		sector.put("mktValue",broker.cash)
+		sectorsList.add(sector)
+
+
+	}
+}

@@ -34,6 +34,20 @@
 		<auto-attributes include="nonpk" mode="IN" optional="true" />
 		<override name="prodId" optional="false" />
 	</service>
+	<service name="createBfinPurchaseJava" engine="java" location="org.apache.ofbiz.borfinance.BorFinanceServices" invoke="createBfinPurchase"
+		auth="true">
+		<description>Create Purchase and update Broker cash</description>
+		<attribute name="prodId" type="String" mode="IN" optional="false" />
+		<attribute name="brokerId" type="String" mode="IN" optional="false" />
+		<attribute name="purchDate" type="String" mode="IN" optional="false" />
+		<attribute name="quantity" type="BigDecimal" mode="IN" optional="false" />
+		<attribute name="price" type="BigDecimal" mode="IN" optional="false" />
+		<attribute name="exchangeId" type="String" mode="IN" optional="false" />
+		<attribute name="currencyUomId" type="String" mode="IN" optional="false" />
+		<attribute name="purchId" type="String" mode="OUT" optional="false" />
+
+	</service>
+
 	<service name="updateBfinPurchase" default-entity-name="BfinPurchase" engine="entity-auto" invoke="update" auth="true">
 		<description>Update a Example</description>
 		<permission-service service-name="borFinanceGenericPermission" main-action="UPDATE" />
@@ -91,15 +105,40 @@
 		auth="true">
 		<description>Populate populPriceEODH table Job</description>
 	</service>
-	
+
 	<service name="populDataYahooFin" engine="java" location="org.apache.ofbiz.borfinance.BorFinanceServices" invoke="populDataYahooFin"
 		auth="true">
 		<description>Populate populDataYahooFin table Job</description>
 	</service>
-	
+
 	<service name="sendBfinEmail" engine="java" location="org.apache.ofbiz.borfinance.BorFinanceServices" invoke="sendBfinEmail"
 		auth="true">
 		<description>Populate populDataYahooFin table Job</description>
+	</service>
+
+	<service name="createBfinBrokerJava" engine="java" location="org.apache.ofbiz.borfinance.BorFinanceServices" invoke="createBkr"
+		auth="true">
+		<description>Create Purchase and update Broker cash</description>
+		<attribute name="brokerId" type="String" mode="IN" optional="false" />
+		<attribute name="cash" type="BigDecimal" mode="IN" optional="true" />
+	</service>
+
+	<service name="createBfinBroker" default-entity-name="BfinBroker" engine="entity-auto" invoke="create" auth="true">
+		<description>Create Work Papers entry</description>
+		<permission-service service-name="borFinanceGenericPermission" main-action="CREATE" />
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+	</service>
+	<service name="updateBfinBroker" default-entity-name="BfinBroker" engine="entity-auto" invoke="update" auth="true">
+		<description>Update a Example</description>
+		<permission-service service-name="borFinanceGenericPermission" main-action="UPDATE" />
+		<auto-attributes include="pk" mode="IN" optional="false" />
+		<auto-attributes include="nonpk" mode="IN" optional="true" />
+	</service>
+	<service name="deleteBfinBroker" default-entity-name="BfinBroker" engine="entity-auto" invoke="delete" auth="true">
+		<description>Delete a VfShipmentItem</description>
+		<permission-service service-name="borFinanceGenericPermission" main-action="DELETE" />
+		<auto-attributes include="pk" mode="IN" optional="false" />
 	</service>
 
 

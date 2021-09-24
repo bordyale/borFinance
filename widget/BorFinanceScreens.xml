@@ -25,6 +25,9 @@
 								<html-template location="component://borFinance/template/Main.ftl" />
 							</html>
 						</platform-specific>
+						<!-- <container>
+							<include-form name="EditBrokerCash" location="component://borFinance/widget/BorFinanceForms.xml" />
+						</container> -->
 
 					</decorator-section>
 				</decorator-screen>

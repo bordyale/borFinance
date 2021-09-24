@@ -197,4 +197,8 @@
         <value xml:lang="en">Brks</value>
         <value xml:lang="it">Brks</value>
     </property>
+    <property key="cash">
+        <value xml:lang="en">Cash</value>
+        <value xml:lang="it">Cash</value>
+    </property>
 </resource>

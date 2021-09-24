@@ -66,6 +66,14 @@
 		</relation>
 
 	</entity>
+	
+	<entity entity-name="BfinBroker" package-name="org.apache.ofbiz.order.borfinance" never-cache="true" title="Broker Entity">
+
+		<field name="brokerId" type="id"></field>
+		<field name="cash" type="fixed-point"></field>
+		<prim-key field="brokerId" />
+
+	</entity>
 
 
 
