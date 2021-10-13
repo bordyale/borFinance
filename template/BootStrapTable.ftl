@@ -78,10 +78,11 @@ $(document).ready(function(){
             <th>${uiLabelMap.lastDividend}</th>
             <th>${uiLabelMap.lastDividendDate}</th>
             <th>${uiLabelMap.lastPrevDividend}</th>            
+            <th>${uiLabelMap.brokers}</th> 
             <th>${uiLabelMap.CommonName}</th> 
             <th>${uiLabelMap.LastMktPriceDate}</th>
             <th>${uiLabelMap.productType}</th> 
-            <th>${uiLabelMap.brokers}</th> 
+            
           </tr>  
         </thead>  
         <tbody>  
@@ -101,10 +102,11 @@ $(document).ready(function(){
             	<td><#if item.lastDividend?has_content>${item.lastDividend}<#else>0</#if></td>
             	<td><#if item.lastDividendDate?has_content>${item.lastDividendDate}<#else>0</#if></td>
             	<td><#if item.lastPrevDividend?has_content>${item.lastPrevDividend}<#else>0</#if></td>
+            	<td>${item.brokers}</td>
             	<td>${item.prodName}</td>
             	<td><#if item.lastMktPriceDate?has_content>${item.lastMktPriceDate}<#else>0</#if></td>
             	<td>${item.productType}</td>
-            	<td>${item.brokers}</td>
+            	
           	</tr> 
 	                        
 	    </#list>
