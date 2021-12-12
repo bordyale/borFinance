@@ -112,13 +112,19 @@
 	<request-map uri="createBfinPurchase">
 		<security https="true" auth="true" />
 		<event type="service" invoke="createBfinPurchaseJava" />
-		<response name="success" type="view" value="findBfinPurchase" />
+		<!-- <response name="success" type="view" value="findBfinPurchase" /> -->
+		<response name="success" type="request-redirect" value="findBfinPurchase">
+			<redirect-parameter name="prodId" />
+		</response>
 		<response name="error" type="view" value="findBfinPurchase" />
 	</request-map>
 	<request-map uri="updateBfinPurchase">
 		<security https="true" auth="true" />
 		<event type="service" invoke="updateBfinPurchase" />
-		<response name="success" type="view" value="findBfinPurchase" />
+		<!-- <response name="success" type="view" value="findBfinPurchase" /> -->
+		<response name="success" type="request-redirect" value="findBfinPurchase">
+			<redirect-parameter name="prodId" />
+		</response>
 		<response name="error" type="view" value="findBfinPurchase" />
 	</request-map>
 	<request-map uri="deleteBfinPurchase">
