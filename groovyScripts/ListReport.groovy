@@ -322,6 +322,7 @@ sectorsList.add(sector)
 
 brokers = from("BfinBroker").cache(false).queryList()
 
+BigDecimal brkTotCash= BigDecimal.ZERO
 if (brokers){
 
 	brokers.each { broker ->
@@ -330,7 +331,14 @@ if (brokers){
 		sector.put("sectorId",broker.brokerId)
 		sector.put("mktValue",broker.cash)
 		sectorsList.add(sector)
+		brkTotCash= brkTotCash.add(broker.cash)
 
 
 	}
 }
+
+sector  = new HashMap<String,Object>()
+
+sector.put("sectorId","TOT CASH LEFT ON BROKERS")
+sector.put("mktValue",brkTotCash)
+sectorsList.add(sector)
