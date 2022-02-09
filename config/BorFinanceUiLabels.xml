@@ -201,4 +201,8 @@
         <value xml:lang="en">Cash</value>
         <value xml:lang="it">Cash</value>
     </property>
+    <property key="PurchDate">
+        <value xml:lang="en">Purchase Date</value>
+        <value xml:lang="it">Data Acquisto</value>
+    </property>
 </resource>
