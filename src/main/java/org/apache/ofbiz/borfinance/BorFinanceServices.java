@@ -169,8 +169,7 @@ public class BorFinanceServices {
 		long startTime = System.currentTimeMillis();
 		String symbol = null;
 		try {
-			List<EntityExpr> exprs = UtilMisc.toList(EntityCondition.makeCondition("productType", EntityOperator.EQUALS, "STOCK"),
-					EntityCondition.makeCondition("skipApi", EntityOperator.EQUALS, "EODH"));
+			List<EntityExpr> exprs = UtilMisc.toList(EntityCondition.makeCondition("skipApi", EntityOperator.EQUALS, "EODH"));
 			EntityCondition cond = EntityCondition.makeCondition(exprs, EntityOperator.AND);
 			List<GenericValue> conditions = EntityQuery.use(delegator).from("BfinProduct").where(cond).orderBy("prodId ASC").queryList();
 
@@ -309,8 +308,7 @@ public class BorFinanceServices {
 		long startTime = System.currentTimeMillis();
 		String symbol = null;
 		try {
-			List<EntityExpr> exprs = UtilMisc.toList(EntityCondition.makeCondition("productType", EntityOperator.EQUALS, "STOCK"),
-					EntityCondition.makeCondition("skipApi", EntityOperator.EQUALS, "EODH"));
+			List<EntityExpr> exprs = UtilMisc.toList(EntityCondition.makeCondition("skipApi", EntityOperator.EQUALS, "EODH"));
 			EntityCondition cond = EntityCondition.makeCondition(exprs, EntityOperator.AND);
 			List<GenericValue> conditions = EntityQuery.use(delegator).from("BfinProduct").where(cond).orderBy("prodId ASC").queryList();
 

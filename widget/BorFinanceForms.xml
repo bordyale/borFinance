@@ -237,6 +237,11 @@
 			<hidden />
 		</field>
 
+		<field name="purchDate" title="${uiLabelMap.PurchDate}">
+			<date-time default-value="${nowTimestamp}" />
+		</field>
+
+
 		<field name="currencyUomId" title="${uiLabelMap.CommonCurrency}">
 			<drop-down allow-empty="true" no-current-selected-key="USD">
 				<entity-options key-field-name="uomId" description="${abbreviation}" entity-name="Uom">
