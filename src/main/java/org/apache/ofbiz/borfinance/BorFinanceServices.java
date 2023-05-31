@@ -208,14 +208,24 @@ public class BorFinanceServices {
 				GenericValue lastSavedDividend = EntityQuery.use(delegator).from("BfinDividend").where("prodId", prodId).cache().orderBy("date DESC").queryFirst();
 				// String prodId = (String) lastSavedDividend.get("prodId");
 				GenericValue product = EntityQuery.use(delegator).from("BfinProduct").where("prodId", prodId).cache().queryFirst();
-				symbol = (String) product.get("prodSym");
+				String symbolStr = (String) product.get("prodSym");
 				String divFreqId = (String) product.get("divFreqId");
 
-				Debug.logWarning("populDataYahooFin: " + symbol + " " + sortedDivMap.get(prodId), module);
+				if (symbolStr == null){
+					continue;
+				}
+				String[] split = symbolStr.split(";");
+				
 
 				// Debug.logWarning("POPULPRICE: " + key + " " + symbol + " " +
 				// sortedPriceMap.get(key), module);
 
+				symbol = split[1];
+				Debug.logWarning("populDataYahooFin: " + symbol + " " + sortedDivMap.get(prodId), module);
+				if (symbol == null){
+					continue;
+				}
+				
 				String url = "https://rapidapi.p.rapidapi.com/stock/v2/get-summary?symbol=" + symbol;
 
 				Map<String, String> headers = UtilMisc.toMap("x-rapidapi-host", "apidojo-yahoo-finance-v1.p.rapidapi.com", "x-rapidapi-key", "ed85e408ccmshd4093ee8f8f03a6p1b071bjsne338369de93a");
@@ -343,7 +353,28 @@ public class BorFinanceServices {
 			for (String key : sortedPriceMap.keySet()) {
 
 				GenericValue product = EntityQuery.use(delegator).from("BfinProduct").where("prodId", key).cache().queryFirst();
-				symbol = (String) product.get("prodSym");
+				String symbolStr = (String) product.get("prodSym");
+				
+				
+				if (symbolStr == null){
+					continue;
+				}
+				String[] split = symbolStr.split(";");
+				
+
+				// Debug.logWarning("POPULPRICE: " + key + " " + symbol + " " +
+				// sortedPriceMap.get(key), module);
+
+				symbol = split[0];
+				if (symbol == null){
+					continue;
+				}
+				
+				
+				
+				
+				
+				
 
 				// Debug.logWarning("POPULPRICE: " + key + " " + symbol + " " +
 				// sortedPriceMap.get(key), module);
