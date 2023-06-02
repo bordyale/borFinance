@@ -192,6 +192,10 @@
 		<security https="true" auth="true" />
 		<response name="success" type="view" value="ReportExport" />
 	</request-map>
+	<request-map uri="PurchaseExport.csv">
+		<security https="true" auth="true" />
+		<response name="success" type="view" value="PurchaseExport" />
+	</request-map>
 
 	<request-map uri="createBfinBroker">
 		<security https="true" auth="true" />
@@ -243,5 +247,7 @@
 	<view-map name="LookupProduct" type="screen" page="component://borFinance/widget/LookupScreens.xml#LookupProduct" />
 
 	<view-map name="ReportExport" type="screencsv" page="component://borFinance/widget/BorFinanceScreens.xml#ReportExportCsv"
+		content-type="text/csv" encoding="none" />
+	<view-map name="PurchaseExport" type="screencsv" page="component://borFinance/widget/BorFinanceScreens.xml#PurchaseExportCsv"
 		content-type="text/csv" encoding="none" />
 </site-conf>

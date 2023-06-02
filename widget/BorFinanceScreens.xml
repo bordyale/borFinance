@@ -25,9 +25,7 @@
 								<html-template location="component://borFinance/template/Main.ftl" />
 							</html>
 						</platform-specific>
-						<!-- <container>
-							<include-form name="EditBrokerCash" location="component://borFinance/widget/BorFinanceForms.xml" />
-						</container> -->
+						<!-- <container> <include-form name="EditBrokerCash" location="component://borFinance/widget/BorFinanceForms.xml" /> </container> -->
 
 					</decorator-section>
 				</decorator-screen>
@@ -154,6 +152,7 @@
 				<set field="headerItem" value="BfinPurchase" />
 				<set field="titleProperty" value="PageTitleFindBfinPurchase" />
 				<set field="exampleCtx" from-field="parameters" />
+				<set field="prodId" from-field="parameters.prodId" />
 			</actions>
 			<widgets>
 				<decorator-screen name="main-decorator" location="${parameters.mainDecoratorLocation}">
@@ -183,6 +182,12 @@
 								</container>
 								<decorator-screen name="FindScreenDecorator" location="component://common/widget/CommonScreens.xml">
 									<decorator-section name="search-options">
+										<container style="button-bar">
+											<link target="PurchaseExport.csv" text="${uiLabelMap.CommonExport}" style="buttontext create" target-window="_blank">
+												<parameter param-name="prodId" />
+												
+											</link>
+										</container>
 										<include-form name="FindBfinPurchase" location="component://borFinance/widget/BorFinanceForms.xml" />
 									</decorator-section>
 									<decorator-section name="search-results">
@@ -366,6 +371,24 @@
 					<label style="h2" text="${uiLabelMap.Sector}" />
 				</container>
 				<include-form name="ReportSectorsCsv" location="component://borFinance/widget/BorFinanceForms.xml" />
+
+			</widgets>
+		</section>
+	</screen>
+	
+	<screen name="PurchaseExportCsv">
+		<section>
+			<actions>
+				<property-map resource="BorFinanceUiLabels" map-name="uiLabelMap" global="true" />
+				<property-map resource="CommonUiLabels" map-name="uiLabelMap" global="true" />
+
+				<set field="prodId" from-field="parameters.prodId" />
+				<set field="viewSize" value="10000" />
+			</actions>
+			<widgets>
+				
+				<include-form name="PurchaseExportCsv" location="component://borFinance/widget/BorFinanceForms.xml" />
+				
 
 			</widgets>
 		</section>
