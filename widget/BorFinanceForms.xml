@@ -38,10 +38,10 @@
 			<text />
 		</field>
 		<field name="prodName" title="${uiLabelMap.CommonName}" sort-field="true">
-			<display />
+			<text />
 		</field>
 		<field name="productType" title="${uiLabelMap.Type}" sort-field="true">
-			<display />
+			<text />
 		</field>
 		<field name="divFreqId" title="${uiLabelMap.divFreq}" sort-field="true">
 			<drop-down allow-empty="true">
@@ -179,7 +179,7 @@
 			<text />
 		</field>
 		<field name="purchDate" title="${uiLabelMap.Date}" sort-field="true">
-			<display type="date" />
+			<text/>
 		</field>
 		<field name="exchangeId" title="${uiLabelMap.Exchange}">
 			<drop-down allow-empty="true">
@@ -502,6 +502,56 @@
 		</field>
 
 	</form>
+
+	<form name="PurchaseExportCsv" type="list" list-name="listIt" odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
+		<actions>
+			<set field="requestParameters.noConditionFind" value="Y" />
+			<set field="sortField" from-field="parameters.sortField" default-value="-purchDate" />
+			<service service-name="performFind" result-map="result" result-map-list="listIt">
+				<field-map field-name="inputFields" from-field="requestParameters" />
+				<field-map field-name="entityName" value="BfinProdPurchView" />
+				<field-map field-name="orderBy" from-field="sortField" />
+				<field-map field-name="viewIndex" from-field="viewIndex" />
+				<field-map field-name="viewSize" from-field="viewSize" />
+			</service>
+		</actions>
+
+		<field name="prodId" >
+			<display />
+		</field>
+		<field name="purchId">
+			<display />
+		</field>
+		<field name="prodSym" title="${uiLabelMap.Symbol}" sort-field="true">
+			<display />
+		</field>
+		<field name="prodName" title="${uiLabelMap.CommonName}" sort-field="true">
+			<display />
+		</field>
+		<field name="quantity" title="${uiLabelMap.Quantity}" sort-field="true">
+			<display />
+		</field>
+		<field name="currencyUomId" title="${uiLabelMap.CommonCurrency}" sort-field="true">
+			<display />
+		</field>
+		<field name="price" title="${uiLabelMap.Price}" sort-field="true">
+			<display />
+		</field>
+		<field name="purchDate" title="${uiLabelMap.Date}" sort-field="true">
+			<display type="date" />
+		</field>
+		<field name="exchangeId" title="${uiLabelMap.Exchange}">
+			<display />
+		</field>
+		<field name="brokerId" title="${uiLabelMap.Broker}">
+			<display />
+		</field>
+
+
+	</form>
+
+
+
 	<form name="ReportSectorsCsv" type="list" list-name="sectorList" odd-row-style="alternate-row" default-table-style="basic-table hover-bar">
 		<field name="sectorId" title="${uiLabelMap.Sector}">
 			<display />
