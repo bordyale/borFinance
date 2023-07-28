@@ -9,7 +9,7 @@
 <entity-engine-xml>
 
 
-	<RecurrenceRule recurrenceRuleId="BFIND" untilDateTime="" frequency="MINUTELY" intervalNumber="5" countNumber="-1" />
+	<RecurrenceRule recurrenceRuleId="BFIND" untilDateTime="" frequency="MINUTELY" intervalNumber="60" countNumber="-1" />
 	<RecurrenceInfo recurrenceInfoId="BFIND" startDateTime="2000-01-01 00:10:00.000" recurrenceRuleId="BFIND"
 		recurrenceCount="0" />
 	<JobSandbox jobId="BFIND" jobName="populateDividendTable" runTime="2000-01-01 00:10:00.000" serviceName="populateDividendTable"

@@ -455,7 +455,7 @@ public class BorFinanceServices {
 		d.setTime(today);
 		int dayOfWeek = d.get(Calendar.DAY_OF_WEEK);
 
-		if (dayOfWeek == 1 || dayOfWeek == 2) {
+		if (dayOfWeek == 1) {
 			Debug.logWarning("ON DAY: " + new SimpleDateFormat("EE").format(today) + " DON'T EXECUTE populateDividendTable()", module);
 			return result;
 		}
@@ -468,13 +468,55 @@ public class BorFinanceServices {
 			// EntityOperator.EQUALS, "STOCK"));
 			// EntityCondition cond = EntityCondition.makeCondition(exprs,
 			// EntityOperator.AND);
-			List<GenericValue> conditions = EntityQuery.use(delegator).from("BfinProduct").orderBy("prodId ASC").queryList();
+
+
+			//TODO filter "skipApi"
+			//List<GenericValue> conditions = EntityQuery.use(delegator).from("BfinProduct").orderBy("prodId ASC").queryList();
+
+			List<EntityExpr> exprs = new LinkedList<EntityExpr>();
+			exprs.add(EntityCondition.makeCondition("skipApi", EntityOperator.EQUALS, ""));
+			exprs.add(EntityCondition.makeCondition("skipApi", EntityOperator.EQUALS, null));
+			exprs.add(EntityCondition.makeCondition("skipApi", EntityOperator.EQUALS, "N"));
+			
+			EntityCondition cond = EntityCondition.makeCondition(exprs, EntityOperator.OR);
+			List<GenericValue> conditions = EntityQuery.use(delegator).from("BfinProduct").where(cond).orderBy("prodId ASC").queryList();
+			
+
+			SortedMap<String, Date> priceMap = new TreeMap<String, Date>();
+			for (GenericValue stock : conditions) {
+				symbol = (String) stock.get("prodSym");
+				String prodId = (String) stock.get("prodId");
+				String divFreqId = (String) stock.get("divFreqId");
+				// String skipApi = (String) stock.get("skipApi");
+
+				// Create a Map with symbol and last saved price.
+
+				GenericValue lastSavedPrice = EntityQuery.use(delegator).from("BfinPrice").where("prodId", prodId).cache().orderBy("date DESC").queryFirst();
+				if (lastSavedPrice != null) {
+					Date priceDate = (Date) lastSavedPrice.get("date");
+					priceMap.put(prodId, priceDate);
+
+				} else {
+					Calendar c = Calendar.getInstance();
+					c.setTime(new Date());
+					int backDayytocheck = -180;
+					c.add(Calendar.DATE, backDayytocheck);
+					priceMap.put(prodId, c.getTime());
+				}
+
+			}
+			// sort the map by value
+			Map<String, Date> sortedPriceMap = priceMap.entrySet().stream().sorted(Map.Entry.comparingByValue())
+					.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
 
 			int i = 0;
 			int apiindex = 0;
 			boolean reset = false;
+			
+			
+			for (String prodIdSet : sortedPriceMap.keySet()) {
 
-			for (GenericValue stock : conditions) {
+				GenericValue stock = EntityQuery.use(delegator).from("BfinProduct").where("prodId", prodIdSet).cache().queryFirst();
 				symbol = (String) stock.get("prodSym");
 				String prodId = (String) stock.get("prodId");
 				String divFreqId = (String) stock.get("divFreqId");
