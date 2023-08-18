@@ -455,10 +455,10 @@ public class BorFinanceServices {
 		d.setTime(today);
 		int dayOfWeek = d.get(Calendar.DAY_OF_WEEK);
 
-		if (dayOfWeek == 1) {
-			Debug.logWarning("ON DAY: " + new SimpleDateFormat("EE").format(today) + " DON'T EXECUTE populateDividendTable()", module);
-			return result;
-		}
+		//if (dayOfWeek == 1) {
+			//Debug.logWarning("ON DAY: " + new SimpleDateFormat("EE").format(today) + " DON'T EXECUTE populateDividendTable()", module);
+			//return result;
+		//}
 
 		long startTime = System.currentTimeMillis();
 		String symbol = null;
@@ -720,9 +720,6 @@ public class BorFinanceServices {
 		// URLConnection con = obj.openConnection();
 
 		int code = con.getResponseCode();
-		if (code != 200) {
-			return null;
-		}
 
 		// int responseCode = con.getResponseCode();
 		// System.out.println("\nSending 'GET' request to URL : " + url);
@@ -737,6 +734,13 @@ public class BorFinanceServices {
 		}
 		in.close();
 		// JSONObject jsonObj = new JSONObject(response.toString());
+		
+		if (code != 200) {
+			Debug.logError(response.toString(), module);
+			return null;
+		}
+		
+		
 		return response.toString();
 
 		// print result
