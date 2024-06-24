@@ -120,22 +120,49 @@ for (GenericValue entry: pricesList){
 				e.put("lastDividendDate",sdf.format(dividend.date))
 				String divFreqId = divFreqId = dividend.divFreqId
 				if (divFreqId !=null && divFreqId.equals("QUAR")){
-					forwardAnnualDiv = amount.divide(new BigDecimal(3),3,RoundingMode.HALF_UP).multiply(new BigDecimal(12))
+					forwardAnnualDiv = forwardAnnualDiv.add(amount)
 				}
 				if (divFreqId !=null && divFreqId.equals("SEMES")){
-					forwardAnnualDiv = amount.divide(new BigDecimal(6),3,RoundingMode.HALF_UP).multiply(new BigDecimal(12))
+					forwardAnnualDiv = forwardAnnualDiv.add(amount)
 				}
 				if (divFreqId !=null && divFreqId.equals("ANN")){
 					forwardAnnualDiv = amount
 				}
 				if (divFreqId !=null && divFreqId.equals("MON")){
 					forwardAnnualDiv = amount.multiply(new BigDecimal(12))
+				}	
+
+			}else if (i==1){
+				//previous dividend
+				BigDecimal amount =dividend.amount
+				e.put("lastPrevDividend",amount)
+				if (divFreqId !=null && divFreqId.equals("QUAR")){
+					forwardAnnualDiv = forwardAnnualDiv.add(amount)
 				}
-				//convert Dividend
-				if (currentUOMId && !"USD".equals(currentUOMId)) {
-					serviceResults = runService('convertUom',
-							[uomId : currentUOMId, uomIdTo : "USD", originalValue : forwardAnnualDiv])
-					if (ServiceUtil.isError(serviceResults)) {
+				if (divFreqId !=null && divFreqId.equals("SEMES")){
+					forwardAnnualDiv = forwardAnnualDiv.add(amount)
+				}			
+			}else if (i==2){
+				BigDecimal amount =dividend.amount
+				if (divFreqId !=null && divFreqId.equals("QUAR")){
+					forwardAnnualDiv = forwardAnnualDiv.add(amount)
+				}
+			}else if (i==3){
+				BigDecimal amount =dividend.amount
+				if (divFreqId !=null && divFreqId.equals("QUAR")){
+					forwardAnnualDiv = forwardAnnualDiv.add(amount)
+				}
+			}	
+			else{
+				true
+			}
+			i++
+		}
+		//convert Dividend
+		if (currentUOMId && !"USD".equals(currentUOMId)) {
+			serviceResults = runService('convertUom',
+					[uomId : currentUOMId, uomIdTo : "USD", originalValue : forwardAnnualDiv])
+			if (ServiceUtil.isError(serviceResults)) {
 						request.setAttribute("_ERROR_MESSAGE_", ServiceUtil.getErrorMessage(serviceResults))
 						return
 					} else {
@@ -145,16 +172,6 @@ for (GenericValue entry: pricesList){
 				}else{
 					totDivUSD=totDivUSD.add(forwardAnnualDiv.multiply(qtySum))
 				}
-
-			}else if (i==1){
-				//previous dividend
-				BigDecimal amount =dividend.amount
-				e.put("lastPrevDividend",amount)
-			}else{
-				true
-			}
-			i++
-		}
 
 
 
