@@ -526,7 +526,8 @@ public class BorFinanceServices {
 					continue;
 				}
 
-				if (i != 0 && i % 4 == 0) {
+				//if (i != 0 && i % 4 == 0) {
+				if (i !=0){
 					break;
 				}
 				// To avoid ask API if not necessary
