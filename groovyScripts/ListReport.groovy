@@ -129,9 +129,8 @@ for (GenericValue entry: pricesList){
 					forwardAnnualDiv = amount
 				}
 				if (divFreqId !=null && divFreqId.equals("MON")){
-					forwardAnnualDiv = amount.multiply(new BigDecimal(12))
-				}	
-
+					forwardAnnualDiv = forwardAnnualDiv.add(amount)
+				}
 			}else if (i==1){
 				//previous dividend
 				BigDecimal amount =dividend.amount
@@ -141,15 +140,64 @@ for (GenericValue entry: pricesList){
 				}
 				if (divFreqId !=null && divFreqId.equals("SEMES")){
 					forwardAnnualDiv = forwardAnnualDiv.add(amount)
-				}			
+				}
+				if (divFreqId !=null && divFreqId.equals("MON")){
+					forwardAnnualDiv = forwardAnnualDiv.add(amount)
+				}
 			}else if (i==2){
 				BigDecimal amount =dividend.amount
 				if (divFreqId !=null && divFreqId.equals("QUAR")){
 					forwardAnnualDiv = forwardAnnualDiv.add(amount)
 				}
+				if (divFreqId !=null && divFreqId.equals("MON")){
+					forwardAnnualDiv = forwardAnnualDiv.add(amount)
+				}
 			}else if (i==3){
 				BigDecimal amount =dividend.amount
 				if (divFreqId !=null && divFreqId.equals("QUAR")){
+					forwardAnnualDiv = forwardAnnualDiv.add(amount)
+				}
+				if (divFreqId !=null && divFreqId.equals("MON")){
+					forwardAnnualDiv = forwardAnnualDiv.add(amount)
+				}
+			}else if (i==4){
+				BigDecimal amount =dividend.amount
+				if (divFreqId !=null && divFreqId.equals("MON")){
+					forwardAnnualDiv = forwardAnnualDiv.add(amount)
+				}
+			}else if (i==5){
+				BigDecimal amount =dividend.amount
+				if (divFreqId !=null && divFreqId.equals("MON")){
+					forwardAnnualDiv = forwardAnnualDiv.add(amount)
+				}
+			}else if (i==6){
+				BigDecimal amount =dividend.amount
+				if (divFreqId !=null && divFreqId.equals("MON")){
+					forwardAnnualDiv = forwardAnnualDiv.add(amount)
+				}
+			}else if (i==7){
+				BigDecimal amount =dividend.amount
+				if (divFreqId !=null && divFreqId.equals("MON")){
+					forwardAnnualDiv = forwardAnnualDiv.add(amount)
+				}
+			}else if (i==8){
+				BigDecimal amount =dividend.amount
+				if (divFreqId !=null && divFreqId.equals("MON")){
+					forwardAnnualDiv = forwardAnnualDiv.add(amount)
+				}
+			}else if (i==9){
+				BigDecimal amount =dividend.amount
+				if (divFreqId !=null && divFreqId.equals("MON")){
+					forwardAnnualDiv = forwardAnnualDiv.add(amount)
+				}
+			}else if (i==10){
+				BigDecimal amount =dividend.amount
+				if (divFreqId !=null && divFreqId.equals("MON")){
+					forwardAnnualDiv = forwardAnnualDiv.add(amount)
+				}
+			}else if (i==11){
+				BigDecimal amount =dividend.amount
+				if (divFreqId !=null && divFreqId.equals("MON")){
 					forwardAnnualDiv = forwardAnnualDiv.add(amount)
 				}
 			}	
