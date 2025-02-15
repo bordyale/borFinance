@@ -488,13 +488,10 @@ public class BorFinanceServices {
 				String prodId = (String) stock.get("prodId");
 				String divFreqId = (String) stock.get("divFreqId");
 				// String skipApi = (String) stock.get("skipApi");
-
-				// Create a Map with symbol and last saved price.
-
-				GenericValue lastSavedPrice = EntityQuery.use(delegator).from("BfinPrice").where("prodId", prodId).cache().orderBy("date DESC").queryFirst();
-				if (lastSavedPrice != null) {
-					Date priceDate = (Date) lastSavedPrice.get("date");
-					priceMap.put(prodId, priceDate);
+				Date plastPriceCheckApi = (Date) stock.get("lastPriceCheckApi");
+				//Use plastPriceCheckApi in case API doesn't update prices everyday. 
+				if (plastPriceCheckApi != null) {
+					priceMap.put(prodId, plastPriceCheckApi);
 
 				} else {
 					Calendar c = Calendar.getInstance();
@@ -503,6 +500,20 @@ public class BorFinanceServices {
 					c.add(Calendar.DATE, backDayytocheck);
 					priceMap.put(prodId, c.getTime());
 				}
+				// Create a Map with symbol and last saved price.
+
+				//GenericValue lastSavedPrice = EntityQuery.use(delegator).from("BfinPrice").where("prodId", prodId).cache().orderBy("date DESC").queryFirst();
+				//if (lastSavedPrice != null) {
+				//	Date priceDate = (Date) lastSavedPrice.get("date");
+				//	priceMap.put(prodId, priceDate);
+
+				//} else {
+				//	Calendar c = Calendar.getInstance();
+				//	c.setTime(new Date());
+				//	int backDayytocheck = -180;
+				//	c.add(Calendar.DATE, backDayytocheck);
+				//	priceMap.put(prodId, c.getTime());
+				//}
 
 			}
 			// sort the map by value
@@ -652,6 +663,12 @@ public class BorFinanceServices {
 					Debug.logWarning("Exiting JOB time : " + elapsedTime, module);
 					break;
 				}
+
+
+				dispatcher.runSync("updateBfinProduct",
+							UtilMisc.<String, Object> toMap("prodId", prodId, "lastPriceCheckApi", new Date(), "userLogin", userLogin));
+
+
 			}
 
 		} catch (GenericEntityException e) {
