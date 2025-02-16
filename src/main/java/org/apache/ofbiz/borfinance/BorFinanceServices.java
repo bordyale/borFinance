@@ -558,6 +558,10 @@ public class BorFinanceServices {
 				String url = "https://www.alphavantage.co/query?function=TIME_SERIES_MONTHLY_ADJUSTED&symbol=" + symbol + "&apikey=" + apikey[0] + "\"";
 				Debug.logWarning("populateDividendTable: " + symbol, module);
 				String respStr = sendGet(url, null);
+				
+				dispatcher.runSync("updateBfinProduct",
+							UtilMisc.<String, Object> toMap("prodId", prodId, "lastPriceCheckApi", new Date(), "userLogin", userLogin));
+			
 				// TODO: check if respStr == null;
 				JSONObject resp = new JSONObject(respStr);
 				JSONObject arr;
@@ -665,8 +669,6 @@ public class BorFinanceServices {
 				}
 
 
-				dispatcher.runSync("updateBfinProduct",
-							UtilMisc.<String, Object> toMap("prodId", prodId, "lastPriceCheckApi", new Date(), "userLogin", userLogin));
 
 
 			}
