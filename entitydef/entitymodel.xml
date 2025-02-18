@@ -19,6 +19,7 @@
 		<field name="divFreqId" type="id"></field>
 		<field name="sectorId" type="id"></field>
 		<field name="lastPriceCheckApi" type="date-time"></field>
+		<field name="lastDivCheckApi" type="date-time"></field>
 
 		<prim-key field="prodId" />
 
