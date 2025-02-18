@@ -56,6 +56,7 @@
 				<option key="Y" description="${uiLabelMap.CommonY}" />
 				<option key="N" description="${uiLabelMap.CommonN}" />
 				<option key="EODH" description="${uiLabelMap.EODHistorical}" />
+				<option key="YFINPY" description="${uiLabelMap.YFinancePython}" />
 			</drop-down>
 		</field>
 		<field name="note" title="${uiLabelMap.Note}" sort-field="true">
