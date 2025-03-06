@@ -79,7 +79,7 @@ for (GenericValue entry: pricesList){
 	BigDecimal qtySum =(BigDecimal)entry.get("quantitySum")
 	//populate not in portfolio products
 	if (qtySum==null){
-		prodsNotInPortfolio.add(e)
+		// prodsNotInPortfolio.add(e)
 		continue
 	}
 
@@ -313,7 +313,7 @@ for (e in se){
 			DecimalFormatSymbols.getInstance(customLocale)).format(e.value))
 	sector.put("percentage",(BigDecimal)e.value.divide(totMktValue,3,RoundingMode.HALF_UP).multiply(new BigDecimal(100)))
 
-	sectorsList.add(sector)
+	// sectorsList.add(sector)
 }
 Map<String,Object> sector  = new HashMap<String,Object>()
 //total Purchased Avg Value
