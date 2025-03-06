@@ -35,13 +35,13 @@
 			<display />
 		</field>
 		<field name="prodSym" title="${uiLabelMap.Symbol}" sort-field="true">
-			<text />
+			<text size="20"/>
 		</field>
 		<field name="prodName" title="${uiLabelMap.CommonName}" sort-field="true">
 			<text />
 		</field>
 		<field name="productType" title="${uiLabelMap.Type}" sort-field="true">
-			<text />
+			<text size="10"/>
 		</field>
 		<field name="divFreqId" title="${uiLabelMap.divFreq}" sort-field="true">
 			<drop-down allow-empty="true">
@@ -171,13 +171,13 @@
 			<display />
 		</field>
 		<field name="quantity" title="${uiLabelMap.Quantity}" sort-field="true">
-			<text />
+			<text size="10"/>
 		</field>
 		<field name="currencyUomId" title="${uiLabelMap.CommonCurrency}" sort-field="true">
-			<text />
+			<text size="5"/>
 		</field>
 		<field name="price" title="${uiLabelMap.Price}" sort-field="true">
-			<text />
+			<text size="10"/>
 		</field>
 		<field name="purchDate" title="${uiLabelMap.Date}" sort-field="true">
 			<text/>
