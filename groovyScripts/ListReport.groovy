@@ -79,7 +79,7 @@ for (GenericValue entry: pricesList){
 	BigDecimal qtySum =(BigDecimal)entry.get("quantitySum")
 	//populate not in portfolio products
 	if (qtySum==null){
-		// prodsNotInPortfolio.add(e)
+		//prodsNotInPortfolio.add(e)
 		continue
 	}
 
@@ -313,7 +313,7 @@ for (e in se){
 			DecimalFormatSymbols.getInstance(customLocale)).format(e.value))
 	sector.put("percentage",(BigDecimal)e.value.divide(totMktValue,3,RoundingMode.HALF_UP).multiply(new BigDecimal(100)))
 
-	// sectorsList.add(sector)
+	//sectorsList.add(sector)
 }
 Map<String,Object> sector  = new HashMap<String,Object>()
 //total Purchased Avg Value
@@ -363,7 +363,10 @@ if (totDivUSD){
 sector  = new HashMap<String,Object>()
 
 sector.put("sectorId","# OF STOCK IN PORTFOLIO")
-sector.put("mktValue",hashMaps.size())
+sector.put("mktValue",new DecimalFormat(
+	"###",
+	DecimalFormatSymbols.getInstance(customLocale)).format(hashMaps.size()))
+//sector.put("mktValue",hashMaps.size())
 sectorsList.add(sector)
 
 
@@ -392,9 +395,11 @@ if (brokers){
 
 	brokers.each { broker ->
 		sector  = new HashMap<String,Object>()
-
+//check if broker.cash is null
+		sector.put("mktValue",new DecimalFormat(
+				"###",
+				DecimalFormatSymbols.getInstance(customLocale)).format(broker.cash))
 		sector.put("sectorId",broker.brokerId)
-		sector.put("mktValue",broker.cash)
 		sectorsList.add(sector)
 		brkTotCash= brkTotCash.add(broker.cash)
 
@@ -405,5 +410,8 @@ if (brokers){
 sector  = new HashMap<String,Object>()
 
 sector.put("sectorId","TOT CASH LEFT ON BROKERS")
-sector.put("mktValue",brkTotCash)
+//sector.put("mktValue",brkTotCash)
+sector.put("mktValue",new DecimalFormat(
+	"###",
+	DecimalFormatSymbols.getInstance(customLocale)).format(brkTotCash))
 sectorsList.add(sector)
