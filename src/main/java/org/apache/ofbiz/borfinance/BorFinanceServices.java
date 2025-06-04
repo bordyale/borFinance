@@ -729,7 +729,8 @@ public class BorFinanceServices {
 		// Install the all-trusting host verifier
 		HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
 
-		URL obj = new URL(url);
+		//URL obj = new URL(url);
+		URL obj = new URL(url.replace("\"", "%22").replace(" ",  "%20"));
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		if (headers != null) {
 			for (String key : headers.keySet()) {
